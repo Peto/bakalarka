@@ -194,10 +194,10 @@ V Bratislave XX. júna \hfill\hbox to 6cm{\dotfill}
 \section{Motivácia}
 Pri tvorbe tejto práce ma najviac ovplyvnila aktuálna situácia v našej spoločnosti, ktorá je čím ďalej, tým viac konzumne zameraná. Nakupujeme oveľa viac ako v minulosti. A nejde len o potrebné veci. A čím viac vecí nakúpime, tým menší prehľad v nich máme. A tak nakupujeme ešte viac. Tento konzumný spôsob života vplýva najviac na našu peňaženku. A rovnako ako máme problém vyznať sa vo veciach ktoré nakupujeme, rovnako vzniká problém vyznať sa aj v našich financiách. A toto by som rád vyriešil. Verím tomu, že čím viac budeme mať svoje financie pod kontrolou, tým lepšie sa nám bude žiť. Čím lepšie budeme vedieť na čo míňame, tým ľahšie sa nám bude dať naplánovať na ktorých veciach môžeme ušetriť. Mať prehľad a začať spravovať svoje domáce účtovníctvo je tým prvým krokom, ktorý musíme urobiť.
 
-Ďalšou významnou motiváciou k tvorbe tejto práce bola pre mňa túžba naučiť sa niečo nové. Niečo, čoho znalosti mi veľmi dobre poslúžia aj pri mojich budúcich projektoch. V tomto prípade ide o použitie frameworku na tvorbu webových aplikácii. Bude sa na ňom zakladať celá moja aplikácia na domáce účtovníctvo.   
+Ďalšou významnou motiváciou k tvorbe tejto práce bola pre mňa túžba naučiť sa niečo nové. Niečo, čoho znalosti mi veľmi dobre poslúžia aj pri mojich budúcich projektoch. V tomto prípade ide o použitie \emph{frameworku} (vývojového rámca) na tvorbu webových aplikácii. Bude sa na ňom zakladať celá moja aplikácia na domáce účtovníctvo.   
 
 \section{Ciele práce}
-Hlavným cieľom tejto práce je vytvoriť webovu aplikáciu Domáce účtovníctvo na jednoduchú a prehľadnú správu osobných (domácich?) financií. Kedže je už podobných aplikácii dosť veľa, mojím plánom nebude urobiť len ich jednoduchú kopiu. Budem sa snažiť porovnať tieto existujúce aplikácie, vyhodnotiť ich klady a zápory, a z každej si zobrať len to najlepšie, čo implementujem do mojej výslednej aplikácie. Zamerať sa chcem taktiež aj na jednoduché a prehľadné grafické rozhranie aplikácie, v ktorom sa používateľ bude vedieť orientovať po pár kliknutiach myšou. Toto je jedna z vecí, ktorú by už existujúci podobné aplikácie mali prepracovať. Pri ich skúmaní sa mi často stávalo, že som nevedel a musel dĺho hľadať ako vykonať určitú akciu. A toto sa pri aplikáciach, ktoré su určené bežným používateľom nesmie stávať. Podobným jednoduchým a prehľadným štýlom bude spravená aj mobilná verzia aplikácie. V jednoduchosti je krása. A tak myslím, že je zbytočné robiť prekomplikovanú aplikáciu s "milión" funkciami, keď ju používateľ po piatich minútach vypne, lebo sa v nej nevyzná.
+Hlavným cieľom tejto práce je vytvoriť webovú aplikáciu Domáce účtovníctvo na jednoduchú a prehľadnú správu osobných (domácich?) financií. Keďže je už podobných aplikácii dosť veľa, mojím plánom nebude urobiť len ich jednoduchú kópiu. Budem sa snažiť porovnať tieto existujúce aplikácie, vyhodnotiť ich klady a zápory, a z každej si zobrať len to najlepšie, čo implementujem do mojej výslednej aplikácie. Zamerať sa chcem taktiež aj na jednoduché a prehľadné grafické rozhranie aplikácie, v ktorom sa používateľ bude vedieť orientovať po pár kliknutiach myšou. Toto je jedna z vecí, ktorú by už existujúci podobné aplikácie mali prepracovať. Pri ich skúmaní sa mi často stávalo, že som nevedel a musel dlho hľadať ako vykonať určitú akciu. A toto sa pri aplikáciách, ktoré sú určené bežným používateľom nesmie stávať. Podobným jednoduchým a prehľadným štýlom bude spravená aj mobilná verzia aplikácie. V jednoduchosti je krása. A tak myslím, že je zbytočné robiť prekomplikovanú aplikáciu s \uv{milión} funkciami, keď ju používateľ po piatich minútach vypne, lebo sa v nej nevyzná.
 
 
 \chapter{Východiská}\label{chap:background}
@@ -205,28 +205,27 @@ V tejto časti práce sa budem snažiť opísať východiská, ktoré ma inšpir
 
 Taktiež spravím prehľad už implementovaných, podobných riešení na správu domáceho účtovníctva. Budem sa zaoberať tromi hlavnými typmi aplikácií. Pôjde o webové, mobilné a desktopové aplikácie na správu a prehľad financií v domácnosti. Mojou snahou je zhrnúť základné vlastnosti a funkcionalitu týchto aplikácií, z každej si zobrať to najlepšie a implementovať to do mojej práce v čo najväčšej miere.
 
-Ďalšiu časť tejto kapitoly bude tvoriť popis Model–view–controller architektúry(MVC) \cite{UvodMVC}\ , ktorá bude s pomocou frameworku CakePHP použitá aj v mojej práci. V súčasnosti ide o jeden z najobľúbenejších spôsobov tvorby aplikácií. Kedže som už spomenul aj framework v ktorom budem robiť aplikáciu, rád by som časť tejto kapitoly venoval aj jemu.
+Ďalšiu časť tejto kapitoly bude tvoriť popis Model–view–controller architektúry(MVC) \cite{UvodMVC}\ , ktorá bude s pomocou frameworku CakePHP použitá aj v mojej práci. V súčasnosti ide o jeden z najobľúbenejších spôsobov tvorby aplikácií. Keďže som už spomenul aj framework v ktorom budem robiť aplikáciu, rád by som časť tejto kapitoly venoval aj jemu.
 Nakoniec by som sa rád pozrel a priblížil aj tému návrhových vzorov, ktoré takáto práca bude vyžadovať.\newpage
 
 
 
 \section{Použité webové technológie}
 \subsection{HTML a CSS}
-HTML \cite{HTML}\ je skratka pre HyperText Markup Language. Je to najpoužívanejší značkovací jazyk, ktorý používame pri tvorbe web stránok. Štruktúru HTML dokumentu určuje definícia typu (Document Type Definition; DTD). Táto definícia určuje množinu značiek, ktoré môžu byť použité v dokumente. 
+HTML \cite{HTML}\ je skratka pre HyperText Markup Language. Je to najpoužívanejší značkovací jazyk na zápis hypermediálnych dokumentov, ktorý používame pri tvorbe web stránok. Štruktúru HTML dokumentu určuje definícia typu (Document Type Definition; DTD). Táto definícia určuje množinu značiek, ktoré môžu byť použité v dokumente. 
 
-Aktuálna verzia tohoto jazyka je HTML 5. Jedna z jej najväčších výhod je použitie tagu video, ktorý by sa mal stať novým štandardom na prezeranie videí a filmov na webe. Postupne by malo nahradiť použivanie flash videí a pluginov, ktoré boli na prehratie takýchto videí potrebné. 
+Aktuálna verzia tohto jazyka je HTML 5. Jedna z jej najväčších výhod je použitie tagu video, ktorý by sa mal stať novým štandardom na prezeranie videí a filmov na webe. Postupne by malo nahradiť používanie flash videí a pluginov, ktoré boli na prehratie takýchto videí potrebné. 
 
-Pod skratkou CSS \cite{CSS21}\ si predstavíme slovné spojenie Cascading Style Sheets. V slovenskom preklade ide o kaskádové štýly, čo je štýlovací jazyk, ktorý nám popisuje ako budú zobrazené stránky napísaná v (X)HTML. CSS nám umožňujú vizuálne formátovať webové dokumenty. Vytvárame tak štruktúrované dokumenty v ktorých oddeľujeme obsah dokumentu(HTML) od jeho vzhľadu(CSS). Hlavné z výhod použitia CSS su prehľadnejší kód, menšia dátová náročnosť a jednoduchá zmena formátovania určitých elementov na celej stránke bez nutnosti formátovania každého elementu zvlášť. 
+CSS \cite{CSS21}\ (Cascading Style Sheets - kaskádové štýly) je štýlovací jazyk, ktorý popisuje ako budú zobrazené stránky, ktoré boli napísané v (X)HTML. CSS umožňujú vizuálne formátovať webové dokumenty. Vytvárame tak štruktúrované dokumenty v ktorých oddeľujeme obsah dokumentu(HTML) od jeho vzhľadu(CSS). Hlavné z výhod použitia CSS su prehľadnejší kód, menšia dátová náročnosť a jednoduchá zmena formátovania určitých elementov na celej stránke bez nutnosti formátovania každého elementu zvlášť. 
 
 \subsection{CakePHP} 
-CakePHP \cite{CakePHP}\ je open source webový framework určený na vývoj vybových aplikácií, ktoré sú založené na PHP 4 a 5. Tento framework vznikol už v roku 2005 ako reakcia na veľmi obľúbený a úspešný framework Ruby on Rails. Framework CakePHP je postavený na softwareovej architektúre Model-view-controller, ktorý bližšie opisujem v kapitole 2.4.
+CakePHP \cite{CakePHP}\ je open source webový framework určený na vývoj webových aplikácií v programovacom jazyku PHP verzie 4 a 5. Tento framework vznikol už v roku 2005 ako reakcia na veľmi obľúbený a úspešný framework Ruby on Rails. Framework CakePHP je postavený na softwareovej architektúre Model-view-controller, ktorý bližšie opisujem v kapitole 2.4.
  
 
 
 \section{Existujúce riešenia}
 Pred začatím tvorby svojej aplikácie som urobil prehľad podobných existujúcich riešení. Rozdelil som ich do troch kategórií. Webové aplikácie, desktopové aplikácie a mobilné aplikácie.
 Na začiatok by som rád uviedol, že všetky ďalej spomínané aplikácie spĺňali určitú základnú funkcionalitu, ktorú od aplikácie na prehľad rozpočtu berieme za samozrejmú.
-Základná funkcionalita:
 \begin{itemize}
 \item{pridávanie, editovanie a mazanie jednorazových príjmov a výdavkov}
 \item{pridávanie, editovanie a mazanie opakovaných príjmov a výdavkov}
@@ -362,48 +361,31 @@ Zaoberal som sa len aplikáciami pre systém Android
 \end{itemize}
 
 \subsection{Porovnanie s mojimi cieľami}
-TODO
-
+Mojim hlavným cieľom je vytvoriť prehľadnú a užívateľsky jednoducho ovládajúcu sa aplikáciu. Všetky spomenuté podobné riešenia sa to tiež snažili splniť. Nie každému sa to však podarilo. Väčšina z aplikácií obsahovala okrem základnej funkcionality aj možnosti, ktoré bežný používateľ asi nikdy nevyužije. To by nevadilo, pokiaľ by tým aplikácia nestrácala na prehľadnosti. To je jeden z hlavných rozdielov na ktorý si chcem dať veľký pozor. Menej je niekedy viac. Druhou veľkou zmenou oproti ostatným riešeniam bude vytvorenie mobilnej webovej verzie mojej aplikácie. Existujúce riešenia boli zamerané vždy na určitý segment. Išlo vždy buď o webovú, desktopovú alebo mobilnú aplikáciu. Mobilná aplikácia nebola prepojená s webovým riešením a opačne. Tým, že vytvorím aj mobilnú webovú verziu odvodenú od klasickej webovej aplikácie bude tento problém vyriešený. Poslednou veľkou zmenou bude možnosť importu bankových výpisov, čím používateľovi uľahčím zadávanie nových transakcií do aplikácie. Túto možnosť u nás neposkytovala žiadna zo skúšaných aplikácií.
 
 \section{Model–View–Controller}
-Pri tvorbe aplikácie budem využívať pravidlá softvérovej architektúry Model–view–controller (MVC). Ide o spôsob architektúry pri ktorom je oddelený dátový model aplikácie(model), používateľské rozhranie aplikácie(view) a riadiaca logika(controller) do 3 komponentov. Táto architektúra zabezpečuje, že úprava niektorého komponentu má len minimálny vplyv na ostatné komponenty. Tým dosahujeme možnosť nezávislého vývoja, testovania a upravovania každého komponentu samostatne.
+Pri tvorbe aplikácie budem využívať pravidlá softvérovej architektúry Model–view–controller (MVC) \cite{MVCdevbook}\ . Ide o spôsob architektúry pri ktorom je oddelený dátový model aplikácie(model), používateľské rozhranie aplikácie(view) a riadiaca logika(controller) do 3 komponentov. Táto architektúra zabezpečuje, že úprava niektorého komponentu má len minimálny vplyv na ostatné komponenty. Tým dosahujeme možnosť nezávislého vývoja, testovania a upravovania každého komponentu samostatne.
 
 Hoci MVC architektúra neeliminuje všetky problémy, poskytuje nám základný pevný bod od ktorého sa môžeme odraziť.
 
 \subsection{Model}
 Model je dátovým a funkčným základom celej aplikácie. Pozostáva z aplikačných dát a biznis logiky. Komunikuje s databázou a spracováva dáta. Model vôbec nevie o výstupe a tak nemá s konkrétnou prezentáciou nič spoločné. Funguje tak, že prijme parametre z vonku, spracuje ich a potom pošle dáta von. 
 
-Framework CakePHP používa ORM(Objektovo relačné mapovanie) pri ktorom korešpondujú modely s databázovými tabuľkami. Máme teda napríklad model Clanok alebo Komentar. Inštancie modelov obsahujú atribúty z databázy. Článok má napríklad atribút názov. Triede taktiež môžeme definovať metódy inštancií.
+Framework CakePHP používa ORM(Objektovo relačné mapovanie) pri ktorom korešpondujú modely s databázovými tabuľkami. Máme teda napríklad model \texttt{Clanok} alebo \texttt{Komentar}. Inštancie modelov obsahujú atribúty z databázy. Článok má napríklad atribút názov. Triede taktiež môžeme definovať metódy inštancií.
 
 Asi najväčšia výhoda v použití modelu je jednoduchá úprava tabuliek v databáze.  Ak by sme ručne písali SQL dopyty, tak by sme v každom z nich museli upraviť zoznam stĺpcov tak, ako sme ich upravili v databáze. Model nám v tomto zásadne pomôže. Postačí nám spraviť úpravu len v ňom.
 
 \subsection{View}
-View zabezpečuje zobrazenie výstupu pre používateľa. Najčastejšie ide o phtml šablónu v jazyku, ktorá obsahuje stránku a tagy určitého značkovacieho jazyka. View získava svoje dáta na zobrazenie priamo z modelu. Model však na komponente View nie je závislý. Používa sa tu však návrhový vzor Observer(Pozorovateľ), ktorý napomáha komponentu Model  informovať ostatné komponenty o zmenách dát. V takomto prípade sa komponent View prihlási komponentu Model ako príjemca týchto informácií. V jednoduchosti sa to dá zhrnúť tak, že Observer sa používa pre View, keď je potrebné sledovať Model.
-\newline
-\par
-View môže byť šablóna napísaná v niektorom zo šablónovacích jazykov. Samotné php, ktoré používa CakePHP je tiež šablónovací jazyk. Často sa však používajú aj iné. 
+View zabezpečuje zobrazenie výstupu pre používateľa. View získava svoje dáta na zobrazenie priamo z modelu. Model však na komponente View nie je závislý. Používa sa tu však návrhový vzor Observer(Pozorovateľ), ktorý napomáha komponentu Model  informovať ostatné komponenty o zmenách dát. V takomto prípade sa komponent View prihlási komponentu Model ako príjemca týchto informácií. V jednoduchosti sa to dá zhrnúť tak, že Observer sa používa pre View, keď je potrebné sledovať Model.
 \newline
 
-Známe šablónovacie jazyky:
-\begin{itemize}
-\item{Smarty}
-\begin{itemize}
-\item{jeden z najznámejších šablónovacích jazykov}
-\item{samostatná šablónovaciu knižnicu}
-\item{jednoduchá syntax na pochopenie}
-\item{dopĺňa php, nenahrádza ho}
-\end{itemize}
-\item{Savant}
-\begin{itemize}
-\item{ako šablónovací jazyk používa php}
-\item{nekompiluje}
-\end{itemize}
-\item{Latte}
-\begin{itemize}
-\item{u nás dosť známy šablónovací jazyk ktorý používa český framework Nette}
-\end{itemize}
-\end{itemize}
-Spoločnými znakmi týchto šablónovacích jazykov je ich jednoduchá syntax a preklad do jazyka php. Ak by sa šablóny prekladali vždy až pri zobrazení aplikácie, boli by zbytočne príliš náročné na výpočet.
+\begin{description}
+\item [Smarty] \cite{Smarty}\  je jeden z najznámejších šablónovacích jazykov. Je to samostatná šablónovacia knižnica. Smarty nenahrádza PHP, ale len ho dopĺňa. Jeden z jeho hlavných kladov je jednoduchá syntax.
+\item [Savant] \cite{Savant}\  je ďalším známym šablónovacím jazykom. Ako šablónovací jazyk je v ňom použité PHP. Tento jazyk nekompiluje, pretože skripty šablón sú napísané v PHP.
+\item [Latte] \cite{Latte}\  je u nás veľmi známy šablónovací jazyk, ktorý používa český framework Nette. Dovoľuje nám vytvárať a používať vlastné makrá. Je rýchlejší ako Smarty a obsahuje viac možností. Taktiež kladie vysoký dôraz na bezpečnosť. Latte automaticky \emph{escapuje} vypisované premenné.
+\end{description}
+
+Spoločnými znakmi týchto šablónovacích jazykov je ich jednoduchá syntax a preklad do jazyka PHP. Ak by sa šablóny prekladali vždy až pri zobrazení aplikácie, boli by zbytočne príliš náročné na výpočet.
 
 \subsection{Controller}
 Controller(radič) je časť MVC architektúry ktorá reaguje na udalosti, ktoré väčšinou pochádzajú od užívateľa a postará sa o zmeny v modely a View.  Stará sa o tok udalostí v aplikácii a aplikačnú logiku. Controller teda prijíma všetky zmeny od užívateľa a postará sa o ich vykonanie. Ak vykonaná akcia požaduje zmenu údajov, požiada o to model. Ten podľa vstupných parametrov prevedie požadovanú akciu a upozorní na to View. View zobrazí upravené dáta pre užívateľa.
@@ -413,12 +395,13 @@ Pri niektorých typoch implementácie MVC môže Controller priamo komunikovať 
 Pri webovej implementácii MVC frameworku sa Controller najčastejšie skladá z dvoch hlavných častí. Prvou časťou je front controller. Tento Controller zachytí všetky http požiadavky, spracuje ich a potom pošle konkrétnym Controllerom. Druhá hlavná časť sú tieto konkrétne Controllery. Controller prijme dáta, ktoré pôvodne pochádzali z http pôžiadavky, uloží ich do Modelu a ten nasmeruje na špecifický View. Ten tieto spracované dáta zobrazí pre používateľa.
 
 \subsection{MVC verzus Passive View MVC}
-Ako som už spominal vo východiskách, moja práca bude založená na frameworku CakePHP. V predchádzajúcej časti som opisoval časti z ktorých je zložená MVC architektúra. CakePHP a podobné webové frameworky však nepoužívajú klasickú MVC architektúru. Sú založené na od nej odvodenej architektúre s názvom PMVC (Passive Model View Controller). Jedným z hlavných kladov tejto architektúry je zlepšenie a zjednodušenie testovateľnosti. \cite{PMVC}\ Základný rozdiel je v tom, že View v tomto modeli len pasívne zobrazuje dáta. Vďaka tomu sa už nemusí aktualizovať podľa stavu modelu a ani na neho už nie je priamo napojený. Taktiež nám to dovoľuje zamerať testovanie na Controller bez toho aby sme mali problémy s View. Kvôli tomuto modelu však vzniká Controlleru ďalšia povinnosť. Musí synchronizovať View a Model. 
+Ako som už spomínal vo východiskách, moja práca bude založená na frameworku CakePHP. V predchádzajúcej časti som opisoval časti z ktorých je zložená MVC architektúra. CakePHP a podobné webové frameworky však nepoužívajú klasickú MVC architektúru. Sú založené na od nej odvodenej architektúre s názvom PMVC (Passive Model View Controller). Základný rozdiel je v tom, že View v tomto modeli len pasívne zobrazuje dáta. View môže byť šablóna napísaná v niektorom zo šablónovacích jazykov. Samotné PHP, ktoré používa CakePHP je tiež šablónovací jazyk. Často sa však používajú aj iné. Najčastejšie ide o phtml šablónu v jazyku, ktorá obsahuje stránku a tagy určitého značkovacieho jazyka. Vďaka tomu sa už nemusí aktualizovať podľa stavu modelu a ani na neho už nie je priamo napojený. Taktiež nám to dovoľuje zamerať testovanie na Controller bez toho aby sme mali problémy s View. Z tohto vyplýva, že jedným z hlavných kladov tejto architektúry je zlepšenie a zjednodušenie testovateľnosti. \cite{PMVC}\  Kvôli tomuto modelu však vzniká Controlleru ďalšia povinnosť. Musí synchronizovať View a Model. 
 
-Implementácia PMVC v CakePHP prebieha nasledovne. Na HTTP server je používateľom zaslaná požiadavka cez GET alebo POST dáta a s nimi spojenú URL adresu. Server túto požiadavku prepošle ďalej dispečerovi, ktorý je implementovaný na vzore Front Controlleru. Ten ju následne spracuje a zaistí akciu na konkrétnom Controlleri. Potom Controller tieto dáta spracuje podľa aplikačnej logiky a vykoná zmeny na Modeli. Tieto zmeny sa uložia v databáze. Ďalej si Controller vypýta od Modelu aktualizované dáta. Nakoniec ho čaká ďalšia požiadavka na server alebo zašle dáta na View. Používateľovi sa zobrazí odpoveď.
+Implementácia PMVC v CakePHP prebieha nasledovne. Na HTTP server je používateľom zaslaná požiadavka cez GET alebo POST dáta a s nimi spojenú URL adresu. Server túto požiadavku prepošle ďalej dispečerovi, ktorý je implementovaný na vzore Front Controlleru. Ten ju následne spracuje a zaistí akciu na konkrétnom Controlleri. Potom Controller tieto dáta spracuje podľa aplikačnej logiky a vykoná zmeny na Modeli. Tieto zmeny sa uložia v databáze. Ďalej si Controller vypýta od Modelu aktualizované dáta a zašle ich na View. Používateľovi sa zobrazí odpoveď.
+ 
 
 \section{Návrhové vzory}
-V živote sa často stretávame s úlohami a problémami, ktoré musíme vyriešiť. Väčšinou nie sme prví, kto natrafil na konkrétny problém. Našlo sa už veľa ľudí pred nami, ktorí ho vyriešili. A nie je predsa potrebné vymýšľať koleso znovu a znovu. Platí to aj pri tvorbe aplikácií.  Často natrafíme na rovnaké, prípadne aspoň podobné problémy. Takéto situácie nám pri programovaní pomáhajú riešiť návrhové vzory. Návrhový vzor je overená šablóna alebo popis riešenia problému.
+V živote sa často stretávame s úlohami a problémami, ktoré musíme vyriešiť. Väčšinou nie sme prví, kto natrafil na konkrétny problém. Našlo sa už veľa ľudí pred nami, ktorí ho vyriešili. A nie je predsa potrebné vymýšľať koleso znovu a znovu. Platí to aj pri tvorbe aplikácií.  Často natrafíme na rovnaké, prípadne aspoň podobné problémy. Takéto situácie nám pri programovaní pomáhajú riešiť návrhové vzory \cite{NavrhoveVzory}\ . Návrhový vzor je overená šablóna alebo popis riešenia problému.
 
 Zvyčajne nám objektovo orientované návrhové vzory definujú vzťahy medzi objektmi a triedami. Nedefinujú nám implementáciu konkrétnej triedy.  
 
@@ -429,15 +412,15 @@ Pre objektívnosť spomeniem aj pár negatív. Niekedy sa pozitívne vlastnosti 
 \chapter{Analýza a návrh}
 \section{Funkčné požiadavky}
 \subsection{Webová verzia aplikácie}
-Funkčnosť webovej aplikácie sa líši z pohľadu rôznych typov používateľov.
+Funkčnosť webovej aplikácie sa líši z pohľadu rôznych typov používateľov:
 \begin{itemize}
-\item{Admin}
+\item{Administrátor}
 \item{Prihlásený používateľ}
 \item{Neprihlásený používateľ}
 \end{itemize}
 
-\subsubsection{Admin}
-Admin môže:
+\subsubsection{Administrátor}
+Administrátor môže:
 \begin{itemize}
 \item{Mazať používateľov}
 \item{Resetovať heslá po žiadosti používateľa}
