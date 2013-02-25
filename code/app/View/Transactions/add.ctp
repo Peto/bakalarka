@@ -3,12 +3,12 @@
 	<fieldset>
 		<legend><?php echo __('Add Transaction'); ?></legend>
 	<?php
-		echo $this->Form->input('transaction_type_id');
+		echo $this->Form->input('transaction_type_id', array('options' => $transaction_types));
 		echo $this->Form->input('name');
 		echo $this->Form->input('amount');
-		echo $this->Form->input('category_id');
-		echo $this->Form->input('subcategory_id');
-		echo $this->Form->input('user_id');
+		echo $this->Form->input('category_id', array('options' => $categories));
+		echo $this->Form->input('subcategory_id', array('options' => $subcategories));
+		echo $this->Form->input('user_id', array('type' => 'hidden','value' => $user));
 		echo $this->Form->input('original_transaction_id');
 		echo $this->Form->input('post_date');
 	?>

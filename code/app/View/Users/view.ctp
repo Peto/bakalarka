@@ -31,9 +31,9 @@
 			<?php echo h($user['User']['active']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('User Type'); ?></dt>
+		<dt><?php echo __('User Type Id'); ?></dt>
 		<dd>
-			<?php echo $this->Html->link($user['UserType']['name'], array('controller' => 'user_types', 'action' => 'view', $user['UserType']['id'])); ?>
+			<?php echo h($user['User']['user_type_id']); ?>
 			&nbsp;
 		</dd>
 	</dl>
@@ -47,11 +47,66 @@
 		<li><?php echo $this->Html->link(__('New User'), array('action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List User Types'), array('controller' => 'user_types', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New User Type'), array('controller' => 'user_types', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Categories'), array('controller' => 'categories', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Category'), array('controller' => 'categories', 'action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Imports'), array('controller' => 'imports', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Import'), array('controller' => 'imports', 'action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Transactions'), array('controller' => 'transactions', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Transaction'), array('controller' => 'transactions', 'action' => 'add')); ?> </li>
 	</ul>
+</div>
+	<div class="related">
+		<h3><?php echo __('Related User Types'); ?></h3>
+	<?php if (!empty($user['UserType'])): ?>
+		<dl>
+			<dt><?php echo __('Id'); ?></dt>
+		<dd>
+	<?php echo $user['UserType']['id']; ?>
+&nbsp;</dd>
+		<dt><?php echo __('Name'); ?></dt>
+		<dd>
+	<?php echo $user['UserType']['name']; ?>
+&nbsp;</dd>
+		</dl>
+	<?php endif; ?>
+		<div class="actions">
+			<ul>
+				<li><?php echo $this->Html->link(__('Edit User Type'), array('controller' => 'user_types', 'action' => 'edit', $user['UserType']['id'])); ?></li>
+			</ul>
+		</div>
+	</div>
+	<div class="related">
+	<h3><?php echo __('Related Categories'); ?></h3>
+	<?php if (!empty($user['Category'])): ?>
+	<table cellpadding = "0" cellspacing = "0">
+	<tr>
+		<th><?php echo __('Id'); ?></th>
+		<th><?php echo __('Name'); ?></th>
+		<th><?php echo __('User Id'); ?></th>
+		<th class="actions"><?php echo __('Actions'); ?></th>
+	</tr>
+	<?php
+		$i = 0;
+		foreach ($user['Category'] as $category): ?>
+		<tr>
+			<td><?php echo $category['id']; ?></td>
+			<td><?php echo $category['name']; ?></td>
+			<td><?php echo $category['user_id']; ?></td>
+			<td class="actions">
+				<?php echo $this->Html->link(__('View'), array('controller' => 'categories', 'action' => 'view', $category['id'])); ?>
+				<?php echo $this->Html->link(__('Edit'), array('controller' => 'categories', 'action' => 'edit', $category['id'])); ?>
+				<?php echo $this->Form->postLink(__('Delete'), array('controller' => 'categories', 'action' => 'delete', $category['id']), null, __('Are you sure you want to delete # %s?', $category['id'])); ?>
+			</td>
+		</tr>
+	<?php endforeach; ?>
+	</table>
+<?php endif; ?>
+
+	<div class="actions">
+		<ul>
+			<li><?php echo $this->Html->link(__('New Category'), array('controller' => 'categories', 'action' => 'add')); ?> </li>
+		</ul>
+	</div>
 </div>
 <div class="related">
 	<h3><?php echo __('Related Imports'); ?></h3>

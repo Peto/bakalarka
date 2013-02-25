@@ -38,6 +38,8 @@ class TransactionsController extends AppController {
  * @return void
  */
 	public function add() {
+		
+		
 		if ($this->request->is('post')) {
 			$this->Transaction->create();
 			if ($this->Transaction->save($this->request->data)) {
@@ -47,7 +49,12 @@ class TransactionsController extends AppController {
 				$this->Session->setFlash(__('The transaction could not be saved. Please, try again.'));
 			}
 		}
+		
 		$users = $this->Transaction->User->find('list');
+		$this->set('transaction_types', $this->Transaction->TransactionType->find('list'));
+		$this->set('categories', $this->Transaction->Category->find('list', array('conditions' => array('Category.user_id' => '1'))));
+		$this->set('subcategories', $this->Transaction->Subcategory->find('list', array('conditions' => array('Subcategory.category_id' => '1'))));
+		$this->set('user', '1'); //nacitat user_id zo session - alebo nacitavat az pri ukladani transakcie
 		$this->set(compact('users'));
 	}
 

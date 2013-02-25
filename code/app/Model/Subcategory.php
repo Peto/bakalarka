@@ -4,6 +4,7 @@ App::uses('AppModel', 'Model');
  * Subcategory Model
  *
  * @property Category $Category
+ * @property Transaction $Transaction
  */
 class Subcategory extends AppModel {
 
@@ -84,4 +85,26 @@ class Subcategory extends AppModel {
 			'order' => ''
 		)
 	);
+
+/**
+ * hasMany associations
+ *
+ * @var array
+ */
+	public $hasMany = array(
+		'Transaction' => array(
+			'className' => 'Transaction',
+			'foreignKey' => 'subcategory_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		)
+	);
+
 }

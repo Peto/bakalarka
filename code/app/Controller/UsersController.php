@@ -38,6 +38,9 @@ class UsersController extends AppController {
  * @return void
  */
 	public function add() {
+		
+		$this->set('user_types', $this->User->UserType->find('list'));
+		
 		if ($this->request->is('post')) {
 			$this->User->create();
 			if ($this->User->save($this->request->data)) {
@@ -47,8 +50,6 @@ class UsersController extends AppController {
 				$this->Session->setFlash(__('The user could not be saved. Please, try again.'));
 			}
 		}
-		$userTypes = $this->User->UserType->find('list');
-		$this->set(compact('userTypes'));
 	}
 
 /**
@@ -73,8 +74,6 @@ class UsersController extends AppController {
 			$options = array('conditions' => array('User.' . $this->User->primaryKey => $id));
 			$this->request->data = $this->User->find('first', $options);
 		}
-		$userTypes = $this->User->UserType->find('list');
-		$this->set(compact('userTypes'));
 	}
 
 /**

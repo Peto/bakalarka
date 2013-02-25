@@ -18,7 +18,8 @@ class SubcategoriesControllerTest extends ControllerTestCase {
 		'app.user',
 		'app.user_type',
 		'app.import',
-		'app.transaction'
+		'app.transaction',
+		'app.transaction_type'
 	);
 
 /**
