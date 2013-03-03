@@ -16,6 +16,9 @@ class UsersController extends AppController {
 		$this->User->recursive = 0;
 		$this->set('users', $this->paginate());
 	}
+	
+	
+	
 
 /**
  * view method
@@ -97,4 +100,42 @@ class UsersController extends AppController {
 		$this->Session->setFlash(__('User was not deleted'));
 		$this->redirect(array('action' => 'index'));
 	}
+	
+	/*public function login() {         //  doEditovat ..pouzit auth
+		if ($this->request->is('post')) {
+	        if ($this->Auth->login()) {
+	            $this->redirect($this->Auth->redirect());
+	        } else {
+	            $this->Session->setFlash(__('Zadali ste chybný mail alebo heslo.'));
+	        }
+	    }
+		/*if ($this->Session->read('Auth.User')) {
+			$this->Session->setFlash('You are logged in!');
+			$this->redirect('/', null, false);
+	
+		}
+	}
+	*/
+	
+	public function beforeFilter() {
+		parent::beforeFilter();
+		$this->Auth->allow('add'); // moznost registrovat sa pre pouzivatelov
+	}
+	
+	public function login() {
+		if ($this->request->is('post')) {
+			if ($this->Auth->login()) {
+				$this->redirect($this->Auth->redirect());
+			} else {
+				$this->Session->setFlash(__('Invalid email or password, try again'));
+			}
+		}
+	}
+	
+	public function logout() {
+		$this->Session->setFlash('Boli ste úspešne odhlásený.');
+		$this->redirect($this->Auth->logout());
+	}
+	
+
 }
