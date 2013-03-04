@@ -52,9 +52,9 @@ class TransactionsController extends AppController {
 		
 		$users = $this->Transaction->User->find('list');
 		$this->set('transaction_types', $this->Transaction->TransactionType->find('list'));
-		$this->set('categories', $this->Transaction->Category->find('list', array('conditions' => array('Category.user_id' => '1'))));
-		$this->set('subcategories', $this->Transaction->Subcategory->find('list', array('conditions' => array('Subcategory.category_id' => '1'))));
-		$this->set('user', '1'); //nacitat user_id zo session - alebo nacitavat az pri ukladani transakcie
+		$this->set('categories', $this->Transaction->Category->find('list', array('conditions' => array('Category.user_id' => '8'))));
+		$this->set('subcategories', $this->Transaction->Subcategory->find('list', array('conditions' => array('Subcategory.category_id' => '3'))));
+		$this->set('user', '8'); //nacitat user_id zo session - alebo nacitavat az pri ukladani transakcie
 		$this->set(compact('users'));
 	}
 

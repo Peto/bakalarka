@@ -27,7 +27,7 @@ class User extends AppModel {
 		'id' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				//'message' => 'Your custom message here',
+				'message' => 'Chyba pri prázdnom ID',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -35,7 +35,7 @@ class User extends AppModel {
 			),
 			'numeric' => array(
 				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
+				'message' => 'ID musí by èíslo',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -45,7 +45,7 @@ class User extends AppModel {
 		'email' => array(
 			'email' => array(
 				'rule' => array('email'),
-				//'message' => 'Your custom message here',
+				'message' => 'Zadali ste chybnú mailovú adresu',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -53,7 +53,7 @@ class User extends AppModel {
 			),
 			'notempty' => array(
 				'rule' => array('notempty'),
-				//'message' => 'Your custom message here',
+				'message' => 'Emailová adresa musí by zadaná',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -61,7 +61,7 @@ class User extends AppModel {
 			),
 			'isunique' => array(
 					'rule' => array('isunique'),
-					//'message' => 'Your custom message here',
+					'message' => 'Na vašu emailovú adresu u je vytvorenı inı úèet',
 					//'allowEmpty' => false,
 					//'required' => false,
 					//'last' => false, // Stop validation after this rule
@@ -71,7 +71,7 @@ class User extends AppModel {
 		'name' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				//'message' => 'Your custom message here',
+				'message' => 'Musíte zada meno',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -81,7 +81,7 @@ class User extends AppModel {
 		'surname' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				//'message' => 'Your custom message here',
+				'message' => 'Musíte zada priezvisko',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -91,11 +91,15 @@ class User extends AppModel {
 		'password' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				//'message' => 'Your custom message here',
+				'message' => 'Musíte zada heslo',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+			array(
+					'rule' => array('passCompare'),
+					'message' => 'Heslá sa nezhodujú'
 			),
 		),
 		'active' => array(
@@ -206,5 +210,16 @@ class User extends AppModel {
 		}
 		return true;
 	}
+	
+	
+	public function passCompare() {
+		return ($this->data[$this->alias]['password'] === $this->data[$this->alias]['password_confirm']);
+	}
+	 
+	/*public function beforeSave() {   // problem
+		$this->data['User']['password'] = AuthComponent::password($this->data['User']['password']);
+		return true;
+	}*/
+	
 
 }
