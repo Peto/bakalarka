@@ -35,6 +35,17 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 		echo $this->fetch('css');
 		echo $this->fetch('script');
 	?>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+
+<script>
+$(function() {
+$( "#datepicker" ).datepicker();
+$( "#datepicker" ).datepicker( "option", "dateFormat", 'yy-mm-dd' );
+});
+</script>
+
 </head>
 <body>
 	<div id="container">

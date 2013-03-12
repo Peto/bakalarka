@@ -9,9 +9,30 @@
 		echo $this->Form->input('category_id', array('options' => $categories));
 		echo $this->Form->input('subcategory_id', array('options' => $subcategories));
 		echo $this->Form->input('user_id', array('type' => 'hidden','value' => $user));
-		echo $this->Form->input('original_transaction_id');
-		echo $this->Form->input('post_date');
-	?>
+		//echo $this->Form->input('original_transaction_id');
+		echo $this->Form->input('post_date', array('type' => 'text', 'id' => 'datepicker' ));
+		echo $this->Form->input('repeat',
+				array(
+						'type' => 'radio',
+						'options' => array('neopakovať', 'opakovať')));
+		echo $this->Form->input('repeat_every', 
+				array(
+						'type' => 'select', 
+						'options' => array('tyzden' => 'tyždeň', 'mesiac' => 'mesiac', 'rok' => 'rok'), 
+						'selected' => 'mesiac'
+						
+				)
+		);
+		echo $this->Form->input('number_of_cycles',
+				array(
+						//'empty' => 'Select...',
+						'type' => 'select',
+						'options' => array_combine(range(1,100,1),range(1,100,1))
+				)
+		);
+		
+		?>
+	
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>
 </div>

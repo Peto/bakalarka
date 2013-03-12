@@ -50,6 +50,7 @@ class AppController extends Controller {
 		$this->Auth->authorize = array('Controller');
 		$this->Auth->authenticate = array(
 				'all' => array (
+						'fields' => array('username' => 'email'),
 						'scope' => array('User.active' => 1)
 				),
 				'Form'

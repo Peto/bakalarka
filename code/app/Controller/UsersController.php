@@ -153,6 +153,8 @@ class UsersController extends AppController {
 		if ($this->request->is('post')) {
 			if ($this->Auth->login()) {
 				//return $this->redirect($this->Auth->redirect());
+				$user = $this->Auth->user();
+				$this->Session->write('User.id', $user['id']);
 				return $this->redirect('/');
 			} else {
 				$this->Session->setFlash(__('Zadali ste chybný mail alebo heslo.'));
