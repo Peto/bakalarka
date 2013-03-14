@@ -8,8 +8,8 @@
 		echo $this->Form->input('surname');
 		echo $this->Form->input('password');
 		echo $this->Form->input('password_confirm', array('type' => 'password'));
-		echo $this->Form->input('active');
-		echo $this->Form->input('user_type_id', array('options' => $user_types));
+		//echo $this->Form->input('active');
+		//echo $this->Form->input('user_type_id', array('options' => $user_types));
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>
