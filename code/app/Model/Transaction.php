@@ -169,6 +169,16 @@ class Transaction extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
+		'number_of_cycles' => array(
+			'numeric' => array(
+				'rule' => array('numeric'),
+				'message' => 'Zadali ste zlý poèet opakovaní transakcie',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed

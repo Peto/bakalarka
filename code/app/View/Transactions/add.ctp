@@ -4,6 +4,8 @@
 	
 	<script>
 		$(document).ready(function () {
+			$("#datepicker").datepicker('setDate', new Date());   // nastavenie defaultneho datumu na aktualny
+			
 			$('#opakovanie_nastavenia').hide();
 		    if ($('#Repeat0').attr('checked', true)) {
 		        $('.opakovanie_nastavenia').hide();
@@ -19,38 +21,34 @@
 		});
 		</script>
 	
-		<legend><?php echo __('Add Transaction'); ?></legend>
+		<legend><?php echo __('Pridaj transakciu'); ?></legend>
 	<?php
-		echo $this->Form->input('transaction_type_id', array('options' => $transaction_types));
-		echo $this->Form->input('name');
-		echo $this->Form->input('amount');
-		echo $this->Form->input('category_id', array('options' => $categories));
-		echo $this->Form->input('subcategory_id', array('options' => $subcategories));
+		echo $this->Form->input('transaction_type_id', array('options' => array('1' => 'príjem', '2' => 'výdavok'), 'selected' => '1', 'type' => 'radio', 'id'=> 'transaction_type_id' , 'legend' => 'Typ transakcie' ));
+		echo $this->Form->input('name', array('label' => 'Názov transakcie'));
+		echo $this->Form->input('amount', array('label' => 'Suma'));
+		echo $this->Form->input('category_id', array('options' => $categories, 'label' => 'Kategória'));
+		echo $this->Form->input('subcategory_id', array('options' => $subcategories, 'label' => 'Podkategória'));
 		echo $this->Form->input('user_id', array('type' => 'hidden','value' => $user));
 		//echo $this->Form->input('original_transaction_id');
-		echo $this->Form->input('post_date', array('type' => 'text', 'id' => 'datepicker' ));?>
+		echo $this->Form->input('post_date', array('type' => 'text', 'id' => 'datepicker', 'label' => 'Dátum transakcie' ));?>
 		<div id='opakovanie'>
 		<?php echo $this->Form->input('repeat',
 				array(
 						'type' => 'radio',
 						'options' => array('neopakovať', 'opakovať'),
-						'id' => 'repeat')); ?> </div>
+						'id' => 'repeat',
+						'legend' => 'Opakovanie transakcie')); ?> </div>
 		<div id='opakovanie_nastavenia'>
 		<?php echo $this->Form->input('repeat_every', 
 				array(
 						'type' => 'select', 
 						'options' => array('tyzden' => 'tyždeň', 'mesiac' => 'mesiac', 'rok' => 'rok'), 
-						'selected' => 'mesiac'
+						'selected' => 'mesiac',
+						'label' => 'Opakovať každý'
 						
 				)
 		); 
-		 echo $this->Form->input('number_of_cycles',
-				array(
-						//'empty' => 'Select...',
-						'type' => 'select',
-						'options' => array_combine(range(1,100,1),range(1,100,1))
-				)
-		);
+		 echo $this->Form->input('number_of_cycles', array('label' => 'Počet opakovaní'));
 		
 		?></div>
 		

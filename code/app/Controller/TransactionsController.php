@@ -175,7 +175,7 @@ class TransactionsController extends AppController {
 		$this->set('transaction_types', $this->Transaction->TransactionType->find('list'));
 		$this->set('categories', $this->Transaction->Category->find('list', array('conditions' => array('Category.user_id' => $user_id))));
 		$this->set('subcategories', $this->Transaction->Subcategory->find('list', array('conditions' => array('Subcategory.user_id' => $user_id))));
-		$this->set('user', $user_id); 	//nacitat user_id zo session - alebo nacitavat az pri ukladani transakcie
+		$this->set('user', $user_id); 	
 		$this->set(compact('users'));
 	}
 
