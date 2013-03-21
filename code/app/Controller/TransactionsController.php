@@ -19,6 +19,9 @@ class TransactionsController extends AppController {
 		
 		$this->paginate = array(
 			'limit' => 20,
+			'order' => array(
+				'Transaction.post_date' => 'asc'
+			),
 			'conditions' => array(
 				'Transaction.user_id' => $this->Session->read('User.id'),
 			),
@@ -164,7 +167,8 @@ class TransactionsController extends AppController {
 				}
 			$this->Transaction->create();
 			$this->Transaction->saveMany($pom_data);
-			print_r($pom_data);}
+			//print_r($pom_data);
+			}
 			
 		}
 		

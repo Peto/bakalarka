@@ -13,6 +13,15 @@ class UsersController extends AppController {
  * @return void
  */
 	public function index() {
+		
+		$this->paginate = array(
+				'limit' => 20,
+				'conditions' => array(
+						'User.id' => $this->Session->read('User.id'),
+						
+				),
+		);
+		
 		$this->User->recursive = 0;
 		$this->set('users', $this->paginate());
 	}

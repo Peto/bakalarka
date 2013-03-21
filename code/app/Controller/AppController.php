@@ -21,6 +21,7 @@
  */
 
 App::uses('Controller', 'Controller');
+App::uses('CakeTime', 'Utility');
 
 /**
  * Application Controller
@@ -55,6 +56,21 @@ class AppController extends Controller {
 				),
 				'Form'
 		);
+		
+		$role = $this->Auth->user('user_type_id'); 	//   na pouzitie s Auth
+		//$this->Session->read('User.role'); 		// na pouzitie pri normal login session
+		if ($role == '2' || $role == '1') {
+			$this->set('user_type_id', $role);
+		}
+		
+		if($role == '1')
+		{
+			$this->set('is_admin', true);
+		}
+		else
+		{
+			$this->set('is_admin', false);
+		}
 	}
 	 
 	public function isAuthorized($user) {

@@ -9,7 +9,7 @@
 			<th><?php echo $this->Paginator->sort('password'); ?></th>
 			<th><?php echo $this->Paginator->sort('active'); ?></th>
 			<th><?php echo $this->Paginator->sort('user_type_id'); ?></th>
-			<th class="actions"><?php echo __('Actions'); ?></th>
+			<th class="actions"><?php echo __('Actions');  ?></th>
 	</tr>
 	<?php foreach ($users as $user): ?>
 	<tr>

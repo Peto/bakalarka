@@ -8,7 +8,7 @@
 		echo $this->Form->input('xml_file');
 		echo $this->Form->input('processed');
 		echo $this->Form->input('filename');
-		echo $this->Form->input('user_id');
+		echo $this->Form->input('user_id', array('type' => 'hidden','value' => $user));
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>

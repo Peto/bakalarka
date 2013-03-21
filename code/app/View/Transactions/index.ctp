@@ -3,6 +3,7 @@
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 			<th><?php echo $this->Paginator->sort('id'); ?></th>
+			<th><?php echo $this->Paginator->sort('post_date'); ?></th>
 			<th><?php echo $this->Paginator->sort('transaction_type_id'); ?></th>
 			<th><?php echo $this->Paginator->sort('name'); ?></th>
 			<th><?php echo $this->Paginator->sort('amount'); ?></th>
@@ -10,12 +11,12 @@
 			<th><?php echo $this->Paginator->sort('subcategory_id'); ?></th>
 			<th><?php echo $this->Paginator->sort('user_id'); ?></th>
 			<th><?php echo $this->Paginator->sort('original_transaction_id'); ?></th>
-			<th><?php echo $this->Paginator->sort('post_date'); ?></th>
 			<th class="actions"><?php echo __('Actions'); ?></th>
 	</tr>
 	<?php foreach ($transactions as $transaction): ?>
 	<tr>
 		<td><?php echo h($transaction['Transaction']['id']); ?>&nbsp;</td>
+		<td><?php echo h(CakeTime::format('d.m.Y',$transaction['Transaction']['post_date'])); ?>&nbsp;</td>
 		<td><?php echo h($transaction['Transaction']['transaction_type_id']); ?>&nbsp;</td>
 		<td><?php echo h($transaction['Transaction']['name']); ?>&nbsp;</td>
 		<td><?php echo h($transaction['Transaction']['amount']); ?>&nbsp;</td>
@@ -25,7 +26,6 @@
 			<?php echo $this->Html->link($transaction['User']['name'], array('controller' => 'users', 'action' => 'view', $transaction['User']['id'])); ?>
 		</td>
 		<td><?php echo h($transaction['Transaction']['original_transaction_id']); ?>&nbsp;</td>
-		<td><?php echo h($transaction['Transaction']['post_date']); ?>&nbsp;</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $transaction['Transaction']['id'])); ?>
 			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $transaction['Transaction']['id'])); ?>
@@ -52,7 +52,9 @@
 	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
 		<li><?php echo $this->Html->link(__('New Transaction'), array('action' => 'add')); ?></li>
-		<li><?php echo $this->Html->link(__('List Users'), array('controller' => 'users', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New User'), array('controller' => 'users', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Categories'), array('action' => 'index')); ?></li>
+		<li><?php echo $this->Html->link(__('List Subcategories'), array('controller' => 'subcategories', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Category'), array('controller' => 'categories', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Subcategory'), array('controller' => 'subcategories', 'action' => 'add')); ?> </li>
 	</ul>
 </div>

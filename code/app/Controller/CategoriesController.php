@@ -13,6 +13,14 @@ class CategoriesController extends AppController {
  * @return void
  */
 	public function index() {
+		
+		$this->paginate = array(
+				'limit' => 20,
+				'conditions' => array(
+						'Category.user_id' => $this->Session->read('User.id'),
+				),
+		);
+		
 		$this->Category->recursive = 0;
 		$this->set('categories', $this->paginate());
 	}
@@ -47,7 +55,10 @@ class CategoriesController extends AppController {
 				$this->Session->setFlash(__('The category could not be saved. Please, try again.'));
 			}
 		}
+		$user_id = $this->Session->read('User.id');
+		
 		$users = $this->Category->User->find('list');
+		$this->set('user', $user_id);
 		$this->set(compact('users'));
 	}
 

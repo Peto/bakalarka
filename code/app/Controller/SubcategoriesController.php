@@ -13,6 +13,14 @@ class SubcategoriesController extends AppController {
  * @return void
  */
 	public function index() {
+		
+		$this->paginate = array(
+				'limit' => 20,
+				'conditions' => array(
+						'subcategory.user_id' => $this->Session->read('User.id'),
+				),
+		);
+		
 		$this->Subcategory->recursive = 0;
 		$this->set('subcategories', $this->paginate());
 	}
@@ -47,8 +55,11 @@ class SubcategoriesController extends AppController {
 				$this->Session->setFlash(__('The subcategory could not be saved. Please, try again.'));
 			}
 		}
-		$categories = $this->Subcategory->Category->find('list');
+		$user_id = $this->Session->read('User.id');
+		//$categories = $this->Subcategory->Category->find('list');
+		$this->set('categories', $this->Subcategory->Category->find('list', array('conditions' => array('Category.user_id' => $user_id))));
 		$this->set(compact('categories'));
+		$this->set('user', $user_id);
 	}
 
 /**

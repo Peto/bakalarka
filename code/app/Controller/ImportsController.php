@@ -13,6 +13,14 @@ class ImportsController extends AppController {
  * @return void
  */
 	public function index() {
+		
+		$this->paginate = array(
+				'limit' => 20,
+				'conditions' => array(
+						'Import.user_id' => $this->Session->read('User.id'),
+				),
+		);
+		
 		$this->Import->recursive = 0;
 		$this->set('imports', $this->paginate());
 	}
@@ -47,7 +55,10 @@ class ImportsController extends AppController {
 				$this->Session->setFlash(__('The import could not be saved. Please, try again.'));
 			}
 		}
+		$user_id = $this->Session->read('User.id');
+		
 		$users = $this->Import->User->find('list');
+		$this->set('user', $user_id);
 		$this->set(compact('users'));
 	}
 

@@ -4,7 +4,8 @@
 		<legend><?php echo __('Add Subcategory'); ?></legend>
 	<?php
 		echo $this->Form->input('name');
-		echo $this->Form->input('category_id');
+		echo $this->Form->input('category_id', array('options' => $categories, 'label' => 'Kategória'));
+		echo $this->Form->input('user_id', array('type' => 'hidden','value' => $user));
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>
