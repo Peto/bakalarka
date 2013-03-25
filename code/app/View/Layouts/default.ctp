@@ -50,7 +50,31 @@ $( "#datepicker" ).datepicker( "option", "dateFormat", 'yy-mm-dd' );
 <body>
 	<div id="container">
 		<div id="header">
-			<h1><?php echo $this->Html->link($cakeDescription, 'http://cakephp.org'); ?></h1>
+		<ul>
+			<li><h1><?php echo $this->Html->link('Transakcie', '/transactions'); ?></h1></li>
+			<li><h1><?php echo $this->Html->link('Pridanie transakcie', '/transactions/add'); ?></h1></li>
+			<li><h1><?php echo $this->Html->link('Príjmy', '/transactions/income'); ?></h1></li>
+			<li><h1><?php echo $this->Html->link('Výdavky', '/transactions/expense'); ?></h1></li>
+			<li><h1><?php echo $this->Html->link('Kategórie', '/categories'); ?></h1></li>
+			<li><h1><?php
+				echo $this->Session->check('Auth.User') 
+				 ? 
+				$this->Html->link(
+				              'Odhlásiť sa',
+				               array(
+				                  'controller' => 'users',
+				                  'action' => 'logout',
+				                  'admin' => false
+				               ))
+				: 
+				$this->Html->link(
+				               'Prihlásiť sa',
+				                array(
+				                   'controller' => 'users',
+				                   'action' => 'login'
+				                ));
+				?></h1></li>
+		</ul>
 		</div>
 		<div id="content">
 

@@ -48,7 +48,7 @@ h1, h2, h3, h4 {
 h1 {
 	background:#fff;
 	color: #003d4c;
-	font-size: 100%;
+	font-size: 130%;
 }
 h2 {
 	background:#fff;
@@ -65,8 +65,15 @@ h4 {
 	color: #993;
 	font-weight: normal;
 }
+
+ul {
+  list-style-type: none;
+}
+
 ul, li {
 	margin: 0 12px;
+  float: left;
+  
 }
 p {
 	margin: 0 0 1em 0;
@@ -81,8 +88,8 @@ p {
 	padding: 10px 20px;
 }
 #header h1 {
-	line-height:20px;
-	background: #003d4c url('../img/cake.icon.png') no-repeat left;
+	line-height:24px;
+	background: #003d4c url('../img/coins_24.png') no-repeat left;
 	color: #fff;
 	padding: 0px 30px;
 }

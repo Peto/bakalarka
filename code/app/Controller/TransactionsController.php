@@ -30,6 +30,57 @@ class TransactionsController extends AppController {
 		$this->Transaction->recursive = 0;
 		$this->set('transactions', $this->paginate());
 	}
+	
+	public function income() {
+	
+		$this->paginate = array(
+				'limit' => 20,
+				'order' => array(
+						'Transaction.post_date' => 'asc'
+				),
+				'conditions' => array(
+						'Transaction.user_id' => $this->Session->read('User.id'),
+						'Transaction.transaction_type_id' => '1',
+				),
+		);
+	
+		$this->Transaction->recursive = 0;
+		$this->set('transactions', $this->paginate());
+	}
+	
+	public function expense() {
+	
+		$this->paginate = array(
+				'limit' => 20,
+				'order' => array(
+						'Transaction.post_date' => 'asc'
+				),
+				'conditions' => array(
+						'Transaction.user_id' => $this->Session->read('User.id'),
+						'Transaction.transaction_type_id' => '2',
+				),
+		);
+	
+		$this->Transaction->recursive = 0;
+		$this->set('transactions', $this->paginate());
+	}
+	
+	public function date_test() {
+	
+		$this->paginate = array(
+				'limit' => 20,
+				'order' => array(
+						'Transaction.post_date' => 'asc'
+				),
+				'conditions' => array(
+						'Transaction.user_id' => $this->Session->read('User.id'),
+						'Transaction.post_date' => '2013-04-26',
+				),
+		);
+	
+		$this->Transaction->recursive = 0;
+		$this->set('transactions', $this->paginate());
+	}
 
 /**
  * view method
@@ -204,8 +255,16 @@ class TransactionsController extends AppController {
 		} else {
 			$options = array('conditions' => array('Transaction.' . $this->Transaction->primaryKey => $id));
 			$this->request->data = $this->Transaction->find('first', $options);
+			$this->set('data', $this->request->data);
 		}
+		
+		$user_id = $this->Session->read('User.id');
+		
 		$users = $this->Transaction->User->find('list');
+		$this->set('transaction_types', $this->Transaction->TransactionType->find('list'));
+		$this->set('categories', $this->Transaction->Category->find('list', array('conditions' => array('Category.user_id' => $user_id))));
+		$this->set('subcategories', $this->Transaction->Subcategory->find('list', array('conditions' => array('Subcategory.user_id' => $user_id))));
+		$this->set('user', $user_id);
 		$this->set(compact('users'));
 	}
 
@@ -230,4 +289,48 @@ class TransactionsController extends AppController {
 		$this->Session->setFlash(__('Transaction was not deleted'));
 		$this->redirect(array('action' => 'index'));
 	}
+	
+	
+	/**
+	* delete_next_repeats method
+	*
+	* @throws NotFoundException
+	* @throws MethodNotAllowedException
+	* @param string $id
+	* @return void
+	*/
+	public function delete_next_repeats($id = null) {
+		$this->Transaction->id = $id;
+		if (!$this->Transaction->exists()) {
+			throw new NotFoundException(__('Invalid transaction'));
+		}
+		//$this->request->onlyAllow('post', 'delete');
+		
+		$original_id = $this->Transaction->field('original_transaction_id');
+		$post_date = $this->Transaction->field('post_date');
+		
+		if ($this->Transaction->delete()) {
+// 			$original_id = $this->Transaction->original_transaction_id;
+// 			$post_date = $this->Transaction->post_date;
+// echo $original_id.' | '.$post_date;
+			if($original_id != '') {
+				if($this->Transaction->deleteAll(array('Transaction.original_transaction_id' => $original_id, 'Transaction.post_date >' => $post_date ), false)) {
+					$this->Session->setFlash(__('Vybratá transakcia a jej neskoršie opakovania boli vymazané.'));
+					$this->redirect(array('action' => 'index'));
+				}
+			} else {
+				if($this->Transaction->deleteAll(array('Transaction.original_transaction_id' => $id, 'Transaction.post_date >' => $post_date ), false)) {
+					$this->Session->setFlash(__('Vybratá transakcia a jej neskoršie opakovania boli vymazané. 2'));
+					$this->redirect(array('action' => 'index'));
+				}
+			}
+// 			$this->Session->setFlash(__('Vybratá transakcia a jej neskoršie opakovania boli vymazané.'));
+// 			$this->redirect(array('action' => 'index'));
+		}
+		$this->Session->setFlash(__('Transakcia nebola vymazaná.'));
+		//$this->redirect(array('action' => 'index'));
+	}
 }
+
+
+

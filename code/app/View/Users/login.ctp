@@ -12,22 +12,3 @@
          'action' => 'add'
      ));
 ?>
-
-<?php
-echo $this->Session->check('Auth.User') 
- ? 
-$this->Html->link(
-              'Odhlásiť sa',
-               array(
-                  'controller' => 'users',
-                  'action' => 'logout',
-                  'admin' => false
-               ))
-: 
-$this->Html->link(
-               'Prihlásiť sa',
-                array(
-                   'controller' => 'users',
-                   'action' => 'login'
-                ));
-?>
