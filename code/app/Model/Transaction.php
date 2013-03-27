@@ -172,7 +172,7 @@ class Transaction extends AppModel {
 		'number_of_cycles' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
-				'message' => 'Zadali ste zlý poèet opakovaní transakcie',
+				'message' => 'Zadali ste zlÃ½ poÄet opakovanÃ­ transakcie',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule

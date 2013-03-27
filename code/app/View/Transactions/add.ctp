@@ -48,7 +48,7 @@
 						
 				)
 		); 
-		 echo $this->Form->input('number_of_cycles', array('label' => 'Počet opakovaní'));
+		 echo $this->Form->input('number_of_cycles', array('label' => 'Počet opakovaní', 'value' => '0'));
 		
 		?></div>
 		

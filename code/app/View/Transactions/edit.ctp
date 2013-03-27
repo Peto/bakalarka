@@ -11,6 +11,19 @@
 		        $('.opakovanie_nastavenia').hide();
 		    }
 
+		    $('#opakovanie').hide();
+		    if ($('#UpdateNext0').attr('checked', true)) {
+		        $('.opakovanie').hide();
+		    }
+
+		    $('#UpdateNext0').click(function () {
+		        $('#opakovanie_nastavenia').slideUp("slow");
+		    });
+
+		    $('#UpdateNext1').click(function () {
+		        $('#opakovanie_nastavenia').slideDown("slow");
+		    })
+
 		    $('#Repeat0').click(function () {
 		        $('#opakovanie_nastavenia').slideUp("slow");
 		    });
@@ -30,9 +43,39 @@
 		echo $this->Form->input('category_id', array('options' => $categories, 'label' => 'Kategória', 'selected' => $data['Transaction']['category_id']));
 		echo $this->Form->input('subcategory_id', array('options' => $subcategories, 'label' => 'Podkategória', 'selected' => $data['Transaction']['subcategory_id']));
 		echo $this->Form->input('user_id', array('type' => 'hidden','value' => $user));
-		//echo $this->Form->input('original_transaction_id');
-		echo $this->Form->input('post_date', array('type' => 'text', 'id' => 'datepicker', 'label' => 'Dátum transakcie', 'default' => $data['Transaction']['post_date']));
-	?>
+		echo $this->Form->input('original_transaction_id', array('type' => 'hidden'));
+		echo $this->Form->input('post_date', array('type' => 'text', 'id' => 'datepicker', 'label' => 'Dátum transakcie', 'default' => $data['Transaction']['post_date']));?>
+		
+		<div id='upravit_dalsie'>
+		<?php echo $this->Form->input('update_next',
+				array(
+						'type' => 'radio',
+						'options' => array('upraviť iba toto opakovanie transakcie', 'upraviť aj ďalšie opakovania tejto transakcie(staršie opakovania nebudú upravené)'),
+						'id' => 'update_next',
+						'legend' => 'Úprava ďalších opakovaní'
+					)
+				); ?> </div>
+		<div id='opakovanie'>
+		<?php echo $this->Form->input('repeat',
+				array(
+						'type' => 'radio',
+						'options' => array('neopakovať', 'opakovať'),
+						'id' => 'repeat',
+						'legend' => 'Opakovanie transakcie'
+					)
+				); ?> </div>
+		<div id='opakovanie_nastavenia'>
+		<?php echo $this->Form->input('repeat_every', 
+				array(
+						'type' => 'select', 
+						'options' => array('tyzden' => 'tyždeň', 'mesiac' => 'mesiac', 'rok' => 'rok'), 
+						'selected' => 'mesiac',
+						'label' => 'Opakovať každý'
+				)
+			); 
+			echo $this->Form->input('number_of_cycles', array('label' => 'Počet opakovaní','value' => '0'));
+				
+				?></div>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>
 </div>

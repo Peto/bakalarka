@@ -90,6 +90,9 @@ class TransactionsController extends AppController {
  * @return void
  */
 	public function view($id = null) {
+		if (!$this->check_ownership($id) ) {
+			throw new PrivateActionException(__('Na prístup k tejto operácii nemáte oprávnenie.'));
+		}
 		if (!$this->Transaction->exists($id)) {
 			throw new NotFoundException(__('Invalid transaction'));
 		}
@@ -103,6 +106,7 @@ class TransactionsController extends AppController {
  * @return void
  */
 	public function add() {
+		
 		
 		/* Array
 		(
@@ -124,7 +128,7 @@ class TransactionsController extends AppController {
 		
 		if ($this->request->is('post')) {
 			$this->Transaction->create();
-			//print_r($this->request->data);
+			print_r($this->request->data);
 			$data= $this->request->data['Transaction'];
 			if ($this->Transaction->save($this->request->data)) {
 				$this->Session->setFlash(__('The transaction has been saved'));  // zistit IDcku novo ulozeneho objektu
@@ -134,91 +138,10 @@ class TransactionsController extends AppController {
 				$this->Session->setFlash(__('The transaction could not be saved. Please, try again.'));
 			}
 			if ($data['repeat'] == 1) {
-				$pom_data= array();
-				for ($i = 1; $i<= $data['number_of_cycles']; $i++) {
-					$timestamp= strtotime($data['post_date']);
-					$day_of_the_month= date('j', $timestamp);	// kolky den v mesiaci bol nastaveny
-					$month_of_the_year=date('n', $timestamp);
-					if ($data['repeat_every'] == 'tyzden') {   //  ak je nastavene opakovanie kazdy tyzden
-						$future_timestamp= strtotime("+$i week", $timestamp);
-						  
-						$pom_data[] =
-						    array(
-						    		'transaction_type_id' => $data['transaction_type_id'],
-						    		'name' => $data['name'],
-						    		'amount' => $data['amount'],
-						    		'category_id' => $data['category_id'],
-						    		'subcategory_id' => $data['subcategory_id'],
-						    		'user_id' => $data['user_id'],
-						    		'post_date' => date('Y-m-d', $future_timestamp), 
-						    		'original_transaction_id' => $this->Transaction->id );
-						
-					}
-					if ($data['repeat_every'] == 'mesiac') { 		// ak je nastavene opakovanie kazdy mesiac
-						if ($day_of_the_month < 29) {
-							$future_timestamp= strtotime("+$i month", $timestamp);
-						
-							$pom_data[] =
-							array(
-									'transaction_type_id' => $data['transaction_type_id'],
-									'name' => $data['name'],
-									'amount' => $data['amount'],
-									'category_id' => $data['category_id'],
-									'subcategory_id' => $data['subcategory_id'],
-									'user_id' => $data['user_id'],
-									'post_date' => date('Y-m-d', $future_timestamp),
-									'original_transaction_id' => $this->Transaction->id );
-						}
-						else {			// nastaveny prilis neskory datum v mesiaci	
-							if (!$this->Transaction->exists()) {
-								throw new NotFoundException(__('Zlá transakcia'));
-							}
-							$this->request->onlyAllow('post', 'delete');   // potrebujem zmazat prvu vytvorenu originalnu transakciu, pretoze ostatne sa nemohli vytvorit
-							if ($this->Transaction->delete()) {
-								//$this->Session->setFlash(__('Zbytocna transakcia bola zmazaná'));
-								$this->Session->setFlash(__('Zadajte prosím skorší deň v mesiaci pri výbere dátumu. Najneskorší povolený je 28. deň.'));
-								//$this->redirect(array('action' => 'index'));
-							}
-							//$this->Session->setFlash(__('Zbytočnú transakciu sa nepodarilo zmazať'));
-							//$this->redirect(array('action' => 'index'));
-						}
-					
-					}
-					if ($data['repeat_every'] == 'rok') { 		// ak je nastavene opakovanie kazdy rok
-						if (($day_of_the_month == 29) && ($month_of_the_year == 2)) {
-							$future_timestamp= strtotime("+$i year -1 day", $timestamp);   // ak je nastaveny 29.feb tj. priestupny rok zmeni nasledujuce opakovania na 28.feb
-					
-							$pom_data[] =
-							array(
-									'transaction_type_id' => $data['transaction_type_id'],
-									'name' => $data['name'],
-									'amount' => $data['amount'],
-									'category_id' => $data['category_id'],
-									'subcategory_id' => $data['subcategory_id'],
-									'user_id' => $data['user_id'],
-									'post_date' => date('Y-m-d', $future_timestamp),
-									'original_transaction_id' => $this->Transaction->id );
-						}
-						else {			
-							$future_timestamp= strtotime("+$i year", $timestamp);
-					
-							$pom_data[] =
-							array(
-									'transaction_type_id' => $data['transaction_type_id'],
-									'name' => $data['name'],
-									'amount' => $data['amount'],
-									'category_id' => $data['category_id'],
-									'subcategory_id' => $data['subcategory_id'],
-									'user_id' => $data['user_id'],
-									'post_date' => date('Y-m-d', $future_timestamp),
-									'original_transaction_id' => $this->Transaction->id );
-						}
-							
-					}
-				}
-			$this->Transaction->create();
-			$this->Transaction->saveMany($pom_data);
-			//print_r($pom_data);
+				$data['original_transaction_id'] = $this->Transaction->id;
+				$data['id'] = $this->Transaction->id;
+				$this->insert_repeat($data, $data['post_date']);
+				
 			}
 			
 		}
@@ -242,16 +165,36 @@ class TransactionsController extends AppController {
  * @return void
  */
 	public function edit($id = null) {
+		if (!$this->check_ownership($id) ) {
+			throw new PrivateActionException(__('Na prístup k tejto operácii nemáte oprávnenie.'));
+		}
+		$this->Transaction->id = $id;
 		if (!$this->Transaction->exists($id)) {
-			throw new NotFoundException(__('Invalid transaction'));
+			throw new NotFoundException(__('Neplatná transakcia'));
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
+			print_r($this->request->data);
+			
+			$data= $this->request->data['Transaction'];
+			$original_date=$this->Transaction->field('post_date');
+			print_r($original_date);
+			unset ($this->request->data['Transaction']['original_transaction_id']);
 			if ($this->Transaction->save($this->request->data)) {
-				$this->Session->setFlash(__('The transaction has been saved'));
+				if ($data['update_next'] == 1) {
+					//$this->delete_next_repeats();
+					if ($data['original_transaction_id'] == '') {
+						$data['original_transaction_id'] = $data['id'];
+					}
+					$this->insert_repeat($data, $original_date);
+				}
+				$this->Session->setFlash(__('Transakcia bola upravená'));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The transaction could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('Transakciu sa nepodarilo upraviť. Skúste prosím znovu.'));
 			}
+			
+			
+			
 		} else {
 			$options = array('conditions' => array('Transaction.' . $this->Transaction->primaryKey => $id));
 			$this->request->data = $this->Transaction->find('first', $options);
@@ -277,16 +220,19 @@ class TransactionsController extends AppController {
  * @return void
  */
 	public function delete($id = null) {
+		if (!$this->check_ownership($id) ) {
+			throw new PrivateActionException(__('Na prístup k tejto operácii nemáte oprávnenie.'));
+		}
 		$this->Transaction->id = $id;
 		if (!$this->Transaction->exists()) {
-			throw new NotFoundException(__('Invalid transaction'));
+			throw new NotFoundException(__('Zlá transakcia'));
 		}
 		$this->request->onlyAllow('post', 'delete');
 		if ($this->Transaction->delete()) {
-			$this->Session->setFlash(__('Transaction deleted'));
+			$this->Session->setFlash(__('Transakcia bola vymazaná'));
 			$this->redirect(array('action' => 'index'));
 		}
-		$this->Session->setFlash(__('Transaction was not deleted'));
+		$this->Session->setFlash(__('Transakciu sa nepodarilo vymazať'));
 		$this->redirect(array('action' => 'index'));
 	}
 	
@@ -300,9 +246,12 @@ class TransactionsController extends AppController {
 	* @return void
 	*/
 	public function delete_next_repeats($id = null) {
+		if (!$this->check_ownership($id) ) {
+			throw new PrivateActionException(__('Na prístup k tejto operácii nemáte oprávnenie.'));
+		}
 		$this->Transaction->id = $id;
 		if (!$this->Transaction->exists()) {
-			throw new NotFoundException(__('Invalid transaction'));
+			throw new NotFoundException(__('Zlá transakcia'));
 		}
 		//$this->request->onlyAllow('post', 'delete');
 		
@@ -330,6 +279,111 @@ class TransactionsController extends AppController {
 		$this->Session->setFlash(__('Transakcia nebola vymazaná.'));
 		//$this->redirect(array('action' => 'index'));
 	}
+	
+	private function insert_repeat($data, $original_date) {
+		$pom_data= array();
+		
+		$this->Transaction->deleteAll(array('Transaction.original_transaction_id' => $data['original_transaction_id'], 'Transaction.post_date >' => $original_date, 'Transaction.id <>' => $data['id']  ), false);
+			
+		
+		
+		for ($i = 1; $i<= $data['number_of_cycles']; $i++) {
+			$timestamp= strtotime($data['post_date']);
+			$day_of_the_month= date('j', $timestamp);	// kolky den v mesiaci bol nastaveny
+			$month_of_the_year=date('n', $timestamp);
+			if ($data['repeat_every'] == 'tyzden') {   //  ak je nastavene opakovanie kazdy tyzden
+				$future_timestamp= strtotime("+$i week", $timestamp);
+					
+				$pom_data[] =
+				array(
+						'transaction_type_id' => $data['transaction_type_id'],
+						'name' => $data['name'],
+						'amount' => $data['amount'],
+						'category_id' => $data['category_id'],
+						'subcategory_id' => $data['subcategory_id'],
+						'user_id' => $data['user_id'],
+						'post_date' => date('Y-m-d', $future_timestamp),
+						'original_transaction_id' => $data['original_transaction_id'], );
+					
+			}
+			if ($data['repeat_every'] == 'mesiac') { 		// ak je nastavene opakovanie kazdy mesiac
+				if ($day_of_the_month < 29) {
+					$future_timestamp= strtotime("+$i month", $timestamp);
+						
+					$pom_data[] =
+					array(
+							'transaction_type_id' => $data['transaction_type_id'],
+							'name' => $data['name'],
+							'amount' => $data['amount'],
+							'category_id' => $data['category_id'],
+							'subcategory_id' => $data['subcategory_id'],
+							'user_id' => $data['user_id'],
+							'post_date' => date('Y-m-d', $future_timestamp),
+							'original_transaction_id' => $data['original_transaction_id'], );
+				}
+				else {			// nastaveny prilis neskory datum v mesiaci
+					if (!$this->Transaction->exists()) {
+						throw new NotFoundException(__('Zlá transakcia'));
+					}
+					$this->request->onlyAllow('post', 'delete');   // potrebujem zmazat prvu vytvorenu originalnu transakciu, pretoze ostatne sa nemohli vytvorit
+					if ($this->Transaction->delete()) {
+						//$this->Session->setFlash(__('Zbytocna transakcia bola zmazaná'));
+						$this->Session->setFlash(__('Zadajte prosím skorší deň v mesiaci pri výbere dátumu. Najneskorší povolený je 28. deň.'));
+						//$this->redirect(array('action' => 'index'));
+					}
+					//$this->Session->setFlash(__('Zbytočnú transakciu sa nepodarilo zmazať'));
+					//$this->redirect(array('action' => 'index'));
+				}
+					
+			}
+			if ($data['repeat_every'] == 'rok') { 		// ak je nastavene opakovanie kazdy rok
+				if (($day_of_the_month == 29) && ($month_of_the_year == 2)) {
+					$future_timestamp= strtotime("+$i year -1 day", $timestamp);   // ak je nastaveny 29.feb tj. priestupny rok zmeni nasledujuce opakovania na 28.feb
+		
+					$pom_data[] =
+					array(
+							'transaction_type_id' => $data['transaction_type_id'],
+							'name' => $data['name'],
+							'amount' => $data['amount'],
+							'category_id' => $data['category_id'],
+							'subcategory_id' => $data['subcategory_id'],
+							'user_id' => $data['user_id'],
+							'post_date' => date('Y-m-d', $future_timestamp),
+							'original_transaction_id' => $data['original_transaction_id'], );
+				}
+				else {
+					$future_timestamp= strtotime("+$i year", $timestamp);
+		
+					$pom_data[] =
+					array(
+							'transaction_type_id' => $data['transaction_type_id'],
+							'name' => $data['name'],
+							'amount' => $data['amount'],
+							'category_id' => $data['category_id'],
+							'subcategory_id' => $data['subcategory_id'],
+							'user_id' => $data['user_id'],
+							'post_date' => date('Y-m-d', $future_timestamp),
+							'original_transaction_id' => $this->Transaction->id );
+				}
+					
+			}
+		}
+		$this->Transaction->create();
+		$this->Transaction->saveMany($pom_data);
+		//print_r($pom_data);
+		
+	}
+	
+	private function check_ownership($id) {    
+		$user_transaction = $this->Transaction->find('first', array(
+    'conditions' => array('Transaction.id' => $id),));
+		if ($this->Session->read('User.id') == $user_transaction['Transaction']['user_id']) {
+			return true;
+		}
+		else {
+			return false;
+		}
+ }
 }
 
 
