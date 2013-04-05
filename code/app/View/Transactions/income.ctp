@@ -1,5 +1,38 @@
 <div class="transactions index">
 	<h2><?php echo __('Transakcie - príjmy'); ?></h2>
+	
+	<script>
+  $(function() {
+    $( "#from" ).datepicker({
+      defaultDate: "+1w",
+      changeMonth: true,
+      numberOfMonths: 3,
+      onClose: function( selectedDate ) {
+        $( "#to" ).datepicker( "option", "minDate", selectedDate );
+      }
+    });
+    $( "#from" ).datepicker( "option", "dateFormat", 'yy-mm-dd' );
+    $( "#to" ).datepicker({
+      defaultDate: "+1w",
+      changeMonth: true,
+      numberOfMonths: 3,
+      onClose: function( selectedDate ) {
+        $( "#from" ).datepicker( "option", "maxDate", selectedDate );
+      }
+    });
+    $( "#to" ).datepicker( "option", "dateFormat", 'yy-mm-dd' );
+  });
+  </script>
+  
+  <div class="chart">
+	<p>Area Chart</p>
+	
+	<div id="areawrapper" style="display: block; float: left; width:90%; margin-bottom: 20px;"></div>
+    <div class="clear"></div>	
+	<?php echo $this->HighCharts->render('Area Chart'); ?>
+</div>
+
+	
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 			<th><?php echo $this->Paginator->sort('id'); ?></th>
@@ -50,9 +83,14 @@
 	</div>
 </div>
 <div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
+	<h3><?php echo __('Prehľad'); ?></h3>
+	<?php echo $this->Form->create('Filter'); 
+	  echo $this->Form->input('from_date', array('type' => 'text', 'id' => 'from', 'label' => 'Od:' ));
+	  echo $this->Form->input('to_date', array('type' => 'text', 'id' => 'to', 'label' => 'Do:' ));
+	  echo $this->Form->input('year_month_day', array('options' => array('1' => 'ročný', '2' => 'mesačný', '3' => 'denný'), 'value' => '2', 'type' => 'radio', 'id'=> 'year_month_day' , 'legend' => 'Rozdeliť na:' ));
+	  echo $this->Form->end(__('Filtruj')); 
+	  print_r($this->request->data); ?>
 	<ul>
-		<li><?php echo $this->Html->link(__('New Transaction'), array('action' => 'add')); ?></li>
 		<li><?php echo $this->Html->link(__('List Categories'), array('controller' => 'categories', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Subcategories'), array('controller' => 'subcategories', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Category'), array('controller' => 'categories', 'action' => 'add')); ?> </li>

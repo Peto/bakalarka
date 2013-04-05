@@ -23,7 +23,7 @@
 	
 		<legend><?php echo __('Pridaj transakciu'); ?></legend>
 	<?php
-		echo $this->Form->input('transaction_type_id', array('options' => array('1' => 'príjem', '2' => 'výdavok'), 'selected' => '1', 'type' => 'radio', 'id'=> 'transaction_type_id' , 'legend' => 'Typ transakcie' ));
+		echo $this->Form->input('transaction_type_id', array('options' => array('1' => 'príjem', '2' => 'výdavok'), 'value' => '1', 'type' => 'radio', 'id'=> 'transaction_type_id' , 'legend' => 'Typ transakcie' ));
 		echo $this->Form->input('name', array('label' => 'Názov transakcie'));
 		echo $this->Form->input('amount', array('label' => 'Suma'));
 		echo $this->Form->input('category_id', array('options' => $categories, 'label' => 'Kategória'));

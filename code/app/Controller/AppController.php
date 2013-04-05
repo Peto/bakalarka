@@ -46,6 +46,7 @@ class AppController extends Controller {
 	}*/
 	
 	public $components = array('Auth', 'Session');
+	
 	 
 	public function beforeFilter() {
 		$this->Auth->authorize = array('Controller');

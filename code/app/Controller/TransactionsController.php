@@ -9,12 +9,15 @@ class TransactionsController extends AppController {
 
 	
 	public $paginate;
+	public $HighCharts = null;
+	public $components = array('HighCharts.HighCharts');
 	
 /**
  * index method
  *
  * @return void
  */
+		
 	public function index() {
 		
 		$this->paginate = array(
@@ -30,9 +33,84 @@ class TransactionsController extends AppController {
 		$this->Transaction->recursive = 0;
 		$this->set('transactions', $this->paginate());
 	}
-	
+		
 	public function income() {
-	
+		
+		$chartData = array();		
+			
+		$chartName = 'Area Chart';
+		
+		$mychart = $this->HighCharts->create( $chartName, 'area' );
+				
+		$this->HighCharts->setChartParams(
+				$chartName,
+				array(
+						'renderTo'				=> 'areawrapper',  // div do ktoreho sa generuje graf
+						'chartWidth'				=> 800,
+						'chartHeight'				=> 400,
+						'chartMarginTop' 			=> 60,
+						'chartMarginLeft'			=> 90,
+						'chartMarginRight'			=> 30,
+						'chartMarginBottom'			=> 110,
+						'chartSpacingRight'			=> 10,
+						'chartSpacingBottom'			=> 15,
+						'chartSpacingLeft'			=> 0,
+						'chartAlignTicks'			=> FALSE,
+						'chartBackgroundColorLinearGradient' 	=> array(0,0,0,300),
+						'chartBackgroundColorStops'             => array(array(0,'rgb(217, 217, 217)'),array(1,'rgb(255, 255, 255)')),
+		
+						'title'					=> 'Príjmy',
+						'titleAlign'				=> 'left',
+						'titleFloating'				=> TRUE,
+						'titleStyleFont'			=> '18px Metrophobic, Arial, sans-serif',
+						'titleStyleColor'			=> '#0099ff',
+						'titleX'				=> 20,
+						'titleY'				=> 20,
+		
+						'legendEnabled' 			=> TRUE,
+						'legendLayout'				=> 'horizontal',
+						'legendAlign'				=> 'center',
+						'legendVerticalAlign '			=> 'bottom',
+						'legendItemStyle'			=> array('color' => '#222'),
+						'legendBackgroundColorLinearGradient' 	=> array(0,0,0,25),
+						'legendBackgroundColorStops'            => array(array(0,'rgb(217, 217, 217)'),array(1,'rgb(255, 255, 255)')),
+		
+						'tooltipEnabled' 			=> FALSE,
+						'plotOptionsFillColor' =>  array(
+								'linearGradient' => array(0, 0, 0, 300),
+								'stops' => array(
+										array(0, 'rgba(112, 138, 255, 1.0)'),  // Highcharts.getOptions().colors[0]
+										array(1, 'rgba(2,0,0,0)')
+								)
+						),
+						'xAxisLabelsEnabled' 			=> TRUE,
+						'xAxisLabelsAlign' 			=> 'right',
+						'xAxisLabelsStep' 			=> 2,
+						//'xAxisLabelsRotation' 		=> -35,
+						'xAxislabelsX' 				=> 5,
+						'xAxisLabelsY' 				=> 20,
+						'xAxisCategories'           		=> array('Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'),
+						'yAxisTitleText' 			=> 'Suma',
+						// autostep options
+						'enableAutoStep' 			=> FALSE,
+		
+						// credits setting  [HighCharts.com  displayed on chart]
+						'creditsEnabled' 			=> FALSE,
+						'creditsText'  	 			=> 'Example.com',
+						'creditsURL'	 			=> 'http://example.com'
+				)
+		);
+		
+		$series = $this->HighCharts->addChartSeries();
+		
+				
+		if(!isset($this->request->data['Filter'])) {
+			$data['from_date'] = '1970-01-01';
+			$data['to_date'] = date('Y-m-d');
+			$data['year_month_day'] = '2';
+		} else {
+			$data= $this->request->data['Filter'];
+		}
 		$this->paginate = array(
 				'limit' => 20,
 				'order' => array(
@@ -41,11 +119,85 @@ class TransactionsController extends AppController {
 				'conditions' => array(
 						'Transaction.user_id' => $this->Session->read('User.id'),
 						'Transaction.transaction_type_id' => '1',
+						'Transaction.post_date >=' => $data['from_date'],
+						'Transaction.post_date <=' => $data['to_date'],
 				),
 		);
+		
+		
 	
 		$this->Transaction->recursive = 0;
-		$this->set('transactions', $this->paginate());
+		$transactions = $this->paginate();
+		$this->set('transactions', $transactions);
+		
+		$date_array = array();
+		$xAxisCategories = array();
+		
+		
+		if ($data['year_month_day'] == '1') {     // filtrovanie podla rokov ...zatial nefukcne
+			$date_array[date('Y')] = array('01' => 0, '02' => 0, '03' => 0, '04' => 0, '05' => 0, '06' => 0, '07' => 0, '08' => 0, '09' => 0, '10' => 0, '11' => 0, '12' => 0);
+				
+			foreach ($transactions as $row) {
+				$r_year = date('Y', strtotime($row['Transaction']['post_date']));
+				$r_month = date('m', strtotime($row['Transaction']['post_date']));
+				$date_array[$r_year][$r_month] += $row['Transaction']['amount'];
+			}
+				
+			print_r($date_array);
+				
+			foreach ($date_array as $year => $val) {
+				foreach ($val as $month => $val2) {
+					$chartData[] = $val2;
+					$xAxisCategories[] = $month;
+				}
+			}
+		}
+		else
+		if ($data['year_month_day'] == '2') {		// filtrovanie podla mesiacov
+	 		$date_array[date('Y')] = array('01' => 0, '02' => 0, '03' => 0, '04' => 0, '05' => 0, '06' => 0, '07' => 0, '08' => 0, '09' => 0, '10' => 0, '11' => 0, '12' => 0);
+			
+			foreach ($transactions as $row) {
+				$r_year = date('Y', strtotime($row['Transaction']['post_date']));
+				$r_month = date('m', strtotime($row['Transaction']['post_date']));
+				$date_array[$r_year][$r_month] += $row['Transaction']['amount'];
+			}
+			
+			print_r($date_array);
+			
+			foreach ($date_array as $year => $val) {
+				foreach ($val as $month => $val2) {
+					$chartData[] = $val2;
+					$xAxisCategories[] = $month;
+				}
+			} 
+		}
+		else 
+		if ($data['year_month_day'] == '3') {		// filtrovanie podla dni ...zatial nefukcne
+			$date_array[date('m')] = array('01' => 0, '02' => 0, '03' => 0, '04' => 0, '05' => 0, '06' => 0, '07' => 0, '08' => 0, '09' => 0, '10' => 0, '11' => 0, '12' => 0, '12' => 0, '13' => 0, '14' => 0, '15' => 0, '16' => 0, '17' => 0, '18' => 0, '19' => 0, '20' => 0, '21' => 0, '22' => 0, '23' => 0, '24' => 0, '25' => 0, '26' => 0, '27' => 0, '28' => 0, '29' => 0, '30' => 0, '31' => 0);
+	
+			foreach ($transactions as $row) {
+				//$r_year = date('Y', strtotime($row['Transaction']['post_date']));
+				$r_month = date('m', strtotime($row['Transaction']['post_date']));
+				$r_day = date('d', strtotime($row['Transaction']['post_date']));
+				$date_array[$r_month][$r_day] += $row['Transaction']['amount'];
+			}
+			
+			print_r($date_array);
+			
+			
+				foreach ($date_array as $month => $val2) {
+					foreach ($val2 as $day => $val3) {
+						$chartData[] = $val3;
+						$xAxisCategories[] = $day;
+					}
+				}
+		}
+				
+		$this->HighCharts->setChartParams( $chartName,	array('xAxisCategories'	=> $xAxisCategories ));
+		
+		$series->addName('Mesiace')->addData($chartData);
+		
+		$mychart->addSeries($series);
 	}
 	
 	public function expense() {
@@ -74,7 +226,7 @@ class TransactionsController extends AppController {
 				),
 				'conditions' => array(
 						'Transaction.user_id' => $this->Session->read('User.id'),
-						'Transaction.post_date' => '2013-04-26',
+						'Transaction.post_date <' => '2013-04-26',
 				),
 		);
 	
@@ -131,17 +283,24 @@ class TransactionsController extends AppController {
 			print_r($this->request->data);
 			$data= $this->request->data['Transaction'];
 			if ($this->Transaction->save($this->request->data)) {
-				$this->Session->setFlash(__('The transaction has been saved'));  // zistit IDcku novo ulozeneho objektu
-				//$this->redirect(array('action' => 'index'));
-			
+				
+				if ($data['repeat'] == 1) {
+					$data['original_transaction_id'] = $this->Transaction->id;
+					$data['id'] = $this->Transaction->id;
+					if($this->insert_repeat($data, $data['post_date'])) {
+						$this->Session->setFlash(__('The transaction has been saved'));
+						$this->redirect(array('action' => 'index'));
+					} else {
+						$this->Session->setFlash(__('Zadajte prosím skorší deň v mesiaci pri výbere dátumu. Najneskorší povolený je 28. deň.'));
+					}
+					
+				} else {
+					$this->Session->setFlash(__('The transaction has been saved'));
+					$this->redirect(array('action' => 'index'));
+				}
+				
 			} else {
 				$this->Session->setFlash(__('The transaction could not be saved. Please, try again.'));
-			}
-			if ($data['repeat'] == 1) {
-				$data['original_transaction_id'] = $this->Transaction->id;
-				$data['id'] = $this->Transaction->id;
-				$this->insert_repeat($data, $data['post_date']);
-				
 			}
 			
 		}
@@ -185,10 +344,17 @@ class TransactionsController extends AppController {
 					if ($data['original_transaction_id'] == '') {
 						$data['original_transaction_id'] = $data['id'];
 					}
-					$this->insert_repeat($data, $original_date);
+					if($this->insert_repeat($data, $original_date)) {
+						$this->Session->setFlash(__('Transakcia bola upravená'));
+						$this->redirect(array('action' => 'index'));
+					} else {
+						$this->Session->setFlash(__('Transakciu sa nepodarilo upraviť. Skúste prosím znovu.'));
+					}
+					
+				} else {
+					$this->Session->setFlash(__('Transakcia bola upravená'));
+					$this->redirect(array('action' => 'index'));
 				}
-				$this->Session->setFlash(__('Transakcia bola upravená'));
-				$this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('Transakciu sa nepodarilo upraviť. Skúste prosím znovu.'));
 			}
@@ -281,6 +447,14 @@ class TransactionsController extends AppController {
 	}
 	
 	private function insert_repeat($data, $original_date) {
+		if(!$this->Transaction->insert_repeat($data, $original_date)) {
+			return false;
+		} else {
+			return true;
+		} 
+	}
+	
+	/* private function insert_repeat($data, $original_date) {
 		$pom_data= array();
 		
 		$this->Transaction->deleteAll(array('Transaction.original_transaction_id' => $data['original_transaction_id'], 'Transaction.post_date >' => $original_date, 'Transaction.id <>' => $data['id']  ), false);
@@ -372,7 +546,7 @@ class TransactionsController extends AppController {
 		$this->Transaction->saveMany($pom_data);
 		//print_r($pom_data);
 		
-	}
+	} */
 	
 	private function check_ownership($id) {    
 		$user_transaction = $this->Transaction->find('first', array(
@@ -383,8 +557,10 @@ class TransactionsController extends AppController {
 		else {
 			return false;
 		}
- }
+ 	}
+ 	
 }
+	
 
 
 

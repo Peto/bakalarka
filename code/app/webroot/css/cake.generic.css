@@ -744,3 +744,28 @@ pre {
 #url-rewriting-warning {
 	display:none;
 }
+
+#UserLoginForm  {
+	width: 300px;
+	margin:0 auto;
+	position: relative;
+	margin-top: 30px;
+	background: #EDF0F2;
+	padding: 20px;
+	padding-bottom: 0px;
+	border: 1px solid #CFD2D4;
+	border-radius: 10px 10px 10px 10px;
+}
+
+#login_submit {
+	margin: 0 auto;
+	position: relative;
+	width: 150px;
+}
+
+#zaregistrujte_sa {
+	margin:0 auto;
+	margin-top: 30px;
+	position: relative;
+	width: 250px;
+}
