@@ -133,29 +133,62 @@ class TransactionsController extends AppController {
 		$date_array = array();
 		$xAxisCategories = array();
 		
+		$from_year = date('Y', strtotime($data['from_date']));
+		$from_month = date('m', strtotime($data['from_date']));
+		$from_day = date('d', strtotime($data['from_date']));
 		
-		if ($data['year_month_day'] == '1') {     // filtrovanie podla rokov ...zatial nefukcne
-			$date_array[date('Y')] = array('01' => 0, '02' => 0, '03' => 0, '04' => 0, '05' => 0, '06' => 0, '07' => 0, '08' => 0, '09' => 0, '10' => 0, '11' => 0, '12' => 0);
-				
+		$to_year = date('Y', strtotime($data['to_date']));
+		$to_month = date('m', strtotime($data['to_date']));
+		$to_day = date('d', strtotime($data['to_date']));
+		$mesiace_preklady = array('01' => 'január', '02' => 'február', '03' => 'marec', '04' => 'apríl', '05' => 'máj', '06' => 'jún', '07' => 'júl', '08' => 'august', '09' => 'september', '10' => 'október', '11' => 'november', '12' => 'december');
+		$pocet_mesiacov = (strtotime($data['to_date']) - strtotime($data['from_date'])) / (60*60*24*30.5);
+		
+		print_r($date_array);
+		if ($data['year_month_day'] == '1') {		// filtrovanie podla rokov
+			for ($i = $from_year; $i<=$to_year; $i++) {
+				$date_array[(string)$i] = 0;
+			}
 			foreach ($transactions as $row) {
 				$r_year = date('Y', strtotime($row['Transaction']['post_date']));
-				$r_month = date('m', strtotime($row['Transaction']['post_date']));
-				$date_array[$r_year][$r_month] += $row['Transaction']['amount'];
+				$date_array[$r_year] += $row['Transaction']['amount'];
 			}
 				
 			print_r($date_array);
 				
-			foreach ($date_array as $year => $val) {
-				foreach ($val as $month => $val2) {
-					$chartData[] = $val2;
-					$xAxisCategories[] = $month;
-				}
+			foreach ($date_array as $year => $val) {		
+					$chartData[] = $val;
+					$xAxisCategories[] = $year;
 			}
+			$series->addName('Príjmy za roky')->addData($chartData);
 		}
 		else
 		if ($data['year_month_day'] == '2') {		// filtrovanie podla mesiacov
-	 		$date_array[date('Y')] = array('01' => 0, '02' => 0, '03' => 0, '04' => 0, '05' => 0, '06' => 0, '07' => 0, '08' => 0, '09' => 0, '10' => 0, '11' => 0, '12' => 0);
-			
+		for ($i = $from_year; $i<=$to_year; $i++) {			// cykluje vsetky vybrane roky
+			if ($from_year == $to_year) {			// ak su vybrate mesiace len v jednom roku
+				for ($j = $from_month; $j<= $to_month; $j++) {
+					$date_array[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)] = 0;
+				}
+			}
+			else {
+				if ($i == $from_year){
+					for ($j = $from_month; $j<= 12; $j++) {
+						$date_array[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)] = 0;
+					}
+				}
+				elseif ($i> $from_year && $i < $to_year) {
+					for ($j = 1; $j<= 12; $j++) {
+						$date_array[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)] = 0;
+					}
+				}
+				elseif ($i == $to_year) {
+					for ($j = 1; $j<= $to_month; $j++) {
+						$date_array[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)] = 0;
+					}
+				}
+			} 
+					
+	 		//$date_array[date('Y')] = array('01' => 0, '02' => 0, '03' => 0, '04' => 0, '05' => 0, '06' => 0, '07' => 0, '08' => 0, '09' => 0, '10' => 0, '11' => 0, '12' => 0);
+		}
 			foreach ($transactions as $row) {
 				$r_year = date('Y', strtotime($row['Transaction']['post_date']));
 				$r_month = date('m', strtotime($row['Transaction']['post_date']));
@@ -167,35 +200,113 @@ class TransactionsController extends AppController {
 			foreach ($date_array as $year => $val) {
 				foreach ($val as $month => $val2) {
 					$chartData[] = $val2;
-					$xAxisCategories[] = $month;
+					if ($pocet_mesiacov > 12) {
+						$xAxisCategories[] = $month;
+					}
+					else 
+					$xAxisCategories[] = $mesiace_preklady[$month];
 				}
 			} 
+			$series->addName('Príjmy za mesiace')->addData($chartData);
 		}
 		else 
 		if ($data['year_month_day'] == '3') {		// filtrovanie podla dni ...zatial nefukcne
-			$date_array[date('m')] = array('01' => 0, '02' => 0, '03' => 0, '04' => 0, '05' => 0, '06' => 0, '07' => 0, '08' => 0, '09' => 0, '10' => 0, '11' => 0, '12' => 0, '12' => 0, '13' => 0, '14' => 0, '15' => 0, '16' => 0, '17' => 0, '18' => 0, '19' => 0, '20' => 0, '21' => 0, '22' => 0, '23' => 0, '24' => 0, '25' => 0, '26' => 0, '27' => 0, '28' => 0, '29' => 0, '30' => 0, '31' => 0);
+		for ($i = $from_year; $i<=$to_year; $i++) {			// cykluje vsetky vybrane roky
+			if ($from_year == $to_year) {			// ak su vybrate mesiace len v jednom roku
+				for ($j = $from_month; $j<= $to_month; $j++) {
+					if ($from_month == $to_month) {			// ak su dni len z jedneho mesiaca 
+						for ($k = $from_day; $k<= $to_day; $k++) {
+							$date_array[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)][str_pad((string)$k, 2, '0', STR_PAD_LEFT)] = 0;
+						}
+					}
+					elseif ($j == $from_month) {		// ak od urciteho dna po koniec mesiaca
+						for ($k = $from_day; $k<= cal_days_in_month(CAL_GREGORIAN, $j, $i); $k++) {
+							$date_array[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)][str_pad((string)$k, 2, '0', STR_PAD_LEFT)] = 0;
+						}
+					}
+					elseif ($j == $to_month) {		// od zaciatku mesiaca po urcity den v nom
+						for ($k = 1; $k<= $to_day; $k++) {
+							$date_array[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)][str_pad((string)$k, 2, '0', STR_PAD_LEFT)] = 0;
+						}
+					}
+					elseif ($j > $from_month && $j < $to_month) {   // vsetky dni v mesiaci
+						for ($k = 1; $k<= cal_days_in_month(CAL_GREGORIAN, $j, $i); $k++) {
+							$date_array[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)][str_pad((string)$k, 2, '0', STR_PAD_LEFT)] = 0;
+						}
+					}
+				}
+			}
+			else {
+				if ($i == $from_year){
+					for ($j = $from_month; $j<= 12; $j++) {
+						for ($j = $from_month; $j<= $to_month; $j++) {
+							if ($j == $from_month) {		// ak od urciteho dna po koniec mesiaca
+								for ($k = $from_day; $k<= cal_days_in_month(CAL_GREGORIAN, $j, $i); $k++) {
+									$date_array[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)][str_pad((string)$k, 2, '0', STR_PAD_LEFT)] = 0;
+								}
+							}
+							else  {   // vsetky dni
+								for ($k = 1; $k<= cal_days_in_month(CAL_GREGORIAN, $j, $i); $k++) {
+									$date_array[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)][str_pad((string)$k, 2, '0', STR_PAD_LEFT)] = 0;
+								}
+							}
+						}	
+					}
+				}
+				elseif ($i> $from_year && $i < $to_year) {		// ak cely rok
+					for ($j = 1; $j<= 12; $j++) {
+						for ($j = $from_month; $j<= $to_month; $j++) {
+							for ($k = 1; $k<= cal_days_in_month(CAL_GREGORIAN, $j, $i); $k++) {
+								$date_array[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)][str_pad((string)$k, 2, '0', STR_PAD_LEFT)] = 0;
+							}
+						}	
+					}
+				}
+				elseif ($i == $to_year) {		// ak je to posledny rok
+					for ($j = 1; $j<= $to_month; $j++) {
+						for ($j = $from_month; $j<= $to_month; $j++) {
+							if ($j == $to_month) {   // ak nie je cely zaverecny mesiac
+								for ($k = 1; $k<= $to_day; $k++) {
+									$date_array[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)][str_pad((string)$k, 2, '0', STR_PAD_LEFT)] = 0;
+								}
+							}
+							else {			// ak je cely mesiac
+								for ($k = 1; $k<= cal_days_in_month(CAL_GREGORIAN, $j, $i); $k++) {
+									$date_array[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)][str_pad((string)$k, 2, '0', STR_PAD_LEFT)] = 0;
+								}
+							}
+						}
+					}
+				}
+			}
+				
+			//$date_array[date('Y')] = array('01' => 0, '02' => 0, '03' => 0, '04' => 0, '05' => 0, '06' => 0, '07' => 0, '08' => 0, '09' => 0, '10' => 0, '11' => 0, '12' => 0);
+		}
+		
+			//$date_array[date('m')] = array('01' => 0, '02' => 0, '03' => 0, '04' => 0, '05' => 0, '06' => 0, '07' => 0, '08' => 0, '09' => 0, '10' => 0, '11' => 0, '12' => 0, '12' => 0, '13' => 0, '14' => 0, '15' => 0, '16' => 0, '17' => 0, '18' => 0, '19' => 0, '20' => 0, '21' => 0, '22' => 0, '23' => 0, '24' => 0, '25' => 0, '26' => 0, '27' => 0, '28' => 0, '29' => 0, '30' => 0, '31' => 0);
 	
 			foreach ($transactions as $row) {
-				//$r_year = date('Y', strtotime($row['Transaction']['post_date']));
+				$r_year = date('Y', strtotime($row['Transaction']['post_date']));
 				$r_month = date('m', strtotime($row['Transaction']['post_date']));
 				$r_day = date('d', strtotime($row['Transaction']['post_date']));
-				$date_array[$r_month][$r_day] += $row['Transaction']['amount'];
+				$date_array[$r_year][$r_month][$r_day] += $row['Transaction']['amount'];
 			}
 			
 			print_r($date_array);
 			
 			
-				foreach ($date_array as $month => $val2) {
-					foreach ($val2 as $day => $val3) {
-						$chartData[] = $val3;
-						$xAxisCategories[] = $day;
+				foreach ($date_array as $year => $val1) {
+					foreach ($val1 as $month => $val2) {
+						foreach ($val2 as $day => $val3) {
+							$chartData[] = $val3;
+							$xAxisCategories[] = $day;
+						}
 					}
 				}
+				$series->addName('Príjmy za dni')->addData($chartData);
 		}
 				
 		$this->HighCharts->setChartParams( $chartName,	array('xAxisCategories'	=> $xAxisCategories ));
-		
-		$series->addName('Mesiace')->addData($chartData);
 		
 		$mychart->addSeries($series);
 	}

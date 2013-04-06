@@ -300,7 +300,7 @@ class Transaction extends AppModel {
 							'subcategory_id' => $data['subcategory_id'],
 							'user_id' => $data['user_id'],
 							'post_date' => date('Y-m-d', $future_timestamp),
-							'original_transaction_id' => $this->Transaction->id );
+							'original_transaction_id' => $this->id );
 				}
 					
 			}
