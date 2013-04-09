@@ -1,6 +1,6 @@
 <?php
      echo $this->Form->create();
-     echo $this->Form->input('email', array('label' => 'E-mail'));
+     echo $this->Form->input('email', array('label' => 'E-mail', 'autofocus'=>'autofocus'));   // autofocus na input...pouzivatel moze hned pisat
      echo $this->Form->input('password', array('label' => 'Heslo'));?>
      
      <div id='login_submit'> <?php echo $this->Form->submit(__('Prihlásiť sa'), array('class' => 'login_submit')); ?> </div>

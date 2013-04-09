@@ -105,7 +105,8 @@ class TransactionsController extends AppController {
 		
 				
 		if(!isset($this->request->data['Filter'])) {
-			$data['from_date'] = '1970-01-01';
+			$time = strtotime("-11 month", time());
+			$data['from_date'] = date("Y-m-d", $time);
 			$data['to_date'] = date('Y-m-d');
 			$data['year_month_day'] = '2';
 		} else {
@@ -399,19 +400,19 @@ class TransactionsController extends AppController {
 					$data['original_transaction_id'] = $this->Transaction->id;
 					$data['id'] = $this->Transaction->id;
 					if($this->insert_repeat($data, $data['post_date'])) {
-						$this->Session->setFlash(__('The transaction has been saved'));
+						$this->Session->setFlash(__('Transakcia bola uložená'));
 						$this->redirect(array('action' => 'index'));
 					} else {
 						$this->Session->setFlash(__('Zadajte prosím skorší deň v mesiaci pri výbere dátumu. Najneskorší povolený je 28. deň.'));
 					}
 					
 				} else {
-					$this->Session->setFlash(__('The transaction has been saved'));
+					$this->Session->setFlash(__('Transakcia bola uložená'));
 					$this->redirect(array('action' => 'index'));
 				}
 				
 			} else {
-				$this->Session->setFlash(__('The transaction could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('Transakciu sa nepodarilo uložiť. Skúste prosím znovu.'));
 			}
 			
 		}
@@ -459,7 +460,7 @@ class TransactionsController extends AppController {
 						$this->Session->setFlash(__('Transakcia bola upravená'));
 						$this->redirect(array('action' => 'index'));
 					} else {
-						$this->Session->setFlash(__('Transakciu sa nepodarilo upraviť. Skúste prosím znovu.'));
+						$this->Session->setFlash(__('Zadajte prosím skorší deň v mesiaci pri výbere dátumu. Najneskorší povolený je 28. deň.'));
 					}
 					
 				} else {
@@ -541,12 +542,12 @@ class TransactionsController extends AppController {
 // echo $original_id.' | '.$post_date;
 			if($original_id != '') {
 				if($this->Transaction->deleteAll(array('Transaction.original_transaction_id' => $original_id, 'Transaction.post_date >' => $post_date ), false)) {
-					$this->Session->setFlash(__('Vybratá transakcia a jej neskoršie opakovania boli vymazané.'));
+					$this->Session->setFlash(__('Vybraté opakovanie transakcie a jej neskoršie opakovania boli vymazané.'));
 					$this->redirect(array('action' => 'index'));
 				}
 			} else {
 				if($this->Transaction->deleteAll(array('Transaction.original_transaction_id' => $id, 'Transaction.post_date >' => $post_date ), false)) {
-					$this->Session->setFlash(__('Vybratá transakcia a jej neskoršie opakovania boli vymazané. 2'));
+					$this->Session->setFlash(__('Vybratá transakcia a jej neskoršie opakovania boli vymazané.'));
 					$this->redirect(array('action' => 'index'));
 				}
 			}

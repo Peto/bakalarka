@@ -222,45 +222,22 @@ class Transaction extends AppModel {
 	public function insert_repeat($data, $original_date) {
 		$pom_data= array();
 	
-		$this->deleteAll(array('Transaction.original_transaction_id' => $data['original_transaction_id'], 'Transaction.post_date >' => $original_date, 'Transaction.id <>' => $data['id']  ), false);
+		$this->deleteAll(array('Transaction.original_transaction_id' => $data['original_transaction_id'], 'Transaction.post_date >' => $original_date, 'Transaction.id <>' => $data['id']  ), false);  // maze dalsie opakovania transakcie ktore su naplanovane do buducnosti
 			
 		for ($i = 1; $i<= $data['number_of_cycles']; $i++) {
 			$timestamp= strtotime($data['post_date']);
 			$day_of_the_month= date('j', $timestamp);	// kolky den v mesiaci bol nastaveny
 			$month_of_the_year=date('n', $timestamp);
 			if ($data['repeat_every'] == 'tyzden') {   //  ak je nastavene opakovanie kazdy tyzden
-				$future_timestamp= strtotime("+$i week", $timestamp);
-					
-				$pom_data[] =
-				array(
-						'transaction_type_id' => $data['transaction_type_id'],
-						'name' => $data['name'],
-						'amount' => $data['amount'],
-						'category_id' => $data['category_id'],
-						'subcategory_id' => $data['subcategory_id'],
-						'user_id' => $data['user_id'],
-						'post_date' => date('Y-m-d', $future_timestamp),
-						'original_transaction_id' => $data['original_transaction_id'], );
-					
+				$future_timestamp= strtotime("+$i week", $timestamp);					
 			}
 			if ($data['repeat_every'] == 'mesiac') { 		// ak je nastavene opakovanie kazdy mesiac
 				if ($day_of_the_month < 29) {
 					$future_timestamp= strtotime("+$i month", $timestamp);
-	
-					$pom_data[] =
-					array(
-							'transaction_type_id' => $data['transaction_type_id'],
-							'name' => $data['name'],
-							'amount' => $data['amount'],
-							'category_id' => $data['category_id'],
-							'subcategory_id' => $data['subcategory_id'],
-							'user_id' => $data['user_id'],
-							'post_date' => date('Y-m-d', $future_timestamp),
-							'original_transaction_id' => $data['original_transaction_id'], );
 				}
 				else {	// nastaveny prilis neskory datum v mesiaci
 					if (!$this->exists()) {
-						throw new NotFoundException(__('Zlá transakcia'));
+						throw new NotFoundException(__('Zlá transakcia. Zadajte prosím skorší deň v mesiaci pri výbere dátumu. Najneskorší povolený je 28. deň.'));
 					}
 					//$this->request->onlyAllow('post', 'delete');   // potrebujem zmazat prvu vytvorenu originalnu transakciu, pretoze ostatne sa nemohli vytvorit
 					if ($this->delete()) {
@@ -276,34 +253,23 @@ class Transaction extends AppModel {
 			if ($data['repeat_every'] == 'rok') { 		// ak je nastavene opakovanie kazdy rok
 				if (($day_of_the_month == 29) && ($month_of_the_year == 2)) {
 					$future_timestamp= strtotime("+$i year -1 day", $timestamp);   // ak je nastaveny 29.feb tj. priestupny rok zmeni nasledujuce opakovania na 28.feb
-	
-					$pom_data[] =
-					array(
-							'transaction_type_id' => $data['transaction_type_id'],
-							'name' => $data['name'],
-							'amount' => $data['amount'],
-							'category_id' => $data['category_id'],
-							'subcategory_id' => $data['subcategory_id'],
-							'user_id' => $data['user_id'],
-							'post_date' => date('Y-m-d', $future_timestamp),
-							'original_transaction_id' => $data['original_transaction_id'], );
 				}
 				else {
 					$future_timestamp= strtotime("+$i year", $timestamp);
-	
-					$pom_data[] =
-					array(
-							'transaction_type_id' => $data['transaction_type_id'],
-							'name' => $data['name'],
-							'amount' => $data['amount'],
-							'category_id' => $data['category_id'],
-							'subcategory_id' => $data['subcategory_id'],
-							'user_id' => $data['user_id'],
-							'post_date' => date('Y-m-d', $future_timestamp),
-							'original_transaction_id' => $this->id );
 				}
 					
 			}
+			
+			$pom_data[] =
+			array(
+					'transaction_type_id' => $data['transaction_type_id'],
+					'name' => $data['name'],
+					'amount' => $data['amount'],
+					'category_id' => $data['category_id'],
+					'subcategory_id' => $data['subcategory_id'],
+					'user_id' => $data['user_id'],
+					'post_date' => date('Y-m-d', $future_timestamp),
+					'original_transaction_id' => $data['original_transaction_id'], );
 		}
 		$this->create();
 		$this->saveMany($pom_data);
