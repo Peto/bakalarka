@@ -214,14 +214,20 @@ Nakoniec by som sa rád pozrel a priblížil aj tému návrhových vzorov, ktor�
 \subsection{HTML a CSS}
 HTML \cite{HTML}\ je skratka pre HyperText Markup Language. Je to najpoužívanejší značkovací jazyk na zápis hypermediálnych dokumentov, ktorý používame pri tvorbe web stránok. Štruktúru HTML dokumentu určuje definícia typu (Document Type Definition; DTD). Táto definícia určuje množinu značiek, ktoré môžu byť použité v dokumente. 
 
-Aktuálna verzia tohto jazyka je HTML 5. Jedna z jej najväčších výhod je použitie tagu video, ktorý by sa mal stať novým štandardom na prezeranie videí a filmov na webe. Postupne by malo nahradiť používanie flash videí a pluginov, ktoré boli na prehratie takýchto videí potrebné. 
+Aktuálna verzia tohto jazyka je HTML 5 \cite{HTML5}\ . Táto verzia priniesla mnoho výhod. Okrem tagu video, ktorý by sa mal stať novým štandardom na prezeranie videí a filmov na webe ide hlavne o nové štrukturálne elementy.
+ 
+Element \texttt{div} teraz môže byť nahradený presnejšie definovanými elementami ako sú \texttt{header, nav, section, article, aside a footer}. Na jednej strane to pomáha k prehľadnejšiemu kódu a na druhú stranu aj koncovému používateľovi pri jednoduchšom pohybe na stránke. Napríklad môže ísť o rýchle preskočenie navigácie alebo jednoduchší pohyb medzi rôznymi článkami.
+
+Dalšou novinkou sú nové atribúty ktoré môžeme využiť pri formulároch a inputoch. Pre mňa poslednou dôležitou výhodou HTML 5 ktorú by som rád spomenul je použitie Inline SVG(Scalable Vector Graphics) . Ide o vektorovú grafiku ktorú používa aj mnou neskôr spomínaná javascriptová Highcharts knižnica.
 
 CSS \cite{CSS21}\ (Cascading Style Sheets - kaskádové štýly) je štýlovací jazyk, ktorý popisuje ako budú zobrazené stránky, ktoré boli napísané v (X)HTML. CSS umožňujú vizuálne formátovať webové dokumenty. Vytvárame tak štruktúrované dokumenty v ktorých oddeľujeme obsah dokumentu(HTML) od jeho vzhľadu(CSS). Hlavné z výhod použitia CSS su prehľadnejší kód, menšia dátová náročnosť a jednoduchá zmena formátovania určitých elementov na celej stránke bez nutnosti formátovania každého elementu zvlášť. 
 
 \subsection{CakePHP} 
 CakePHP \cite{CakePHP}\ je open source webový framework určený na vývoj webových aplikácií v programovacom jazyku PHP verzie 4 a 5. Tento framework vznikol už v roku 2005 ako reakcia na veľmi obľúbený a úspešný framework Ruby on Rails. Framework CakePHP je postavený na softwareovej architektúre Model-view-controller, ktorý bližšie opisujem v kapitole 2.4.
- 
 
+
+\subsection{Highcharts plugin} 
+Tento plugin pre framework CakePHP využíva niektoré skvelé možnosti knižnice pre tvorbu grafov Highcharts. Hlavnou výhodou tejto knižnice je, že je kompletne napísaná v JavaScripte. Pre jej fungovanie nie sú potrebné žiadne client side pluginy akými sú napríklad Java alebo Flash. Knižnica Highcharts funguje vo všetkých moderných webových prehliadačoch a nerobia jej problém ani tie mobilné. Ako na Androide, tak aj na iOS. Použitý plugin pre CakePHP je stále vo vývoji, a preto zatiaľ neponúka všetky výhody Highcharts. Základná funkcionalita ktorú poskytuje však plne postačuje na využitie v mojej aplikácii.
 
 \section{Existujúce riešenia}
 Pred začatím tvorby svojej aplikácie som urobil prehľad podobných existujúcich riešení. Rozdelil som ich do troch kategórií. Webové aplikácie, desktopové aplikácie a mobilné aplikácie.
@@ -490,7 +496,7 @@ Neprihlásený používateľ môže:
 \item{požiadať admina o zresetovanie svojho hesla v prípade jeho zabudnutia}
 \end{itemize}
 
-
+\chapter{Implementácia}
 
 \chapter{Záver}\label{chap:outro}
 
