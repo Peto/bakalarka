@@ -746,7 +746,7 @@ pre {
 }
 
 #UserLoginForm  {
-	width: 300px;
+	width: 220px;
 	margin:0 auto;
 	position: relative;
 	margin-top: 30px;
@@ -760,7 +760,7 @@ pre {
 #login_submit {
 	margin: 0 auto;
 	position: relative;
-	width: 150px;
+	width: 130px;
 }
 
 #zaregistrujte_sa {

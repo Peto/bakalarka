@@ -16,7 +16,7 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
-$siteDescription = __d('cake_dev', 'Domáce účtovníctvo');
+$siteDescription = __d('cake_dev', 'Login: Domáce účtovníctvo');
 ?>
 <!DOCTYPE html>
 <html>
@@ -37,45 +37,15 @@ $siteDescription = __d('cake_dev', 'Domáce účtovníctvo');
 		echo $this->fetch('css');
 		echo $this->fetch('script');
 	?>
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
-<!-- <script src="http://code.jquery.com/jquery-1.9.1.js"></script> -->
-<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
 
-<script>
-$(function() {
-$( "#datepicker" ).datepicker();
-$( "#datepicker" ).datepicker( "option", "dateFormat", 'yy-mm-dd' );
-});
-</script>
 
 </head>
 <body>
 	<div id="container">
 		<div id="header">
 		<ul>
-			<li><h1><?php echo $this->Html->link('Transakcie', '/transactions'); ?></h1></li>
-			<li><h1><?php echo $this->Html->link('Pridanie transakcie', '/transactions/add'); ?></h1></li>
-			<li><h1><?php echo $this->Html->link('Príjmy', '/transactions/income'); ?></h1></li>
-			<li><h1><?php echo $this->Html->link('Výdavky', '/transactions/expense'); ?></h1></li>
-			<li><h1><?php echo $this->Html->link('Kategórie', '/categories'); ?></h1></li>
-			<li><h1><?php
-				echo $this->Session->check('Auth.User') 
-				 ? 
-				$this->Html->link(
-				              'Odhlásiť sa',
-				               array(
-				                  'controller' => 'users',
-				                  'action' => 'logout',
-				                  'admin' => false
-				               ))
-				: 
-				$this->Html->link(
-				               'Prihlásiť sa',
-				                array(
-				                   'controller' => 'users',
-				                   'action' => 'login'
-				                ));
-				?></h1></li>
+			<li><h1><?php echo $this->Html->link('Domáce účtovníctvo', '/'); ?></h1></li>
+			
 		</ul>
 		</div>
 		<div id="content">

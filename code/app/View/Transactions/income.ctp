@@ -60,10 +60,10 @@
 		</td>
 		<td><?php echo h($transaction['Transaction']['original_transaction_id']); ?>&nbsp;</td>
 		<td class="actions">
-			<?php echo $this->Html->link(__('Zobraziť'), array('action' => 'view', $transaction['Transaction']['id'])); ?>
-			<?php echo $this->Html->link(__('Upraviť'), array('action' => 'edit', $transaction['Transaction']['id'])); ?>
-			<?php echo $this->Form->postLink(__('Zmazať'), array('action' => 'delete', $transaction['Transaction']['id']), null, __('Ste si istý, že chcete zmazať túto transakciu: id # %s?', $transaction['Transaction']['id'])); ?>
-			<?php echo $this->Form->postLink(__('Zmazať všetky ďalšie'), array('action' => 'delete_next_repeats', $transaction['Transaction']['id']), null, __('Ste si istý, že chcete zmazať túto transakciu a všetky jej ďalšie opakovania?: id # %s?', $transaction['Transaction']['id'])); ?>
+			<?php echo $this->Html->link($this->Html->image('/img/view.png', array('alt' => 'Zobraziť')), array('action' => 'view', $transaction['Transaction']['id']), array('escape' => false)); ?>
+			<?php echo $this->Html->link($this->Html->image('/img/edit.png', array('alt' => 'Editovať')), array('action' => 'edit', $transaction['Transaction']['id']), array('escape' => false)); ?>
+			<?php echo $this->Form->postLink($this->Html->image('/img/deletered.png', array('alt' => 'Zmazať')), array('action' => 'delete', $transaction['Transaction']['id']), array('escape' => false), __('Ste si istý, že chcete zmazať túto transakciu: id # %s?', $transaction['Transaction']['id'])); ?>
+			<?php echo $this->Form->postLink($this->Html->image('/img/deleteall.png', array('alt' => 'Zmazať aktuálnu a všetky ďalšie')), array('action' => 'delete_next_repeats', $transaction['Transaction']['id']), array('escape' => false), __('Ste si istý, že chcete zmazať túto transakciu a všetky jej ďalšie opakovania?: id # %s?', $transaction['Transaction']['id'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
