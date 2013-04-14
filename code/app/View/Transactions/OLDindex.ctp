@@ -1,5 +1,5 @@
 <div class="transactions index">
-	<h2><?php echo __('Transakcie - príjmy'); ?></h2>
+	<h2><?php echo __('Transakcie'); ?></h2>
 	
 	<script>
   $(function() {
@@ -23,8 +23,8 @@
     $( "#to" ).datepicker( "option", "dateFormat", 'yy-mm-dd' );
   });
   </script>
-  
-  <div class="chart">
+	
+	<div class="chart">
 	<p>Area Chart</p>
 	
 	<div id="areawrapper" style="display: block; float: left; width:90%; margin-bottom: 20px;"></div>
@@ -32,7 +32,6 @@
 	<?php echo $this->HighCharts->render('Area Chart'); ?>
 </div>
 
-	
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 			<th><?php echo $this->Paginator->sort('id'); ?></th>
@@ -50,13 +49,12 @@
 		<td><?php echo h($transaction['Transaction']['id']); ?>&nbsp;</td>
 		<td><?php echo h(CakeTime::format('d.m.Y',$transaction['Transaction']['post_date'])); ?>&nbsp;</td>
 		<td><?php echo h($transaction['Transaction']['transaction_type_id']); ?>&nbsp;</td>
-		<td><?php echo h($transaction['Transaction']['name']); ?>&nbsp;</td>
+		<td><?php echo $this->Html->link($transaction['Transaction']['name'], array('action' => 'view', $transaction['Transaction']['id'])); ?>&nbsp;</td>
 		<td><?php echo h($transaction['Transaction']['amount']); ?>&nbsp;</td>
 		<td><?php echo h($transaction['Transaction']['category_id']); ?>&nbsp;</td>
 		<td><?php echo h($transaction['Transaction']['subcategory_id']); ?>&nbsp;</td>
 		<td><?php echo h($transaction['Transaction']['original_transaction_id']); ?>&nbsp;</td>
 		<td class="actions">
-			<?php echo $this->Html->link($this->Html->image('/img/view.png', array('alt' => 'Zobraziť')), array('action' => 'view', $transaction['Transaction']['id']), array('escape' => false)); ?>
 			<?php echo $this->Html->link($this->Html->image('/img/edit.png', array('alt' => 'Editovať')), array('action' => 'edit', $transaction['Transaction']['id']), array('escape' => false)); ?>
 			<?php echo $this->Form->postLink($this->Html->image('/img/deletered.png', array('alt' => 'Zmazať')), array('action' => 'delete', $transaction['Transaction']['id']), array('escape' => false), __('Ste si istý, že chcete zmazať túto transakciu: id # %s?', $transaction['Transaction']['id'])); ?>
 			<?php echo $this->Form->postLink($this->Html->image('/img/deleteall.png', array('alt' => 'Zmazať aktuálnu a všetky ďalšie')), array('action' => 'delete_next_repeats', $transaction['Transaction']['id']), array('escape' => false), __('Ste si istý, že chcete zmazať túto transakciu a všetky jej ďalšie opakovania?: id # %s?', $transaction['Transaction']['id'])); ?>
@@ -87,9 +85,10 @@
 	  echo $this->Form->end(__('Filtruj')); 
 	  print_r($this->request->data); ?>
 	<ul>
-		<li><?php echo $this->Html->link(__('List Categories'), array('controller' => 'categories', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Subcategories'), array('controller' => 'subcategories', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Category'), array('controller' => 'categories', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Subcategory'), array('controller' => 'subcategories', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('Nová transakcia'), array('action' => 'add')); ?></li>
+		<li><?php echo $this->Html->link(__('Zobraz kategórie'), array('controller' => 'categories', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('Zobraz subkategórie'), array('controller' => 'subcategories', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('Nová kategória'), array('controller' => 'categories', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('Nová subkategória'), array('controller' => 'subcategories', 'action' => 'add')); ?> </li>
 	</ul>
 </div>

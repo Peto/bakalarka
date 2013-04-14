@@ -32,6 +32,7 @@ $siteDescription = __d('cake_dev', 'Domáce účtovníctvo');
 		echo $this->Html->css('cake.generic');
 		
 		echo $this->Html->script(array('https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'));
+		echo $this->Html->script(array('jquery.chained.js'));
 
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
@@ -40,6 +41,7 @@ $siteDescription = __d('cake_dev', 'Domáce účtovníctvo');
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
 <!-- <script src="http://code.jquery.com/jquery-1.9.1.js"></script> -->
 <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+
 
 <script>
 $(function() {

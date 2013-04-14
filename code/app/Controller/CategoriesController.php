@@ -15,7 +15,7 @@ class CategoriesController extends AppController {
 	public function index() {
 		
 		$this->paginate = array(
-				'limit' => 20,
+				'limit' => 15,
 				'conditions' => array(
 						'Category.user_id' => $this->Session->read('User.id'),
 				),

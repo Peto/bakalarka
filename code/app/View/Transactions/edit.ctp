@@ -4,6 +4,7 @@
 	
 	<script>
 		$(document).ready(function () {
+			$("#TransactionSubcategoryId").chained("#TransactionCategoryId");
 			$("#datepicker").datepicker('setDate', new Date('<?php echo $data['Transaction']['post_date']; ?>'));   // nastavenie defaultneho datumu na aktualny
 			
 			$('#opakovanie_nastavenia').hide();
@@ -40,9 +41,27 @@
 		echo $this->Form->input('transaction_type_id', array('options' => array('1' => 'príjem', '2' => 'výdavok'), 'selected' => $data['Transaction']['transaction_type_id'], 'type' => 'radio', 'id'=> 'transaction_type_id' , 'legend' => 'Typ transakcie' ));
 		echo $this->Form->input('name', array('label' => 'Názov transakcie'));
 		echo $this->Form->input('amount', array('label' => 'Suma'));
-		echo $this->Form->input('category_id', array('options' => $categories, 'label' => 'Kategória', 'selected' => $data['Transaction']['category_id']));
-		echo $this->Form->input('subcategory_id', array('options' => $subcategories, 'label' => 'Podkategória', 'selected' => $data['Transaction']['subcategory_id']));
-		echo $this->Form->input('user_id', array('type' => 'hidden','value' => $user));
+// 		echo $this->Form->input('category_id', array('options' => $categories, 'label' => 'Kategória', 'selected' => $data['Transaction']['category_id']));
+// 		echo $this->Form->input('subcategory_id', array('options' => $subcategories, 'label' => 'Podkategória', 'selected' => $data['Transaction']['subcategory_id']));
+		?><select id="TransactionCategoryId" name="data[Transaction][category_id]">
+		<option value="">Vyberte kategóriu</option>
+		<?php foreach ($categories as $key => $row) {
+			if ($data['Transaction']['category_id'] == $key){ 
+			echo '<option selected value="'.$key.'" >'.$row.'</option>';
+			}
+			else { echo '<option value="'.$key.'" >'.$row.'</option>';}	}?>
+				</select>
+		<select id="TransactionSubcategoryId" name="data[Transaction][subcategory_id]">
+		<option value="">Vyberte podkategóriu</option>
+		<?php foreach ($subcategories as $row) {
+			if ($data['Transaction']['subcategory_id'] == $row['Subcategory']['id']){
+				echo '<option value="'.$row['Subcategory']['id'].'" selected class="'.$row['Subcategory']['category_id'].'">'.$row['Subcategory']['name'].'</option>';
+			}
+			else { echo '<option value="'.$row['Subcategory']['id'].'" class="'.$row['Subcategory']['category_id'].'">'.$row['Subcategory']['name'].'</option>';
+			}
+		}?>
+		</select>
+		<?php echo $this->Form->input('user_id', array('type' => 'hidden','value' => $user));
 		echo $this->Form->input('original_transaction_id', array('type' => 'hidden'));
 		echo $this->Form->input('post_date', array('type' => 'text', 'id' => 'datepicker', 'label' => 'Dátum transakcie', 'default' => $data['Transaction']['post_date']));?>
 		

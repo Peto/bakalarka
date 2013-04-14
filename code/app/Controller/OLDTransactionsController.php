@@ -111,7 +111,7 @@ class TransactionsController extends AppController {
 			$data= $this->request->data['Filter'];
 		}
 		$this->paginate = array(
-				'limit' => 15,
+				'limit' => 20,
 				'order' => array(
 						'Transaction.post_date' => 'asc'
 				),
@@ -128,7 +128,6 @@ class TransactionsController extends AppController {
 		$this->Transaction->recursive = 0;
 		$transactions = $this->paginate();
 		$this->set('transactions', $transactions);
-		
 		
 		$date_array = array();
 		$xAxisCategories = array();
@@ -741,22 +740,16 @@ class TransactionsController extends AppController {
 			$data= $this->request->data['Transaction'];
 			$original_date=$this->Transaction->field('post_date');
 			print_r($original_date);
-			
-			 if (empty($this->request->data['Transaction']['original_transaction_id'])) {
-				$this->request->data['Transaction']['original_transaction_id'] = 0;
-			} 
-			if ($data['update_next'] == 1) {
-				unset ($this->request->data['Transaction']['original_transaction_id']);
-				$this->request->data['Transaction']['original_transaction_id'] = 0;
-			}
+			$this->request->data['Transaction']['original_transaction_id'] = 0;
+			//unset ($this->request->data['Transaction']['original_transaction_id']);
 			if ($this->Transaction->save($this->request->data)) {
 				if ($data['update_next'] == 1) {
 					//$this->delete_next_repeats();
-					if ($data['original_transaction_id'] > 0) {    
+					if ($data['original_transaction_id'] == '') {    // cekovat ci je vacsie ako nula
 						$data['original_transaction_id'] = $data['id'];
 					}
 					if($this->insert_repeat($data, $original_date)) {
-						$this->Session->setFlash(__('Transakcia bola upravená'));
+						$this->Session->setFlash(__('Transakcia a jej ďalšie opakovania boli upravené'));
 						$this->redirect(array('action' => 'index'));
 					} else {
 						$this->Session->setFlash(__('Zadajte prosím skorší deň v mesiaci pri výbere dátumu. Najneskorší povolený je 28. deň.'));
@@ -783,8 +776,7 @@ class TransactionsController extends AppController {
 		$users = $this->Transaction->User->find('list');
 		$this->set('transaction_types', $this->Transaction->TransactionType->find('list'));
 		$this->set('categories', $this->Transaction->Category->find('list', array('conditions' => array('Category.user_id' => $user_id))));
-		//$this->set('subcategories', $this->Transaction->Subcategory->find('list', array('conditions' => array('Subcategory.user_id' => $user_id))));
-		$this->set('subcategories', $this->Transaction->Subcategory->find('all', array('fields' => array('Subcategory.category_id', 'Subcategory.id', 'Subcategory.name'), 'recursive' => 1, 'conditions' => array('Subcategory.user_id' => $user_id))));
+		$this->set('subcategories', $this->Transaction->Subcategory->find('list', array('conditions' => array('Subcategory.user_id' => $user_id))));
 		$this->set('user', $user_id);
 		$this->set(compact('users'));
 	}
@@ -840,7 +832,7 @@ class TransactionsController extends AppController {
 // 			$original_id = $this->Transaction->original_transaction_id;
 // 			$post_date = $this->Transaction->post_date;
 // echo $original_id.' | '.$post_date;
-			if($original_id > 0) {
+			if($original_id != '') {
 				if($this->Transaction->deleteAll(array('Transaction.original_transaction_id' => $original_id, 'Transaction.post_date >' => $post_date ), false)) {
 					$this->Session->setFlash(__('Vybraté opakovanie transakcie a jej neskoršie opakovania boli vymazané.'));
 					$this->redirect(array('action' => 'index'));
@@ -970,7 +962,6 @@ class TransactionsController extends AppController {
 			return false;
 		}
  	}
-
  	
 }
 	

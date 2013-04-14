@@ -4,6 +4,7 @@
 	
 	<script>
 		$(document).ready(function () {
+			$("#TransactionSubcategoryId").chained("#TransactionCategoryId");
 			$("#datepicker").datepicker('setDate', new Date());   // nastavenie defaultneho datumu na aktualny
 			
 			$('#opakovanie_nastavenia').hide();
@@ -19,6 +20,7 @@
 		        $('#opakovanie_nastavenia').slideDown("slow");
 		    });
 		});
+		 
 		</script>
 	
 		<legend><?php echo __('Pridaj transakciu'); ?></legend>
@@ -26,9 +28,23 @@
 		echo $this->Form->input('transaction_type_id', array('options' => array('1' => 'príjem', '2' => 'výdavok'), 'value' => '1', 'type' => 'radio', 'id'=> 'transaction_type_id' , 'legend' => 'Typ transakcie' ));
 		echo $this->Form->input('name', array('label' => 'Názov transakcie'));
 		echo $this->Form->input('amount', array('label' => 'Suma'));
-		echo $this->Form->input('category_id', array('options' => $categories, 'label' => 'Kategória'));
-		echo $this->Form->input('subcategory_id', array('options' => $subcategories, 'label' => 'Podkategória'));
-		echo $this->Form->input('user_id', array('type' => 'hidden','value' => $user));
+		//$categories[0] = 'Vyberte kategóriu';
+		//ksort($categories);
+		//echo $this->Form->input('category_id', array('options' => $categories, 'label' => 'Kategória'), array('id' => 'data[Transaction][category_id]'));
+		// echo $this->Form->input('subcategory_id', array('options' => $subcategories, 'label' => 'Podkategória')); ?>
+		<select id="TransactionCategoryId" name="data[Transaction][category_id]">
+		<option value="">Vyberte kategóriu</option>
+		<?php foreach ($categories as $key => $row) {
+			echo '<option value="'.$key.'" >'.$row.'</option>';
+		}?>
+		</select>
+		<select id="TransactionSubcategoryId" name="data[Transaction][subcategory_id]">
+		<option value="">Vyberte podkategóriu</option>
+		<?php foreach ($subcategories as $row) {
+			echo '<option value="'.$row['Subcategory']['id'].'" class="'.$row['Subcategory']['category_id'].'">'.$row['Subcategory']['name'].'</option>';
+		}?>
+		</select>
+		<?php echo $this->Form->input('user_id', array('type' => 'hidden','value' => $user));
 		//echo $this->Form->input('original_transaction_id');
 		echo $this->Form->input('post_date', array('type' => 'text', 'id' => 'datepicker', 'label' => 'Dátum transakcie' ));?>
 		<div id='opakovanie'>
@@ -49,8 +65,9 @@
 				)
 		); 
 		 echo $this->Form->input('number_of_cycles', array('label' => 'Počet opakovaní', 'value' => '0'));
-		
+		 
 		?></div>
+		
 		
 	
 	</fieldset>
