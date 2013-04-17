@@ -33,18 +33,17 @@ class TransactionsController extends AppController {
 		$this->Transaction->recursive = 0;
 		$this->set('transactions', $this->paginate()); */
 		
-		$chartData = array();
+		$chartData1 = array();
+		$chartData2 = array();
 			
-		$chartName = 'Area Chart';
-		
-		$mychart = $this->HighCharts->create( $chartName, 'area' );
-		
+		$chartName = 'Column Chart';
+		$mychart = $this->HighCharts->create( $chartName, 'column' );
 		$this->HighCharts->setChartParams(
 				$chartName,
 				array(
-						'renderTo'				=> 'areawrapper',  // div do ktoreho sa generuje graf
+						'renderTo'				=> 'columnwrapper',  // div to display chart inside
 						'chartWidth'				=> 800,
-						'chartHeight'				=> 400,
+						'chartHeight'				=> 600,
 						'chartMarginTop' 			=> 60,
 						'chartMarginLeft'			=> 90,
 						'chartMarginRight'			=> 30,
@@ -54,9 +53,9 @@ class TransactionsController extends AppController {
 						'chartSpacingLeft'			=> 0,
 						'chartAlignTicks'			=> FALSE,
 						'chartBackgroundColorLinearGradient' 	=> array(0,0,0,300),
-						'chartBackgroundColorStops'             => array(array(0,'rgb(217, 217, 217)'),array(1,'rgb(255, 255, 255)')),
+						'chartBackgroundColorStops'		=> array(array(0,'rgb(217, 217, 217)'),array(1,'rgb(255, 255, 255)')),
 		
-						'title'					=> 'Príjmy',
+						'title'					=> 'Príjmy verzus výdavky',
 						'titleAlign'				=> 'left',
 						'titleFloating'				=> TRUE,
 						'titleStyleFont'			=> '18px Metrophobic, Arial, sans-serif',
@@ -64,42 +63,77 @@ class TransactionsController extends AppController {
 						'titleX'				=> 20,
 						'titleY'				=> 20,
 		
-						'legendEnabled' 			=> TRUE,
+						'legendEnabled'				=> TRUE,
 						'legendLayout'				=> 'horizontal',
 						'legendAlign'				=> 'center',
 						'legendVerticalAlign '			=> 'bottom',
 						'legendItemStyle'			=> array('color' => '#222'),
 						'legendBackgroundColorLinearGradient' 	=> array(0,0,0,25),
-						'legendBackgroundColorStops'            => array(array(0,'rgb(217, 217, 217)'),array(1,'rgb(255, 255, 255)')),
+						'legendBackgroundColorStops' => array(array(0,'rgb(217, 217, 217)'),array(1,'rgb(255, 255, 255)')),
 		
 						'tooltipEnabled' 			=> FALSE,
-						'plotOptionsFillColor' =>  array(
-								'linearGradient' => array(0, 0, 0, 300),
-								'stops' => array(
-										array(0, 'rgba(112, 138, 255, 1.0)'),  // Highcharts.getOptions().colors[0]
-										array(1, 'rgba(2,0,0,0)')
-								)
-						),
+						//'tooltipBackgroundColorLinearGradient'=> array(0,0,0,50),   // triggers js error
+						//'tooltipBackgroundColorStops' 	=> array(array(0,'rgb(217, 217, 217)'),array(1,'rgb(255, 255, 255)')),
+		
+						//'plotOptionsLinePointStart' 		=> strtotime('-30 day') * 1000,
+						//'plotOptionsLinePointInterval' 	=> 24 * 3600 * 1000,
+		
+						//'xAxisType' 				=> 'datetime',
+						//'xAxisTickInterval' 			=> 10,
+						//'xAxisStartOnTick' 			=> TRUE,
+						//'xAxisTickmarkPlacement' 		=> 'on',
+						//'xAxisTickLength' 			=> 10,
+						//'xAxisMinorTickLength' 		=> 5,
+		
 						'xAxisLabelsEnabled' 			=> TRUE,
 						'xAxisLabelsAlign' 			=> 'right',
-						'xAxisLabelsStep' 			=> 2,
+						'xAxisLabelsStep' 			=> 1,
 						//'xAxisLabelsRotation' 		=> -35,
 						'xAxislabelsX' 				=> 5,
 						'xAxisLabelsY' 				=> 20,
-						'xAxisCategories'           		=> array('Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'),
-						'yAxisTitleText' 			=> 'Suma',
-							
-						// autostep options
-						'enableAutoStep' 			=> FALSE,
+						'xAxisCategories'           		=> array(
+								'Jan',
+								'Feb',
+								'Mar',
+								'Apr',
+								'May',
+								'Jun',
+								'Jul',
+								'Aug',
+								'Sep',
+								'Oct',
+								'Nov',
+								'Dec'
+						),
 		
-						// credits setting  [HighCharts.com  displayed on chart]
-						'creditsEnabled' 			=> FALSE,
-						'creditsText'  	 			=> 'Example.com',
-						'creditsURL'	 			=> 'http://example.com'
+						//'yAxisMin' 				=> 0,
+						//'yAxisMaxPadding'			=> 0.2,
+						//'yAxisEndOnTick'			=> FALSE,
+						//'yAxisMinorGridLineWidth' 		=> 0,
+						//'yAxisMinorTickInterval' 		=> 'auto',
+						//'yAxisMinorTickLength' 		=> 1,
+						//'yAxisTickLength'			=> 2,
+						//'yAxisMinorTickWidth'			=> 1,
+		
+		
+						'yAxisTitleText' 			=> 'Suma',
+						//'yAxisTitleAlign' 			=> 'high',
+						//'yAxisTitleStyleFont' 		=> '14px Metrophobic, Arial, sans-serif',
+						//'yAxisTitleRotation' 			=> 0,
+						//'yAxisTitleX' 			=> 0,
+						//'yAxisTitleY' 			=> -10,
+						//'yAxisPlotLines' 			=> array( array('color' => '#808080', 'width' => 1, 'value' => 0 )),
+		
+						/* autostep options */
+						'enableAutoStep' 			=> FALSE
 				)
 		);
 		
-		$series = $this->HighCharts->addChartSeries();
+		$series1 = $this->HighCharts->addChartSeries();
+		$series2 = $this->HighCharts->addChartSeries();
+		
+		$series1->addName('Tokyo')->addData($this->chartData1);
+		$series2->addName('London')->addData($this->chartData2);
 		
 		
 		if(!isset($this->request->data['Filter'])) {
@@ -111,26 +145,24 @@ class TransactionsController extends AppController {
 			$data= $this->request->data['Filter'];
 		}
 		$this->paginate = array(
-				'limit' => 15,
+				'limit' => 30,
 				'order' => array(
 						'Transaction.post_date' => 'asc'
 				),
 				'conditions' => array(
 						'Transaction.user_id' => $this->Session->read('User.id'),
-						//'Transaction.transaction_type_id' => '1',
 						'Transaction.post_date >=' => $data['from_date'],
 						'Transaction.post_date <=' => $data['to_date'],
 				),
 		);
-		
-		
 		
 		$this->Transaction->recursive = 0;
 		$transactions = $this->paginate();
 		$this->set('transactions', $transactions);
 		
 		
-		$date_array = array();
+		$date_array1 = array();
+		$date_array2 = array();
 		$xAxisCategories = array();
 		
 		$from_year = date('Y', strtotime($data['from_date']));
@@ -143,73 +175,84 @@ class TransactionsController extends AppController {
 		$mesiace_preklady = array('01' => 'január', '02' => 'február', '03' => 'marec', '04' => 'apríl', '05' => 'máj', '06' => 'jún', '07' => 'júl', '08' => 'august', '09' => 'september', '10' => 'október', '11' => 'november', '12' => 'december');
 		$pocet_mesiacov = (strtotime($data['to_date']) - strtotime($data['from_date'])) / (60*60*24*30.5);
 		
-		print_r($date_array);
 		if ($data['year_month_day'] == '1') {		// filtrovanie podla rokov
 			for ($i = $from_year; $i<=$to_year; $i++) {
-				$date_array[(string)$i] = 0;
+				$date_array1[(string)$i] = 0;
+				$date_array2[(string)$i] = 0;
 			}
 			foreach ($transactions as $row) {
 				$r_year = date('Y', strtotime($row['Transaction']['post_date']));
 				if ($row['Transaction']['transaction_type_id'] == '1') {
-					$date_array[$r_year] += $row['Transaction']['amount'];
+					$date_array1[$r_year] += $row['Transaction']['amount'];
 				}
 				else {
-					$date_array[$r_year] -= $row['Transaction']['amount'];
+					$date_array2[$r_year] -= $row['Transaction']['amount'];
 				}
 			}
 		
-			print_r($date_array);
+			print_r($date_array1);
+			print_r($date_array2);
 		
-			foreach ($date_array as $year => $val) {
-				$chartData[] = $val;
+			foreach ($date_array1 as $year => $val) {
+				$chartData1[] = $val;
 				$xAxisCategories[] = $year;
 			}
-			$series->addName('Príjmy za roky')->addData($chartData);
+			
+			foreach ($date_array2 as $year => $val) {
+				$chartData2[] = $val;
+				$xAxisCategories[] = $year;
+			}
+			
+			$series1->addName('Príjmy za roky')->addData($chartData1);
+			$series2->addName('Výdavky za roky')->addData($chartData2);
 		}
 		else
 			if ($data['year_month_day'] == '2') {		// filtrovanie podla mesiacov
 			for ($i = $from_year; $i<=$to_year; $i++) {			// cykluje vsetky vybrane roky
 				if ($from_year == $to_year) {			// ak su vybrate mesiace len v jednom roku
 					for ($j = $from_month; $j<= $to_month; $j++) {
-						$date_array[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)] = 0;
+						$date_array1[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)] = 0;
+						$date_array2[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)] = 0;
 					}
 				}
 				else {
 					if ($i == $from_year){
 						for ($j = $from_month; $j<= 12; $j++) {
-							$date_array[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)] = 0;
+							$date_array1[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)] = 0;
+							$date_array2[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)] = 0;
 						}
 					}
 					elseif ($i> $from_year && $i < $to_year) {
 						for ($j = 1; $j<= 12; $j++) {
-							$date_array[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)] = 0;
+							$date_array1[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)] = 0;
+							$date_array2[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)] = 0;
 						}
 					}
 					elseif ($i == $to_year) {
 						for ($j = 1; $j<= $to_month; $j++) {
-							$date_array[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)] = 0;
+							$date_array1[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)] = 0;
+							$date_array2[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)] = 0;
 						}
 					}
 				}
-					
-				//$date_array[date('Y')] = array('01' => 0, '02' => 0, '03' => 0, '04' => 0, '05' => 0, '06' => 0, '07' => 0, '08' => 0, '09' => 0, '10' => 0, '11' => 0, '12' => 0);
 			}
 			foreach ($transactions as $row) {
 				$r_year = date('Y', strtotime($row['Transaction']['post_date']));
 				$r_month = date('m', strtotime($row['Transaction']['post_date']));
 				if ($row['Transaction']['transaction_type_id'] == '1') {
-					$date_array[$r_year][$r_month] += $row['Transaction']['amount'];
+					$date_array1[$r_year][$r_month] += $row['Transaction']['amount'];
 				}
 				else {
-					$date_array[$r_year][$r_month] -= $row['Transaction']['amount'];
+					$date_array2[$r_year][$r_month] -= $row['Transaction']['amount'];
 				}
 			}
 				
-			print_r($date_array);
+			print_r($date_array1);
+			print_r($date_array2);
 				
-			foreach ($date_array as $year => $val) {
+			foreach ($date_array1 as $year => $val) {
 				foreach ($val as $month => $val2) {
-					$chartData[] = $val2;
+					$chartData1[] = $val2;
 					if ($pocet_mesiacov > 12) {
 						$xAxisCategories[] = $month;
 					}
@@ -217,31 +260,48 @@ class TransactionsController extends AppController {
 						$xAxisCategories[] = $mesiace_preklady[$month];
 				}
 			}
-			$series->addName('Príjmy za mesiace')->addData($chartData);
+			
+			foreach ($date_array2 as $year => $val) {
+				foreach ($val as $month => $val2) {
+					$chartData2[] = $val2;
+					if ($pocet_mesiacov > 12) {
+						$xAxisCategories[] = $month;
+					}
+					else
+						$xAxisCategories[] = $mesiace_preklady[$month];
+				}
+			}
+			
+			$series1->addName('Príjmy za mesiace')->addData($chartData1);
+			$series2->addName('Výdavky za mesiace')->addData($chartData2);
 		}
 		else
-			if ($data['year_month_day'] == '3') {		// filtrovanie podla dni ...zatial nefukcne
+			if ($data['year_month_day'] == '3') {		// filtrovanie podla dni
 			for ($i = $from_year; $i<=$to_year; $i++) {			// cykluje vsetky vybrane roky
 				if ($from_year == $to_year) {			// ak su vybrate mesiace len v jednom roku
 					for ($j = $from_month; $j<= $to_month; $j++) {
 						if ($from_month == $to_month) {			// ak su dni len z jedneho mesiaca
 							for ($k = $from_day; $k<= $to_day; $k++) {
-								$date_array[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)][str_pad((string)$k, 2, '0', STR_PAD_LEFT)] = 0;
+								$date_array1[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)][str_pad((string)$k, 2, '0', STR_PAD_LEFT)] = 0;
+								$date_array2[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)][str_pad((string)$k, 2, '0', STR_PAD_LEFT)] = 0;
 							}
 						}
 						elseif ($j == $from_month) {		// ak od urciteho dna po koniec mesiaca
 							for ($k = $from_day; $k<= cal_days_in_month(CAL_GREGORIAN, $j, $i); $k++) {
-								$date_array[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)][str_pad((string)$k, 2, '0', STR_PAD_LEFT)] = 0;
+								$date_array1[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)][str_pad((string)$k, 2, '0', STR_PAD_LEFT)] = 0;
+								$date_array2[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)][str_pad((string)$k, 2, '0', STR_PAD_LEFT)] = 0;
 							}
 						}
 						elseif ($j == $to_month) {		// od zaciatku mesiaca po urcity den v nom
 							for ($k = 1; $k<= $to_day; $k++) {
-								$date_array[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)][str_pad((string)$k, 2, '0', STR_PAD_LEFT)] = 0;
+								$date_array1[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)][str_pad((string)$k, 2, '0', STR_PAD_LEFT)] = 0;
+								$date_array2[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)][str_pad((string)$k, 2, '0', STR_PAD_LEFT)] = 0;
 							}
 						}
 						elseif ($j > $from_month && $j < $to_month) {   // vsetky dni v mesiaci
 							for ($k = 1; $k<= cal_days_in_month(CAL_GREGORIAN, $j, $i); $k++) {
-								$date_array[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)][str_pad((string)$k, 2, '0', STR_PAD_LEFT)] = 0;
+								$date_array1[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)][str_pad((string)$k, 2, '0', STR_PAD_LEFT)] = 0;
+								$date_array2[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)][str_pad((string)$k, 2, '0', STR_PAD_LEFT)] = 0;
 							}
 						}
 					}
@@ -252,12 +312,14 @@ class TransactionsController extends AppController {
 							for ($j = $from_month; $j<= $to_month; $j++) {
 								if ($j == $from_month) {		// ak od urciteho dna po koniec mesiaca
 									for ($k = $from_day; $k<= cal_days_in_month(CAL_GREGORIAN, $j, $i); $k++) {
-										$date_array[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)][str_pad((string)$k, 2, '0', STR_PAD_LEFT)] = 0;
+										$date_array1[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)][str_pad((string)$k, 2, '0', STR_PAD_LEFT)] = 0;
+										$date_array2[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)][str_pad((string)$k, 2, '0', STR_PAD_LEFT)] = 0;
 									}
 								}
 								else  {   // vsetky dni
 									for ($k = 1; $k<= cal_days_in_month(CAL_GREGORIAN, $j, $i); $k++) {
-										$date_array[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)][str_pad((string)$k, 2, '0', STR_PAD_LEFT)] = 0;
+										$date_array1[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)][str_pad((string)$k, 2, '0', STR_PAD_LEFT)] = 0;
+										$date_array2[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)][str_pad((string)$k, 2, '0', STR_PAD_LEFT)] = 0;
 									}
 								}
 							}
@@ -267,7 +329,8 @@ class TransactionsController extends AppController {
 						for ($j = 1; $j<= 12; $j++) {
 							for ($j = $from_month; $j<= $to_month; $j++) {
 								for ($k = 1; $k<= cal_days_in_month(CAL_GREGORIAN, $j, $i); $k++) {
-									$date_array[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)][str_pad((string)$k, 2, '0', STR_PAD_LEFT)] = 0;
+									$date_array1[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)][str_pad((string)$k, 2, '0', STR_PAD_LEFT)] = 0;
+									$date_array2[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)][str_pad((string)$k, 2, '0', STR_PAD_LEFT)] = 0;
 								}
 							}
 						}
@@ -277,23 +340,21 @@ class TransactionsController extends AppController {
 							for ($j = $from_month; $j<= $to_month; $j++) {
 								if ($j == $to_month) {   // ak nie je cely zaverecny mesiac
 									for ($k = 1; $k<= $to_day; $k++) {
-										$date_array[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)][str_pad((string)$k, 2, '0', STR_PAD_LEFT)] = 0;
+										$date_array1[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)][str_pad((string)$k, 2, '0', STR_PAD_LEFT)] = 0;
+										$date_array2[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)][str_pad((string)$k, 2, '0', STR_PAD_LEFT)] = 0;
 									}
 								}
 								else {			// ak je cely mesiac
 									for ($k = 1; $k<= cal_days_in_month(CAL_GREGORIAN, $j, $i); $k++) {
-										$date_array[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)][str_pad((string)$k, 2, '0', STR_PAD_LEFT)] = 0;
+										$date_array1[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)][str_pad((string)$k, 2, '0', STR_PAD_LEFT)] = 0;
+										$date_array2[(string)$i][str_pad((string)$j, 2, '0', STR_PAD_LEFT)][str_pad((string)$k, 2, '0', STR_PAD_LEFT)] = 0;
 									}
 								}
 							}
 						}
 					}
 				}
-		
-				//$date_array[date('Y')] = array('01' => 0, '02' => 0, '03' => 0, '04' => 0, '05' => 0, '06' => 0, '07' => 0, '08' => 0, '09' => 0, '10' => 0, '11' => 0, '12' => 0);
 			}
-		
-			//$date_array[date('m')] = array('01' => 0, '02' => 0, '03' => 0, '04' => 0, '05' => 0, '06' => 0, '07' => 0, '08' => 0, '09' => 0, '10' => 0, '11' => 0, '12' => 0, '12' => 0, '13' => 0, '14' => 0, '15' => 0, '16' => 0, '17' => 0, '18' => 0, '19' => 0, '20' => 0, '21' => 0, '22' => 0, '23' => 0, '24' => 0, '25' => 0, '26' => 0, '27' => 0, '28' => 0, '29' => 0, '30' => 0, '31' => 0);
 		
 			foreach ($transactions as $row) {
 				$r_year = date('Y', strtotime($row['Transaction']['post_date']));
@@ -301,28 +362,38 @@ class TransactionsController extends AppController {
 				$r_day = date('d', strtotime($row['Transaction']['post_date']));
 				
 				if ($row['Transaction']['transaction_type_id'] == '1') {
-					$date_array[$r_year][$r_month][$r_day] += $row['Transaction']['amount'];
+					$date_array1[$r_year][$r_month][$r_day] += $row['Transaction']['amount'];
 				}
 				else {
-				$date_array[$r_year][$r_month][$r_day] -= $row['Transaction']['amount'];}
+				$date_array2[$r_year][$r_month][$r_day] -= $row['Transaction']['amount'];}
 			}
-			print_r($date_array);
-				
-				
-			foreach ($date_array as $year => $val1) {
+		
+			foreach ($date_array1 as $year => $val1) {
 				foreach ($val1 as $month => $val2) {
 					foreach ($val2 as $day => $val3) {
-						$chartData[] = $val3;
+						$chartData1[] = $val3;
 						$xAxisCategories[] = $day;
 					}
 				}
 			}
-			$series->addName('Príjmy za dni')->addData($chartData);
+			
+			foreach ($date_array2 as $year => $val1) {
+				foreach ($val1 as $month => $val2) {
+					foreach ($val2 as $day => $val3) {
+						$chartData2[] = $val3;
+						$xAxisCategories[] = $day;
+					}
+				}
+			}
+			
+			$series1->addName('Príjmy za dni')->addData($chartData1);
+			$series2->addName('Výdavky za dni')->addData($chartData2);
 		}
 		
 		$this->HighCharts->setChartParams( $chartName,	array('xAxisCategories'	=> $xAxisCategories ));
 		
-		$mychart->addSeries($series);
+		$mychart->addSeries($series1);
+		$mychart->addSeries($series2);
 	}
 		
 	public function income() {

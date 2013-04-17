@@ -27,7 +27,7 @@ class User extends AppModel {
 		'id' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				'message' => 'Chyba pri prázdnom ID',
+				'message' => 'Chyba pri prï¿½zdnom ID',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -35,7 +35,7 @@ class User extends AppModel {
 			),
 			'numeric' => array(
 				'rule' => array('numeric'),
-				'message' => 'ID musí by èíslo',
+				'message' => 'ID musï¿½ byï¿½ ï¿½ï¿½slo',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -45,7 +45,7 @@ class User extends AppModel {
 		'email' => array(
 			'email' => array(
 				'rule' => array('email'),
-				'message' => 'Zadali ste chybnú mailovú adresu',
+				'message' => 'Zadali ste chybnï¿½ mailovï¿½ adresu',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -53,7 +53,7 @@ class User extends AppModel {
 			),
 			'notempty' => array(
 				'rule' => array('notempty'),
-				'message' => 'Emailová adresa musí by zadaná',
+				'message' => 'Emailovï¿½ adresa musï¿½ byï¿½ zadanï¿½',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -61,7 +61,7 @@ class User extends AppModel {
 			),
 			'isunique' => array(
 					'rule' => array('isunique'),
-					'message' => 'Na vašu emailovú adresu už je vytvorený iný úèet',
+					'message' => 'Na vaï¿½u emailovï¿½ adresu uï¿½ je vytvorenï¿½ inï¿½ ï¿½ï¿½et',
 					//'allowEmpty' => false,
 					//'required' => false,
 					//'last' => false, // Stop validation after this rule
@@ -71,7 +71,7 @@ class User extends AppModel {
 		'name' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				'message' => 'Musíte zada meno',
+				'message' => 'Musï¿½te zadaï¿½ meno',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -81,7 +81,7 @@ class User extends AppModel {
 		'surname' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				'message' => 'Musíte zada priezvisko',
+				'message' => 'Musï¿½te zadaï¿½ priezvisko',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -91,7 +91,7 @@ class User extends AppModel {
 		'password' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				'message' => 'Musíte zada heslo',
+				'message' => 'Musï¿½te zadaï¿½ heslo',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -99,7 +99,7 @@ class User extends AppModel {
 			),
 			array(
 					'rule' => array('passCompare'),
-					'message' => 'Heslá sa nezhodujú'
+					'message' => 'Heslï¿½ sa nezhodujï¿½'
 			),
 		),
 		'active' => array(
@@ -175,6 +175,19 @@ class User extends AppModel {
 			'exclusive' => '',
 			'finderQuery' => '',
 			'counterQuery' => ''
+		),
+		'Subcategory' => array(
+				'className' => 'Subcategory',
+				'foreignKey' => 'user_id',
+				'dependent' => false,
+				'conditions' => '',
+				'fields' => '',
+				'order' => '',
+				'limit' => '',
+				'offset' => '',
+				'exclusive' => '',
+				'finderQuery' => '',
+				'counterQuery' => ''
 		),
 		'Import' => array(
 			'className' => 'Import',

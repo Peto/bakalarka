@@ -25,8 +25,6 @@
   </script>
   
   <div class="chart">
-	<p>Area Chart</p>
-	
 	<div id="areawrapper" style="display: block; float: left; width:90%; margin-bottom: 20px;"></div>
     <div class="clear"></div>	
 	<?php echo $this->HighCharts->render('Area Chart'); ?>

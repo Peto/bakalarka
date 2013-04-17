@@ -1,5 +1,7 @@
 \documentclass[12pt]{book}
-\usepackage[utf8x]{inputenc}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
 \usepackage[slovak]{babel}
 \usepackage{graphicx}
 \usepackage{anysize}
@@ -32,10 +34,10 @@
     pdfkeywords={accounting, finance, framework, MVC, CakePHP}, % list of keywords
     pdfnewwindow=true,      % links in new window
     colorlinks=true,       % false: boxed links; true: colored links
-    linkcolor=red,          % color of internal links
+    linkcolor=blue,          % color of internal links
     citecolor=green,        % color of links to bibliography
     filecolor=cyan,      % color of file links
-    urlcolor=red           % color of external links
+    urlcolor=blue           % color of external links
 }
 
 
@@ -216,7 +218,7 @@ HTML \cite{HTML}\ je skratka pre HyperText Markup Language. Je to najpoužívane
 
 Aktuálna verzia tohto jazyka je HTML 5 \cite{HTML5}\ . Táto verzia priniesla mnoho výhod. Okrem tagu video, ktorý by sa mal stať novým štandardom na prezeranie videí a filmov na webe ide hlavne o nové štrukturálne elementy.
  
-Element \texttt{div} teraz môže byť nahradený presnejšie definovanými elementami ako sú \texttt{header, nav, section, article, aside a footer}. Na jednej strane to pomáha k prehľadnejšiemu kódu a na druhú stranu aj koncovému používateľovi pri jednoduchšom pohybe na stránke. Napríklad môže ísť o rýchle preskočenie navigácie alebo jednoduchší pohyb medzi rôznymi článkami.
+Element \texttt{div} teraz môže byť nahradený presnejšie definovanými elementami ako sú \texttt{header}, nav, section, article, aside a footer. Na jednej strane to pomáha k prehľadnejšiemu kódu a na druhú stranu aj koncovému používateľovi pri jednoduchšom pohybe na stránke. Napríklad môže ísť o rýchle preskočenie navigácie alebo jednoduchší pohyb medzi rôznymi článkami.
 
 Dalšou novinkou sú nové atribúty ktoré môžeme využiť pri formulároch a inputoch. Pre mňa poslednou dôležitou výhodou HTML 5 ktorú by som rád spomenul je použitie Inline SVG(Scalable Vector Graphics) . Ide o vektorovú grafiku ktorú používa aj mnou neskôr spomínaná javascriptová Highcharts knižnica.
 
@@ -227,7 +229,7 @@ CakePHP \cite{CakePHP}\ je open source webový framework určený na vývoj webo
 
 
 \subsection{Highcharts plugin} 
-Tento plugin pre framework CakePHP využíva niektoré skvelé možnosti knižnice pre tvorbu grafov Highcharts. Hlavnou výhodou tejto knižnice je, že je kompletne napísaná v JavaScripte. Pre jej fungovanie nie sú potrebné žiadne client side pluginy akými sú napríklad Java alebo Flash. Knižnica Highcharts funguje vo všetkých moderných webových prehliadačoch a nerobia jej problém ani tie mobilné. Ako na Androide, tak aj na iOS. Použitý plugin pre CakePHP je stále vo vývoji, a preto zatiaľ neponúka všetky výhody Highcharts. Základná funkcionalita ktorú poskytuje však plne postačuje na využitie v mojej aplikácii.
+Tento plugin \cite{HighchartsPlugin}\ pre framework CakePHP využíva niektoré skvelé možnosti knižnice pre tvorbu grafov Highcharts. Hlavnou výhodou tejto knižnice je, že je kompletne napísaná v JavaScripte. Pre jej fungovanie nie sú potrebné žiadne client side pluginy akými sú napríklad Java alebo Flash. Knižnica Highcharts funguje vo všetkých moderných webových prehliadačoch a nerobia jej problém ani tie mobilné. Ako na Androide, tak aj na iOS. Použitý plugin pre CakePHP je stále vo vývoji, a preto zatiaľ neponúka všetky výhody Highcharts. Základná funkcionalita ktorú poskytuje však plne postačuje na využitie v mojej aplikácii.
 
 \section{Existujúce riešenia}
 Pred začatím tvorby svojej aplikácie som urobil prehľad podobných existujúcich riešení. Rozdelil som ich do troch kategórií. Webové aplikácie, desktopové aplikácie a mobilné aplikácie.
@@ -496,21 +498,43 @@ Neprihlásený používateľ môže:
 \item{požiadať admina o zresetovanie svojho hesla v prípade jeho zabudnutia}
 \end{itemize}
 
-\section{Používatelské rozhranie}
+\section{Používateľské rozhranie}
 Ako som spomenul už v časti Porovnanie s mojimi cieľami, v aplikácii Domáce účtovníctvo sa snažím implementovať príjemné, intuitívne a hlavne jednoduché používateľské rozhranie. Na vrch stránky som umiestnil navigáciu so všetkými potrebnými základnými položkami. Pod navigáciou sa v ľavej časti stránky nachadza dodatočné menu s odkazmi na konkrétnejšie podstránky. Okrem nich sa tam nachádzajú aj akcie ktoré možno aplikovať na aktuálnej stránke. Napríklad pri prehľade konkrétnej transakcie sú tam zobrazené možnosti na jej editáciu alebo prípadne na jej zmazanie. Ako som spomenul táto ponuka sa mení v závislosti od vybranej stránky. Pri prehľadoch transakcií sa v tejto časti nachádza nastavenie filtra, podľa ktorého sa zobrazia transakcie.
 
-Napravo od tohoto menu sa nachádza obsah stránky. Pre prehľadoch ide zvyčajne o graf pod ktorým je umiestnená tabuľka s možnosťou triedenia podľa stípcov a jednoduchého stránkovania.
+Napravo od tohoto menu sa nachádza obsah stránky. Pri prehľadoch ide zvyčajne o graf pod ktorým je umiestnená tabuľka s možnosťou triedenia podľa stípcov a jednoduchého stránkovania.
 
 
 \section{Databázový model}
-TODO
+\subsection{Transactions}
+Pre aplikáciu Domáce účtovníctvo sú najdôležitejšou časťou transakcie. Rovnako je pre databázový model najvýznamnejšia tabuľka \texttt{transactions}. Táto tabuľka uchováva informácie o všetkých transakciách. Transakcie sú rozdelené na príjmy a výdavky podľa \texttt{transaction\_type\_id} a preto na to nie je nutné 2 špeciálne tabuľky. \texttt{Transactions} obsahuje cudzie kľúče na stľpce v tabuľkách \texttt{transaction\_types}(\texttt{transaction\_type\_id}), \texttt{categories}(\texttt{category\_id}), \texttt{subcategories}(\texttt{subcategory\_id}), \texttt{users}(\texttt{user\_id}) a dokonca aj sama na seba. To využíva pri opakovaných transakciách odkazovaním na svoj stĺpec \texttt{original\_transaction\_id}.
+\subsection{Users}
+Druhou významnou tabuľkou(modelom??) sú users(používatelia?), ktorí sú reprezentovaní v tabuľke \texttt{users}. Nájdeme v nej všetky informácie týkajuce sa použivateľa. Zaujímavá je položka active. Určuje či je používateľ stále aktívny a má prístup do systému. V prípade zrušenia konta sa zmení len táto položka a tým je používateľovi zablokovaný ďalší prístup do aplikácie. Táto tabuľka obsahuje jediný cudzí kľuč \texttt{user\_type\_id}, ktorý sa vzťahuje na stĺpec \texttt{id} v tabuľke \texttt{user\_types}. Ďalej je v tejto tabuľke zadefinovaný vzťah hasMany na tabuľky \texttt{transactions}, \texttt{categories}, \texttt{subcategories} a \texttt{imports}. Z toho vyplýva, že jednému používateľovi môže prislúchať viacero záznamov z týchto tabuliek.
+\subsection{Categories}
+Jednoduchá tabuľka obsahujúca informácie o kategóriách transakcií. Obsahuje len jeden cudzí kľúč \texttt{user\_id} na na stĺpec \texttt{id} v tabuľke \texttt{users}. 
+\subsection{Subcategories}
+Tabuľka obsahujúca informácie o podkategóriách. Na rozdiel od \texttt{Categories} obsahuje okrem cudzieho kľúča aj ďalší cudzí kľúč \texttt{category\_id} odkazujúci na kategóriu ktorej patrí. 
+\subsection{User\_types}
+Tabuľka \texttt{user} types slúži na identifikáciu a pomenovanie typu používateľa. Aktuálne sú možné 2 typy používateľov. Admin a bežný používateľ.
+\subsection{Transaction\_types} 
+Tabuľka \texttt{transaction\_types} slúži na identifikáciu a pomenovanie typu transakcie. Tie sú rozdelené na príjmy a výdavky.
+\subsection{Imports} 
+Tabuľka obsahujúca len jeden cudzí kľúč \texttt{user\_id}, ktorý definuje vzťah \texttt{belongsTo} k tabuľke \texttt{user} a konkrétnemu userovi(používateľovi).
+\begin{figure}[ht]
+  \centering
+      \includegraphics[width=15cm]{databazovy_model}
+  \caption{Domáce účtovníctvo - Databázový model}
+  \label{DataModel}
+\end{figure}  
+
 
 \chapter{Implementácia}
 TODO
 
+Vystupy pre highcharts plugin - rozne typy prehladov podla casovych obdobi (den, mesiac, rok)
+
 
 \chapter{Záver}\label{chap:outro}
-
+ 
 Zaverecny popis.
 
 \backmatter
@@ -519,7 +543,6 @@ Zaverecny popis.
 \bibliographystyle{abbrv}
 \bibliography{literatura}
 
-Pouzita literatura TODO
 
 \newcommand{\dbappendix}[1]{\chapter{#1}}
 \appendix

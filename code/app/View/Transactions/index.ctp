@@ -24,12 +24,12 @@
   });
   </script>
 	
-	<div class="chart">
-	<p>Area Chart</p>
-	
-	<div id="areawrapper" style="display: block; float: left; width:90%; margin-bottom: 20px;"></div>
+<div class="chart">
+	<div id="columnwrapper" style="display: block; float: left; width:90%; margin-bottom: 20px;"></div>
     <div class="clear"></div>	
-	<?php echo $this->HighCharts->render('Area Chart'); ?>
+	
+	<?php echo $this->HighCharts->render('Column Chart'); ?>
+
 </div>
 
 	<table cellpadding="0" cellspacing="0">
