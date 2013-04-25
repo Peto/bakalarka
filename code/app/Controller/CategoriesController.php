@@ -4,6 +4,8 @@ App::uses('AppController', 'Controller');
  * Categories Controller
  *
  * @property Category $Category
+ * 
+ * 
  */
 class CategoriesController extends AppController {
 
@@ -23,6 +25,10 @@ class CategoriesController extends AppController {
 		
 		$this->Category->recursive = 0;
 		$this->set('categories', $this->paginate());
+		
+		$categories=$this->paginate;
+		
+		
 	}
 
 /**

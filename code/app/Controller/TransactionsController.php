@@ -168,7 +168,6 @@ class TransactionsController extends AppController {
 		$transactions = $this->paginate();
 		$this->set('transactions', $transactions);
 		
-		
 		$date_array1 = array();
 		$date_array2 = array();
 		$date_array3 = array();
@@ -742,9 +741,81 @@ class TransactionsController extends AppController {
 	
 		$this->Transaction->recursive = 0;
 		$this->set('transactions', $this->paginate());
+	
 	}
 	
-	public function date_test() {
+	public function category() {
+		
+		$chartName = 'Column Chart';
+		$mychart = $this->HighCharts->create( $chartName, 'column' );
+		$this->HighCharts->setChartParams(
+				$chartName,
+				array(
+						'renderTo'				=> 'columnwrapper',  // div to display chart inside
+						'chartWidth'				=> 800,
+						'chartHeight'				=> 600,
+						'chartMarginTop' 			=> 60,
+						'chartMarginLeft'			=> 90,
+						'chartMarginRight'			=> 30,
+						'chartMarginBottom'			=> 110,
+						'chartSpacingRight'			=> 10,
+						'chartSpacingBottom'			=> 15,
+						'chartSpacingLeft'			=> 0,
+						'chartAlignTicks'			=> FALSE,
+						'chartBackgroundColorLinearGradient' 	=> array(0,0,0,300),
+						'chartBackgroundColorStops'		=> array(array(0,'rgb(217, 217, 217)'),array(1,'rgb(255, 255, 255)')),
+		
+						'title'					=> 'Príjmy a výdavky podľa kategórií',
+						'titleAlign'				=> 'left',
+						'titleFloating'				=> TRUE,
+						'titleStyleFont'			=> '18px Metrophobic, Arial, sans-serif',
+						'titleStyleColor'			=> '#0099ff',
+						'titleX'				=> 20,
+						'titleY'				=> 20,
+		
+						'legendEnabled'				=> TRUE,
+						'legendLayout'				=> 'horizontal',
+						'legendAlign'				=> 'center',
+						'legendVerticalAlign '			=> 'bottom',
+						'legendItemStyle'			=> array('color' => '#222'),
+						'legendBackgroundColorLinearGradient' 	=> array(0,0,0,25),
+						'legendBackgroundColorStops' => array(array(0,'rgb(217, 217, 217)'),array(1,'rgb(255, 255, 255)')),
+		
+						'tooltipEnabled' 			=> FALSE,
+						'xAxisLabelsEnabled' 			=> TRUE,
+						'xAxisLabelsAlign' 			=> 'right',
+						'xAxisLabelsStep' 			=> 1,
+						'xAxislabelsX' 				=> 5,
+						'xAxisLabelsY' 				=> 20,
+						'xAxisCategories'           		=> array(
+								'Jan',
+								'Feb',
+								'Mar',
+								'Apr',
+								'May',
+								'Jun',
+								'Jul',
+								'Aug',
+								'Sep',
+								'Oct',
+								'Nov',
+								'Dec'
+						),
+						'yAxisTitleText' 			=> 'Suma',
+						'enableAutoStep' 			=> FALSE
+				)
+		);
+		
+		$series = $this->HighCharts->addChartSeries();
+		
+		if(!isset($this->request->data['Filter'])) {
+			$time = strtotime("-11 month", time());
+			$data['from_date'] = date("Y-m-d", $time);
+			$data['to_date'] = date('Y-m-d');
+			$data['year_month_day'] = '2';
+		} else {
+			$data= $this->request->data['Filter'];
+		}
 	
 		$this->paginate = array(
 				'limit' => 20,
@@ -753,13 +824,183 @@ class TransactionsController extends AppController {
 				),
 				'conditions' => array(
 						'Transaction.user_id' => $this->Session->read('User.id'),
-						'Transaction.post_date <' => '2013-04-26',
+						'Transaction.post_date >=' => $data['from_date'],
+						'Transaction.post_date <=' => $data['to_date'],
 				),
 		);
-	
+		
 		$this->Transaction->recursive = 0;
-		$this->set('transactions', $this->paginate());
+		$transactions = $this->paginate();
+		$this->set('transactions', $transactions);
+		
+		$alltransactions = $this->Transaction->find('all', array(
+				'conditions' => array(
+						'Transaction.user_id' => $this->Session->read('User.id'),
+						'Transaction.post_date >=' => $data['from_date'],
+						'Transaction.post_date <=' => $data['to_date'],
+				)
+		));
+		
+		$category_array = array();
+		$category_name = array();
+		
+		/*foreach ($transactions as $row) {
+			$r_year = date('Y', strtotime($row['Transaction']['post_date']));
+			$r_month = date('m', strtotime($row['Transaction']['post_date']));
+			$r_day = date('d', strtotime($row['Transaction']['post_date']));
+			$date_array[$r_year][$r_month][$r_day] += $row['Transaction']['amount'];
+		}*/
+		
+		foreach ($alltransactions as $row) {
+			$category = $row['Transaction']['category_id'];
+			$category_name[$category] = $row['Category']['name'];
+			
+		
+			if ($row['Transaction']['transaction_type_id'] == '1') {
+				$category_array[$category] += $row['Transaction']['amount'];
+			}
+			else {
+				$category_array[$category] -= $row['Transaction']['amount'];
+			}
+		}
+		
+		foreach ($category_array as $kategoria => $val) {
+			$chartData[] = $val;
+			$xAxisCategories[] = $category_name[$kategoria];
+		}
+		
+		//print_r($category_array);
+		
+		//print_r($xAxisCategories);
+		$finalBalance = $this->balance();
+		print_r($finalBalance);
+		
+		$series->addName('Kategórie')->addData($chartData);
+		
+		$this->HighCharts->setChartParams( $chartName,	array('xAxisCategories'	=> $xAxisCategories ));
+		
+		$mychart->addSeries($series);
+		
+		/*$chartName = 'Stacked Column Chart';   // snaha o STACKED COLUMN so subkategoriami
+
+        $mychart = $this->HighCharts->create(
+                        $chartName,
+                        array(
+                            'type' => 'column',
+                            'exporting' => TRUE
+                        )
+                    );
+
+
+        $this->HighCharts->setChartParams(
+                $chartName,
+                array(
+                    'renderTo'			=> 'columnwrapper',  // div to display chart inside
+                    'chartWidth'		=> 1000,
+                    'chartHeight'		=> 750,
+                    'chartBackgroundColorLinearGradient' 	=> array(0,0,0,300),
+                    'chartBackgroundColorStops'	=> array(array(0,'rgb(217, 217, 217)'),array(1,'rgb(255, 255, 255)')),
+                    'title'			=> 'Stacked Column Chart',
+                    'subtitle'			=> 'Source: World Bank',
+                    'xAxisLabelsEnabled' 	=> TRUE,
+                    'xAxisCategories'       	=> array( 'Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas' ),
+                    'yAxisTitleText' 		=> 'Total Fruit Consumption',
+                    'enableAutoStep' 		=> FALSE,
+                    'creditsEnabled'		=> FALSE,
+                    'plotOptionsSeriesStacking' => 'normal' // other options is 'percent'
+                )
+        );
+		
+		if(!isset($this->request->data['Filter'])) {
+			$time = strtotime("-11 month", time());
+			$data['from_date'] = date("Y-m-d", $time);
+			$data['to_date'] = date('Y-m-d');
+			$data['year_month_day'] = '2';
+		} else {
+			$data= $this->request->data['Filter'];
+		}
+		
+		$this->paginate = array(
+				'limit' => 20,
+				'order' => array(
+						'Transaction.post_date' => 'asc'
+				),
+				'conditions' => array(
+						'Transaction.user_id' => $this->Session->read('User.id'),
+						'Transaction.post_date >=' => $data['from_date'],
+						'Transaction.post_date <=' => $data['to_date'],
+				),
+		);
+		
+		$this->Transaction->recursive = 0;
+		$transactions = $this->paginate();
+		$this->set('transactions', $transactions);
+		
+		$alltransactions = $this->Transaction->find('all', array(
+				'conditions' => array(
+						'Transaction.user_id' => $this->Session->read('User.id'),
+						'Transaction.post_date >=' => $data['from_date'],
+						'Transaction.post_date <=' => $data['to_date'],
+				)
+		));
+		
+		$category_array = array();
+		
+		foreach ($alltransactions as $row) {
+			$category = $row['Transaction']['category_id'];
+			$subcategory = $row['Transaction']['subcategory_id'];
+		
+			if ($row['Transaction']['transaction_type_id'] == '1') {
+				$category_array[$category][$subcategory] += $row['Transaction']['amount'];
+			}
+			else {
+				$category_array[$category][$subcategory] -= $row['Transaction']['amount'];
+			}
+		}
+		
+		foreach ($category_array as $kategoria => $val) {
+			foreach ($val as $subkategoria => $val2) {
+			$chartData[] = $val2;
+			$xAxisCategories[] = $kategoria;
+			$category_sub[$kategoria][] = $subkategoria;
+			}
+		}
+		
+		//print_r($category_array);
+		
+		print_r($category_sub[8]);		
+		
+		////////////
+// 		$johnSeries = $this->HighCharts->addChartSeries();
+// 		$janeSeries = $this->HighCharts->addChartSeries();
+// 		$joeSeries  = $this->HighCharts->addChartSeries();
+		
+// 		$johnSeries->addName('John')
+// 		->addData($this->johnData);
+// 		$janeSeries->addName('Jane')
+// 		->addData($this->janeData);
+// 		$joeSeries->addName('Joe')
+// 		->addData($this->joeData);
+		
+// 		$mychart->addSeries($johnSeries);
+// 		$mychart->addSeries($janeSeries);
+// 		$mychart->addSeries($joeSeries);
+		/////////////
+		
+		$series1 = $this->HighCharts->addChartSeries();
+		$series2 = $this->HighCharts->addChartSeries();
+		$series1->addName('Subkategórie 1')->addData($chartData);
+		$series2->addName('Subkategórie 2')->addData($category_sub[8][11]);
+		
+		$this->HighCharts->setChartParams( $chartName,	array('xAxisCategories'	=> $xAxisCategories ));
+		
+		$mychart->addSeries($series1);
+		$mychart->addSeries($series2);
+		
+		//print_r($chartData);*/
+		
 	}
+
 
 /**
  * view method
@@ -987,6 +1228,26 @@ class TransactionsController extends AppController {
 		} else {
 			return true;
 		} 
+	}
+	
+	public function balance() {
+		$alltransactions = $this->Transaction->find('all', array(
+				'conditions' => array(
+						'Transaction.user_id' => $this->Session->read('User.id'),
+						'Transaction.post_date <=' => date('Y-m-d'),
+				)
+		));
+		$finalBalance = 0;
+		foreach ($alltransactions as $row) {
+			if ($row['Transaction']['transaction_type_id'] == '1') {
+				$finalBalance += $row['Transaction']['amount'];
+			}
+			else {
+				$finalBalance -= $row['Transaction']['amount'];
+			}
+		}
+		return $finalBalance;
+		
 	}
 	
 	/* private function insert_repeat($data, $original_date) {
