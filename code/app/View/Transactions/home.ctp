@@ -1,5 +1,6 @@
 <div class="transactions index">
-	<h2><?php echo __('Transakcie'); ?></h2>
+	<h2><?php echo __('Úvodná stránka'); ?></h2>
+	
 	
 	
 	<script>
@@ -29,10 +30,16 @@
   });
   </script>
   
+<div id="balance">
+	<?php echo 'Aktuálny stav: '.$aktualnystav .' €' ;?>
+	<?php echo 'Budúci stav: '.$dalsistav .' €' ;?>
+</div>
+
+<div class="rozsah"> 
   <?php 
-  	echo 'Transakcie od: '.date("d.m.Y", strtotime($from_date));
-	echo 'Transakcie do: '.date("d.m.Y", strtotime($to_date));
+  	echo 'Rozsah zobrazených transakcií: '.date("d.m.Y", strtotime($from_date)).' - '.date("d.m.Y", strtotime($to_date));
   ?>
+</div>
 	
 <div class="chart">
 	<div id="columnwrapper" style="display: block; float: left; width:90%; margin-bottom: 20px;"></div>

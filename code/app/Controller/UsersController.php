@@ -130,7 +130,7 @@ class UsersController extends AppController {
 				//return $this->redirect($this->Auth->redirect());
 				$user = $this->Auth->user();
 				$this->Session->write('User.id', $user['id']);
-				return $this->redirect('/transactions');
+				return $this->redirect('/');
 			} else {
 				$this->Session->setFlash(__('Zadali ste chybný mail alebo heslo.'));
 			}
@@ -162,6 +162,7 @@ class UsersController extends AppController {
 	
 	public function logout() {
 		$this->Session->setFlash('Boli ste úspešne odhlásený.');
+		$this->Session->destroy();
 		$this->redirect($this->Auth->logout());
 	}
 	
