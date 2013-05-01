@@ -1,4 +1,4 @@
-\documentclass[12pt]{book}
+\documentclass[12pt,onesided]{book}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
@@ -440,26 +440,26 @@ Pre objektívnosť spomeniem aj pár negatív. Niekedy sa pozitívne vlastnosti 
 \subsection{Webová verzia aplikácie}
 Funkčnosť webovej aplikácie sa líši z pohľadu rôznych typov používateľov:
 \begin{itemize}
-\item{Administrátor}
-\item{Prihlásený používateľ}
-\item{Neprihlásený používateľ}
+\item{administrátor}
+\item{prihlásený používateľ}
+\item{neprihlásený používateľ}
 \end{itemize}
 
 \subsubsection{Administrátor}
 Administrátor môže:
 \begin{itemize}
-\item{Mazať používateľov}
-\item{Resetovať heslá po žiadosti používateľa}
+\item{mazať používateľov}
+\item{resetovať heslá po žiadosti používateľa}
 \end{itemize}
 
 \subsubsection{Prihlásený používateľ}
 Prihlásený používateľ má možnosť kompletnej správy svojich príjmov a výdavkov.
 Prihlásený používateľ môže:
 \begin{itemize}
-\item{Pridávať, editovať a mazať jednorazové príjmy a výdavky}
-\item{Pridávať, editovať a mazať opakované príjmy a výdavky}
-\item{Možnosť zmeniť jednorazový príjem alebo výdavok na opakovaný a opačne}
-\item{Triediť príjmy a výdavky podľa rôznych kategórií, času, podľa toho či sú opakované alebo jednorazové}
+\item{pridávať, editovať a mazať jednorazové príjmy a výdavky}
+\item{pridávať, editovať a mazať opakované príjmy a výdavky}
+\item{možnosť zmeniť jednorazový príjem alebo výdavok na opakovaný a opačne}
+\item{triediť príjmy a výdavky podľa rôznych kategórií, času, podľa toho či sú opakované alebo jednorazové}
 \item{prezerať prehľad vývoja stavu financií v čase pomocou grafov}
 \item{prezerať  predpokladaný vývoj príjmov a výdavkov na nasledujúci mesiac/rok na základe priemerovania za predchádzajúce obdobie}
 \item{prezerať odhady či je vzhľadom na predpokladané príjmy a výdavky možné v budúcnosti splatiť plánované a predpokladané výdavky}
@@ -478,17 +478,17 @@ Neprihlásený používateľ môže:
 \subsection{Mobilná webová verzia aplikácie}
 Funkčnosť mobilnej verzie aplikácie sa líši z pohľadu 2 typov používateľov.
 \begin{itemize}
-\item{Prihlásený používateľ}
-\item{Neprihlásený používateľ}
+\item{prihlásený používateľ}
+\item{neprihlásený používateľ}
 \end{itemize}
 
 \subsubsection{Prihlásený používateľ}
 Prihlásený používateľ môže:
 \begin{itemize}
-\item{Pridávať, editovať a mazať jednorazové príjmy a výdavky}
-\item{Pridávať, editovať a mazať opakované príjmy a výdavky}
-\item{Prezerať prehľad vývoja stavu financií}
-\item{Triediť príjmy a výdavky podľa rôznych kategórií, času, podľa toho či sú opakované alebo jednorazové}
+\item{pridávať, editovať a mazať jednorazové príjmy a výdavky}
+\item{pridávať, editovať a mazať opakované príjmy a výdavky}
+\item{prezerať prehľad vývoja stavu financií}
+\item{triediť príjmy a výdavky podľa rôznych kategórií, času, podľa toho či sú opakované alebo jednorazové}
 \end{itemize}
 
 \subsubsection{Neprihlásený používateľ}
@@ -505,20 +505,22 @@ Napravo od tohoto menu sa nachádza obsah stránky. Pri prehľadoch ide zvyčajn
 
 
 \section{Databázový model}
-\subsection{Transactions}
+\begin{description}
+\item [Transactions]
 Pre aplikáciu Domáce účtovníctvo sú najdôležitejšou časťou transakcie. Rovnako je pre databázový model najvýznamnejšia tabuľka \texttt{transactions}. Táto tabuľka uchováva informácie o všetkých transakciách. Transakcie sú rozdelené na príjmy a výdavky podľa \texttt{transaction\_type\_id} a preto na to nie je nutné 2 špeciálne tabuľky. \texttt{Transactions} obsahuje cudzie kľúče na stľpce v tabuľkách \texttt{transaction\_types}(\texttt{transaction\_type\_id}), \texttt{categories}(\texttt{category\_id}), \texttt{subcategories}(\texttt{subcategory\_id}), \texttt{users}(\texttt{user\_id}) a dokonca aj sama na seba. To využíva pri opakovaných transakciách odkazovaním na svoj stĺpec \texttt{original\_transaction\_id}.
-\subsection{Users}
+\item [Users]
 Druhou významnou tabuľkou(modelom??) sú users(používatelia?), ktorí sú reprezentovaní v tabuľke \texttt{users}. Nájdeme v nej všetky informácie týkajuce sa použivateľa. Zaujímavá je položka active. Určuje či je používateľ stále aktívny a má prístup do systému. V prípade zrušenia konta sa zmení len táto položka a tým je používateľovi zablokovaný ďalší prístup do aplikácie. Táto tabuľka obsahuje jediný cudzí kľuč \texttt{user\_type\_id}, ktorý sa vzťahuje na stĺpec \texttt{id} v tabuľke \texttt{user\_types}. Ďalej je v tejto tabuľke zadefinovaný vzťah hasMany na tabuľky \texttt{transactions}, \texttt{categories}, \texttt{subcategories} a \texttt{imports}. Z toho vyplýva, že jednému používateľovi môže prislúchať viacero záznamov z týchto tabuliek.
-\subsection{Categories}
+\item [Categories]
 Jednoduchá tabuľka obsahujúca informácie o kategóriách transakcií. Obsahuje len jeden cudzí kľúč \texttt{user\_id} na na stĺpec \texttt{id} v tabuľke \texttt{users}. 
-\subsection{Subcategories}
-Tabuľka obsahujúca informácie o podkategóriách. Na rozdiel od \texttt{Categories} obsahuje okrem cudzieho kľúča aj ďalší cudzí kľúč \texttt{category\_id} odkazujúci na kategóriu ktorej patrí. 
-\subsection{User\_types}
+\item [Subcategories]
+Tabuľka obsahujúca informácie o podkategóriách. Na rozdiel od \texttt{Categories} obsahuje okrem cudzieho kľúča aj ďalší cudzí kľúč \texttt{category\_id} odkazujúci na kategóriu ktorej patrí.
+\item [{User\_types}] 
 Tabuľka \texttt{user} types slúži na identifikáciu a pomenovanie typu používateľa. Aktuálne sú možné 2 typy používateľov. Admin a bežný používateľ.
-\subsection{Transaction\_types} 
+\item [{Transaction\_types}] 
 Tabuľka \texttt{transaction\_types} slúži na identifikáciu a pomenovanie typu transakcie. Tie sú rozdelené na príjmy a výdavky.
-\subsection{Imports} 
+\item [Imports]  
 Tabuľka obsahujúca len jeden cudzí kľúč \texttt{user\_id}, ktorý definuje vzťah \texttt{belongsTo} k tabuľke \texttt{user} a konkrétnemu userovi(používateľovi).
+\end{description}
 \begin{figure}[ht]
   \centering
       \includegraphics[width=15cm]{databazovy_model}

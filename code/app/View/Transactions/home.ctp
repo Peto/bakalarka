@@ -32,7 +32,7 @@
   
 <div id="balance">
 	<?php echo 'Aktuálny stav: '.$aktualnystav .' €' ;?>
-	<?php echo 'Budúci stav: '.$dalsistav .' €' ;?>
+	<?php echo 'Stav o 3 mesiace: '.$dalsistav .' €' ;?>
 </div>
 
 <div class="rozsah"> 
@@ -46,6 +46,15 @@
     <div class="clear"></div>	
 	
 	<?php echo $this->HighCharts->render('Column Chart'); ?>
+
+</div>
+
+  <div class="chart">
+	
+	<div id="columnwrappertwo" style="display: block; float: left; width:90%; margin-bottom: 20px;"></div>
+    <div class="clear"></div>	
+	
+	<?php echo $this->HighCharts->render('Column Chart Two'); ?>
 
 </div>
 
@@ -95,13 +104,7 @@
 </div>
 <div class="actions">
 	<h3><?php echo __('Prehľad'); ?></h3>
-	<?php echo $this->Form->create('Filter'); 
-	  echo $this->Form->input('from_date', array('type' => 'text', 'id' => 'from', 'label' => 'Od:', 'default' => $from_date ));
-	  echo $this->Form->input('to_date', array('type' => 'text', 'id' => 'to', 'label' => 'Do:', 'default' => $to_date  ));
-	  echo $this->Form->input('year_month_day', array('options' => array('1' => 'ročný', '2' => 'mesačný', '3' => 'denný'), 'value' => '2', 'type' => 'radio', 'id'=> 'year_month_day' , 'legend' => 'Rozdeliť na:' ));
-	  echo $this->Form->end(__('Filtruj'));
-	  
-	  print_r($this->request->data); ?>
+	
 	<ul>
 		<li><?php echo $this->Html->link(__('Nová transakcia'), array('action' => 'add')); ?></li>
 		<li><?php echo $this->Html->link(__('Zobraz kategórie'), array('controller' => 'categories', 'action' => 'index')); ?> </li>

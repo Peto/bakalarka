@@ -1,10 +1,10 @@
 <div class="categories index">
-	<h2><?php echo __('Categories'); ?></h2>
+	<h2><?php echo __('Kategórie'); ?></h2>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 			<th><?php echo $this->Paginator->sort('id'); ?></th>
-			<th><?php echo $this->Paginator->sort('name'); ?></th>
-			<th class="actions"><?php echo __('Actions'); ?></th>
+			<th><?php echo $this->Paginator->sort('name', 'Názov'); ?></th>
+			<th class="actions"><?php echo __('Akcie'); ?></th>
 	</tr>
 	<?php foreach ($categories as $category): ?>
 	<tr>
@@ -21,7 +21,7 @@
 	<p>
 	<?php
 	echo $this->Paginator->counter(array(
-	'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
+	'format' => __('Stránka {:page} z {:pages}, zobrazuje {:current} záznamov zo {:count} celkovo, začína na zázname {:start}, končí na zázname {:end}')
 	));
 	?>	</p>
 	<div class="paging">
@@ -33,10 +33,10 @@
 	</div>
 </div>
 <div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
+	<h3><?php echo __('Akcie'); ?></h3>
 	<ul>
-		<li><?php echo $this->Html->link(__('New Category'), array('action' => 'add')); ?></li>
-		<li><?php echo $this->Html->link(__('List Subcategories'), array('controller' => 'subcategories', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Subcategory'), array('controller' => 'subcategories', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('Nová kategória'), array('action' => 'add')); ?></li>
+		<li><?php echo $this->Html->link(__('Zoznam podkategórii'), array('controller' => 'subcategories', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('Nová podkategória'), array('controller' => 'subcategories', 'action' => 'add')); ?> </li>
 	</ul>
 </div>

@@ -57,9 +57,8 @@ $( "#datepicker" ).datepicker( "option", "dateFormat", 'yy-mm-dd' );
 		<ul>
 			<li><h1><?php echo $this->Html->link('Transakcie', '/transactions'); ?></h1></li>
 			<li><h1><?php echo $this->Html->link('Pridanie transakcie', '/transactions/add'); ?></h1></li>
-			<li><h1><?php echo $this->Html->link('Príjmy', '/transactions/income'); ?></h1></li>
-			<li><h1><?php echo $this->Html->link('Výdavky', '/transactions/expense'); ?></h1></li>
 			<li><h1><?php echo $this->Html->link('Kategórie', '/categories'); ?></h1></li>
+			<li><h1><?php echo $this->Html->link('Import', '/imports'); ?></h1></li>
 			<li><h1><?php
 				echo $this->Session->check('Auth.User') 
 				 ? 
