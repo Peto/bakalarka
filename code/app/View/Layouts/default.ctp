@@ -29,18 +29,18 @@ $siteDescription = __d('cake_dev', 'Domáce účtovníctvo');
 	<?php
 		echo $this->Html->meta('icon');
 
+		echo $this->Html->css('jquery-ui');
 		echo $this->Html->css('cake.generic');
 		
-		echo $this->Html->script(array('https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'));
+		echo $this->Html->script(array('jquery.min.js'));
 		echo $this->Html->script(array('jquery.chained.js'));
+		echo $this->Html->script(array('jquery-ui.js'));
 
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
 		echo $this->fetch('script');
 	?>
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
 <!-- <script src="http://code.jquery.com/jquery-1.9.1.js"></script> -->
-<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
 
 
 <script>
@@ -55,6 +55,7 @@ $( "#datepicker" ).datepicker( "option", "dateFormat", 'yy-mm-dd' );
 	<div id="container">
 		<div id="header">
 		<ul>
+			<li><h1><?php echo $this->Html->link('Domov', '/'); ?></h1></li>
 			<li><h1><?php echo $this->Html->link('Transakcie', '/transactions'); ?></h1></li>
 			<li><h1><?php echo $this->Html->link('Pridanie transakcie', '/transactions/add'); ?></h1></li>
 			<li><h1><?php echo $this->Html->link('Kategórie', '/categories'); ?></h1></li>
