@@ -44,11 +44,11 @@ class TransactionsController extends AppController {
 				array(
 						'renderTo'				=> 'columnwrapper',  // div to display chart inside
 						'chartWidth'				=> 800,
-						'chartHeight'				=> 600,
-						'chartMarginTop' 			=> 60,
+						'chartHeight'				=> 400,
+						'chartMarginTop' 			=> 50,
 						'chartMarginLeft'			=> 90,
 						'chartMarginRight'			=> 30,
-						'chartMarginBottom'			=> 110,
+						'chartMarginBottom'			=> 60,
 						'chartSpacingRight'			=> 10,
 						'chartSpacingBottom'			=> 15,
 						'chartSpacingLeft'			=> 0,
@@ -80,22 +80,8 @@ class TransactionsController extends AppController {
 						//'xAxisLabelsRotation' 		=> -35,
 						'xAxislabelsX' 				=> 5,
 						'xAxisLabelsY' 				=> 20,
-						'xAxisCategories'           		=> array(
-								'Jan',
-								'Feb',
-								'Mar',
-								'Apr',
-								'May',
-								'Jun',
-								'Jul',
-								'Aug',
-								'Sep',
-								'Oct',
-								'Nov',
-								'Dec'
-						),
 		
-						'yAxisTitleText' 			=> 'Suma',
+						'yAxisTitleText' 			=> 'Suma (€)',
 		
 						/* autostep options */
 						'enableAutoStep' 			=> FALSE
@@ -469,7 +455,7 @@ public function home() {
 					//'xAxisLabelsRotation' 		=> -35,
 					'xAxislabelsX' 				=> 5,
 					'xAxisLabelsY' 				=> 20,
-					'yAxisTitleText' 			=> 'Suma',
+					'yAxisTitleText' 			=> 'Suma (€)',
 					
 					'enableAutoStep' 			=> FALSE
 			)
@@ -667,11 +653,20 @@ public function home() {
 	$finalBalance = $this->balance(0);
 	$this->set('aktualnystav', $finalBalance);
 	
+	$lastIncome = $this->incomeLastMonths(1);
+	$this->set('minulystav', $lastIncome);
+	
+	$lastExpense = $this->expenseLastMonths(1);
+	$this->set('minulystavexp', $lastExpense);
+	
 	$nextBalance = $this->balance(3);
 	$this->set('dalsistav', $nextBalance);
 	
 	
 	/////////////// druhy chart
+	
+	$chartData = array();
+	$xAxisCategoriesNew = array();
 	
 	$chartNameTwo = 'Column Chart Two';
 	$mychartTwo = $this->HighCharts->create( $chartNameTwo, 'column' );
@@ -714,7 +709,7 @@ public function home() {
 					'xAxisLabelsStep' 			=> 1,
 					'xAxislabelsX' 				=> 5,
 					'xAxisLabelsY' 				=> 20,
-					'yAxisTitleText' 			=> 'Suma',
+					'yAxisTitleText' 			=> 'Suma (€)',
 					'enableAutoStep' 			=> FALSE
 			)
 	);
@@ -822,7 +817,7 @@ public function home() {
 								'Nov',
 								'Dec'
 						),
-						'yAxisTitleText' 			=> 'Suma',
+						'yAxisTitleText' 			=> 'Suma (€)',
 						'enableAutoStep' 			=> FALSE
 				)
 		);
@@ -1129,32 +1124,27 @@ public function home() {
 			if ($this->Transaction->save($this->request->data)) {
 				if ($data['update_next'] == 1) {
 					//$this->delete_next_repeats();
-					if ($data['original_transaction_id'] > 0) {    
+					/*if ($data['original_transaction_id'] > 0) {       /// OTESTOVAT FUNKCNOST
 						$data['original_transaction_id'] = $data['id'];
-					}
+					}*/
 					if($this->insert_repeat($data, $original_date)) {
 						$this->Session->setFlash(__('Transakcia bola upravená'));
 						$this->redirect(array('action' => 'index'));
 					} else {
 						$this->Session->setFlash(__('Zadajte prosím skorší deň v mesiaci pri výbere dátumu. Najneskorší povolený je 28. deň.'));
-					}
-					
+					}					
 				} else {
 					$this->Session->setFlash(__('Transakcia bola upravená'));
 					$this->redirect(array('action' => 'index'));
 				}
 			} else {
 				$this->Session->setFlash(__('Transakciu sa nepodarilo upraviť. Skúste prosím znovu.'));
-			}
-			
-			
-			
+			}						
 		} else {
 			$options = array('conditions' => array('Transaction.' . $this->Transaction->primaryKey => $id));
 			$this->request->data = $this->Transaction->find('first', $options);
 			$this->set('data', $this->request->data);
-		}
-		
+		}		
 		$user_id = $this->Session->read('User.id');
 		
 		$users = $this->Transaction->User->find('list');
@@ -1263,6 +1253,44 @@ public function home() {
 			}
 		}
 		return $finalBalance;
+	}
+	
+	public function incomeLastMonths($mesiace) {
+		$mesiace = '- '.$mesiace .' month';
+		$time = strtotime($mesiace, time());
+		$fromDate = date("Y-m-d", $time);
+		$alltransactions = $this->Transaction->find('all', array(
+				'conditions' => array(
+						'Transaction.user_id' => $this->Session->read('User.id'),
+						'Transaction.post_date >=' => $fromDate,
+						'Transaction.post_date <=' => date('Y-m-d'),
+						'Transaction.transaction_type_id ' => 1,
+				)
+		));
+		$finalIncome = 0;
+		foreach ($alltransactions as $row) {
+			$finalIncome += $row['Transaction']['amount'];
+		}
+		return $finalIncome;
+	}
+	
+	public function expenseLastMonths($mesiace) {
+		$mesiace = '- '.$mesiace .' month';
+		$time = strtotime($mesiace, time());
+		$fromDate = date("Y-m-d", $time);
+		$alltransactions = $this->Transaction->find('all', array(
+				'conditions' => array(
+						'Transaction.user_id' => $this->Session->read('User.id'),
+						'Transaction.post_date >=' => $fromDate,
+						'Transaction.post_date <=' => date('Y-m-d'),
+						'Transaction.transaction_type_id ' => 2,
+				)
+		));
+		$finalExpense = 0;
+		foreach ($alltransactions as $row) {		
+			$finalExpense += $row['Transaction']['amount'];			
+		}
+		return $finalExpense;
 	}
 	
 	/* private function insert_repeat($data, $original_date) {

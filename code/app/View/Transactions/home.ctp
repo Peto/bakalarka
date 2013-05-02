@@ -1,5 +1,5 @@
 <div class="transactions index">
-	<h2><?php echo __('Úvodná stránka'); ?></h2>
+	<h2><?php echo __('Prehľad za posledný mesiac'); ?></h2>
 	
 	
 	
@@ -30,10 +30,6 @@
   });
   </script>
   
-<div id="balance">
-	<?php echo 'Aktuálny stav: '.$aktualnystav .' €' ;?>
-	<?php echo 'Stav o 3 mesiace: '.$dalsistav .' €' ;?>
-</div>
 
 <div class="rozsah"> 
   <?php 
@@ -104,6 +100,12 @@
 </div>
 <div class="actions">
 	<h3><?php echo __('Prehľad'); ?></h3>
+	<div id="balance">
+	<?php echo 'Aktuálny stav: '.$aktualnystav .' €' ;?><br />
+	<?php echo 'Stav o 3 mesiace: '.$dalsistav .' €' ;?><br />
+	<?php echo 'Príjmy za posledný mesiac: '.$minulystav .' €' ;?><br />
+	<?php echo 'Výdavky za posledný mesiac: '.$minulystavexp .' €' ;?><br />
+</div>
 	
 	<ul>
 		<li><?php echo $this->Html->link(__('Nová transakcia'), array('action' => 'add')); ?></li>

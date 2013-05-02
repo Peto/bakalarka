@@ -221,8 +221,18 @@ class Transaction extends AppModel {
 	
 	public function insert_repeat($data, $original_date) {
 		$pom_data= array();
+		
+		////// nove deleteAll
+		if($data['original_transaction_id'] > 0) {   // overujem ci upravujem povodnu transakciu alebo niektore jej opakovanie, podla toho vyberam original_transaction_id
+			$this->deleteAll(array('Transaction.original_transaction_id' => $data['original_transaction_id'], 'Transaction.post_date >' => $original_date, 'Transaction.id <>' => $data['id'] ), false); 
+		} else {
+			$this->deleteAll(array('Transaction.original_transaction_id' => $data['id'], 'Transaction.post_date >' => $original_date, 'Transaction.id <>' => $data['id'] ), false); 
+			
+		}
+		
+		////////////////////// nove deleteAll
 	
-		$this->deleteAll(array('Transaction.original_transaction_id' => $data['original_transaction_id'], 'Transaction.post_date >' => $original_date, 'Transaction.id <>' => $data['id']  ), false);  // maze dalsie opakovania transakcie ktore su naplanovane do buducnosti
+		//$this->deleteAll(array('Transaction.original_transaction_id' => $data['original_transaction_id'], 'Transaction.post_date >' => $original_date, 'Transaction.id <>' => $data['id']  ), false);  // maze dalsie opakovania transakcie ktore su naplanovane do buducnosti
 			
 		for ($i = 1; $i<= $data['number_of_cycles']; $i++) {
 			$timestamp= strtotime($data['post_date']);
