@@ -46,24 +46,25 @@
 	<tr>
 			<th><?php echo $this->Paginator->sort('id'); ?></th>
 			<th><?php echo $this->Paginator->sort('post_date','Dátum'); ?></th>
-			<th><?php echo $this->Paginator->sort('transaction_type_id', 'Typ transakcie'); ?></th>
 			<th><?php echo $this->Paginator->sort('name','Názov'); ?></th>
 			<th><?php echo $this->Paginator->sort('amount','Suma'); ?></th>
 			<th><?php echo $this->Paginator->sort('category_id','Kategória'); ?></th>
 			<th><?php echo $this->Paginator->sort('subcategory_id','Subkategória'); ?></th>
-			<th><?php echo $this->Paginator->sort('original_transaction_id','ID hlavnej transakcie'); ?></th>
 			<th class="actions"><?php echo __('Akcie'); ?></th>
 	</tr>
 	<?php foreach ($transactions as $transaction): ?>
 	<tr>
 		<td><?php echo h($transaction['Transaction']['id']); ?>&nbsp;</td>
 		<td><?php echo h(CakeTime::format('d.m.Y',$transaction['Transaction']['post_date'])); ?>&nbsp;</td>
-		<td><?php echo h($transaction['Transaction']['transaction_type_id']); ?>&nbsp;</td>
 		<td><?php echo $this->Html->link($transaction['Transaction']['name'], array('action' => 'view', $transaction['Transaction']['id'])); ?>&nbsp;</td>
-		<td><?php echo h($transaction['Transaction']['amount']); ?> € &nbsp;</td>
-		<td><?php echo $transaction['Category']['name'];?>&nbsp;</td>
-		<td><?php echo $transaction['Subcategory']['name']; ?>&nbsp;</td>
-		<td><?php echo h($transaction['Transaction']['original_transaction_id']); ?>&nbsp;</td>
+		<td class="left">
+				<?php if ($transaction['Transaction']['transaction_type_id'] == 2){
+					echo '-';
+				}; ?>
+				<?php echo h($transaction['Transaction']['amount']); ?> € &nbsp;
+		</td>
+		<td><?php echo $this->Html->link($transaction['Category']['name'], array('controller' => 'categories', 'action' => 'view', $transaction['Category']['id'])); ?>&nbsp;</td>
+		<td><?php echo $this->Html->link($transaction['Subcategory']['name'], array('controller' => 'subcategories', 'action' => 'view', $transaction['Subcategory']['id'])); ?>&nbsp;</td>
 		<td class="actions">
 			<?php echo $this->Html->link($this->Html->image('/img/edit.png', array('alt' => 'Editovať')), array('action' => 'edit', $transaction['Transaction']['id']), array('escape' => false)); ?>
 			<?php echo $this->Form->postLink($this->Html->image('/img/deletered.png', array('alt' => 'Zmazať')), array('action' => 'delete', $transaction['Transaction']['id']), array('escape' => false), __('Ste si istý, že chcete zmazať túto transakciu: id # %s?', $transaction['Transaction']['id'])); ?>

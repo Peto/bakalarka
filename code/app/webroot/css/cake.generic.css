@@ -769,3 +769,23 @@ pre {
 	position: relative;
 	width: 250px;
 }
+
+#grafbox {
+	position: relative;
+	float: left;
+}
+
+#paginbox {
+	position: relative;
+	float: left;
+	width: 520px;
+	margin-left: 20px;
+}
+
+.left {
+	text-align: right;
+}
+
+table a {
+	font-weight: normal;
+}

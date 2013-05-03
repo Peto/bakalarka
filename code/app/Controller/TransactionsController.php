@@ -19,17 +19,7 @@ class TransactionsController extends AppController {
  */
 		
 	public function index() {
-		
-		/* $this->paginate = array(
-			'limit' => 20,
-			'order' => array(
-				'Transaction.post_date' => 'asc'
-			),
-			'conditions' => array(
-				'Transaction.user_id' => $this->Session->read('User.id'),
-			),
-		);
-		
+		/*
 		$this->Transaction->recursive = 0;
 		$this->set('transactions', $this->paginate()); */
 		
@@ -43,7 +33,7 @@ class TransactionsController extends AppController {
 				$chartName,
 				array(
 						'renderTo'				=> 'columnwrapper',  // div to display chart inside
-						'chartWidth'				=> 800,
+						'chartWidth'				=> 860,
 						'chartHeight'				=> 400,
 						'chartMarginTop' 			=> 50,
 						'chartMarginLeft'			=> 90,
@@ -97,8 +87,7 @@ class TransactionsController extends AppController {
 		$series2->addName('London')->addData($this->chartData2);
 		
 		$rozdiel = $this->HighCharts->addChartSeries();
-		$rozdiel->type = 'line';
-		//$rozdiel->type = 'areaspline';    
+		$rozdiel->type = 'line';   
 		$rozdiel->addName('Rozdiel')->addData($this->rozdielData);
 		
 		
@@ -152,13 +141,21 @@ class TransactionsController extends AppController {
 		$mesiace_preklady = array('01' => 'január', '02' => 'február', '03' => 'marec', '04' => 'apríl', '05' => 'máj', '06' => 'jún', '07' => 'júl', '08' => 'august', '09' => 'september', '10' => 'október', '11' => 'november', '12' => 'december');
 		$pocet_mesiacov = (strtotime($filterdata['to_date']) - strtotime($filterdata['from_date'])) / (60*60*24*30.5);
 		
+		$transactionsFind = $this->Transaction->find('all', array(
+				'conditions' => array(
+						'Transaction.user_id' => $this->Session->read('User.id'),
+						'Transaction.post_date >=' => $filterdata['from_date'],
+						'Transaction.post_date <=' => $filterdata['to_date'],
+				)
+		));
+		
 		if ($filterdata['year_month_day'] == '1') {		// filtrovanie podla rokov
 			for ($i = $from_year; $i<=$to_year; $i++) {
 				$date_array1[(string)$i] = 0;
 				$date_array2[(string)$i] = 0;
 				$date_array3[(string)$i] = 0;
 			}
-			foreach ($transactions as $row) {
+			foreach ($transactionsFind as $row) {
 				$r_year = date('Y', strtotime($row['Transaction']['post_date']));
 				if ($row['Transaction']['transaction_type_id'] == '1') {
 					$date_array1[$r_year] += $row['Transaction']['amount'];
@@ -223,7 +220,7 @@ class TransactionsController extends AppController {
 					}
 				}
 			}
-			foreach ($transactions as $row) {
+			foreach ($transactionsFind as $row) {
 				$r_year = date('Y', strtotime($row['Transaction']['post_date']));
 				$r_month = date('m', strtotime($row['Transaction']['post_date']));
 				if ($row['Transaction']['transaction_type_id'] == '1') {
@@ -353,7 +350,7 @@ class TransactionsController extends AppController {
 				}
 			}
 		
-			foreach ($transactions as $row) {
+			foreach ($transactionsFind as $row) {
 				$r_year = date('Y', strtotime($row['Transaction']['post_date']));
 				$r_month = date('m', strtotime($row['Transaction']['post_date']));
 				$r_day = date('d', strtotime($row['Transaction']['post_date']));
@@ -417,7 +414,7 @@ public function home() {
 			$chartName,
 			array(
 					'renderTo'				=> 'columnwrapper',  // div to display chart inside
-					'chartWidth'				=> 800,
+					'chartWidth'				=> 860,
 					'chartHeight'				=> 300,
 					'chartMarginTop' 			=> 50,
 					'chartMarginLeft'			=> 90,
@@ -597,19 +594,24 @@ public function home() {
 				}
 			}
 		}
-	
+		$bilancia = 0;
 		foreach ($transactions as $row) {
 			$r_year = date('Y', strtotime($row['Transaction']['post_date']));
 			$r_month = date('m', strtotime($row['Transaction']['post_date']));
 			$r_day = date('d', strtotime($row['Transaction']['post_date']));
 	
 			if ($row['Transaction']['transaction_type_id'] == '1') {
+				/// pocitanie priebeznej bilancie od zaciatku casoveho intervalo (1 mesiac)
+				$bilancia = $bilancia + $row['Transaction']['amount'];
+				
 				$date_array1[$r_year][$r_month][$r_day] += $row['Transaction']['amount'];
-				$date_array3[$r_year][$r_month][$r_day] += $row['Transaction']['amount'];
+				$date_array3[$r_year][$r_month][$r_day] = $bilancia;
 			}
 			else {
-				$date_array2[$r_year][$r_month][$r_day] += $row['Transaction']['amount'];
-				$date_array3[$r_year][$r_month][$r_day] -= $row['Transaction']['amount'];
+				$bilancia = $bilancia - $row['Transaction']['amount'];
+				
+				$date_array2[$r_year][$r_month][$r_day] -= $row['Transaction']['amount'];
+				$date_array3[$r_year][$r_month][$r_day] = $bilancia;
 			}
 		}
 	
@@ -641,7 +643,7 @@ public function home() {
 			
 		$series1->addName('Príjmy za dni')->addData($chartData1);
 		$series2->addName('Výdavky za dni')->addData($chartData2);
-		$rozdiel->addName('Rozdiel za dni')->addData($rozdielData);
+		$rozdiel->addName('Priebežná bilancia')->addData($rozdielData);
 	
 	
 	$this->HighCharts->setChartParams( $chartName,	array('xAxisCategories'	=> $xAxisCategories ));
@@ -668,18 +670,18 @@ public function home() {
 	$chartData = array();
 	$xAxisCategoriesNew = array();
 	
-	$chartNameTwo = 'Column Chart Two';
-	$mychartTwo = $this->HighCharts->create( $chartNameTwo, 'column' );
+	$chartNameTwo = 'Bar Chart';
+	$mychartTwo = $this->HighCharts->create( $chartNameTwo, 'bar' );
 	$this->HighCharts->setChartParams(
 			$chartNameTwo,
 			array(
-					'renderTo'				=> 'columnwrappertwo',  // div to display chart inside
-					'chartWidth'				=> 800,
-					'chartHeight'				=> 300,
-					'chartMarginTop' 			=> 50,
+					'renderTo'				=> 'barwrapper',  // div to display chart inside
+					'chartWidth'				=> 320,
+					'chartHeight'				=> 350,
+					'chartMarginTop' 			=> 70,
 					'chartMarginLeft'			=> 90,
-					'chartMarginRight'			=> 30,
-					'chartMarginBottom'			=> 60,
+					'chartMarginRight'			=> 10,
+					'chartMarginBottom'			=> 80,
 					'chartSpacingRight'			=> 10,
 					'chartSpacingBottom'			=> 15,
 					'chartSpacingLeft'			=> 0,
@@ -687,7 +689,7 @@ public function home() {
 					'chartBackgroundColorLinearGradient' 	=> array(0,0,0,300),
 					'chartBackgroundColorStops'		=> array(array(0,'rgb(217, 217, 217)'),array(1,'rgb(255, 255, 255)')),
 	
-					'title'					=> 'Príjmy a výdavky podľa kategórií',
+					'title'					=> 'Transakcie podľa kategórií',
 					'titleAlign'				=> 'left',
 					'titleFloating'				=> TRUE,
 					'titleStyleFont'			=> '18px Metrophobic, Arial, sans-serif',
@@ -708,6 +710,7 @@ public function home() {
 					'xAxisLabelsAlign' 			=> 'right',
 					'xAxisLabelsStep' 			=> 1,
 					'xAxislabelsX' 				=> 5,
+					//'xAxisLabelsRotation' 		=> -35,
 					'xAxisLabelsY' 				=> 20,
 					'yAxisTitleText' 			=> 'Suma (€)',
 					'enableAutoStep' 			=> FALSE

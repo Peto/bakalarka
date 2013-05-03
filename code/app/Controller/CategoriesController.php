@@ -12,6 +12,8 @@ class CategoriesController extends AppController {
 	public $paginate;
 	public $HighCharts = null;
 	public $components = array('HighCharts.HighCharts');
+	
+	
 
 /**
  * index method
@@ -43,6 +45,9 @@ class CategoriesController extends AppController {
  * @return void
  */
 	public function view($id = null) {
+		if (!$this->check_ownership($id) ) {
+			throw new PrivateActionException(__('Na prístup k tejto kategórii nemáte oprávnenie.'));
+		}
 		Controller::loadModel('Transaction');
 		if (!$this->Category->exists($id)) {
 			throw new NotFoundException(__('Invalid category'));
@@ -114,37 +119,55 @@ class CategoriesController extends AppController {
 			$data['from_date'] = date("Y-m-d", $time);
 			$data['to_date'] = date('Y-m-d');
 			$data['year_month_day'] = '2';
+			if (!$this->Session->check('filterdata')) {
+				$this->Session->write('filterdata', $data);
+			}
 		} else {
 			$data= $this->request->data['Filter'];
+			$this->Session->write('filterdata', $data);
+			$this->redirect(array('action' => 'view/'.$id, 'page' => 1));
 		}
+		
+		$filterdata = $this->Session->read('filterdata');
 	
 		$transactions = $this->Transaction->find('all', array(
 				'conditions' => array(
 						'Transaction.user_id' => $this->Session->read('User.id'),
-						'Transaction.post_date >=' => $data['from_date'],
-						'Transaction.post_date <=' => $data['to_date'],
+						'Transaction.post_date >=' => $filterdata['from_date'],
+						'Transaction.post_date <=' => $filterdata['to_date'],
 						'Transaction.category_id ' => $id,
 				)
 		));
+
+		$this->Transaction->recursive = 0;
+		$transactionsPaginate = $this->paginate('Transaction', array('Transaction.user_id' => $this->Session->read('User.id'),
+												'Transaction.post_date >=' => $filterdata['from_date'],
+												'Transaction.post_date <=' => $filterdata['to_date'],
+												'Transaction.category_id ' => $id,
+				
+				)
+		);
+
+		$this->set('transactions', $transactionsPaginate);
 		
-		$this->set('from_date', $data['from_date']);
-		$this->set('to_date', $data['to_date']);
+		$this->set('from_date', $filterdata['from_date']);
+		$this->set('to_date', $filterdata['to_date']);
 
 		
 		$date_array1 = array();
 		$xAxisCategories = array();
 		
-		$from_year = date('Y', strtotime($data['from_date']));
-		$from_month = date('m', strtotime($data['from_date']));
-		$from_day = date('d', strtotime($data['from_date']));
+		$from_year = date('Y', strtotime($filterdata['from_date']));
+		$from_month = date('m', strtotime($filterdata['from_date']));
+		$from_day = date('d', strtotime($filterdata['from_date']));
 		
-		$to_year = date('Y', strtotime($data['to_date']));
-		$to_month = date('m', strtotime($data['to_date']));
-		$to_day = date('d', strtotime($data['to_date']));
+		$to_year = date('Y', strtotime($filterdata['to_date']));
+		$to_month = date('m', strtotime($filterdata['to_date']));
+		$to_day = date('d', strtotime($filterdata['to_date']));
 		$mesiace_preklady = array('01' => 'január', '02' => 'február', '03' => 'marec', '04' => 'apríl', '05' => 'máj', '06' => 'jún', '07' => 'júl', '08' => 'august', '09' => 'september', '10' => 'október', '11' => 'november', '12' => 'december');
-		$pocet_mesiacov = (strtotime($data['to_date']) - strtotime($data['from_date'])) / (60*60*24*30.5);
+		$pocet_mesiacov = (strtotime($filterdata['to_date']) - strtotime($filterdata['from_date'])) / (60*60*24*30.5);
 		
-		if ($data['year_month_day'] == '1') {		// filtrovanie podla rokov
+		if ($filterdata['year_month_day'] == '1') {		// filtrovanie podla rokov
 			for ($i = $from_year; $i<=$to_year; $i++) {
 				$date_array1[(string)$i] = 0;
 			}
@@ -167,7 +190,7 @@ class CategoriesController extends AppController {
 			$series1->addName('Kategória za roky')->addData($chartData1);
 		}
 		else
-			if ($data['year_month_day'] == '2') {		// filtrovanie podla mesiacov
+			if ($filterdata['year_month_day'] == '2') {		// filtrovanie podla mesiacov
 			for ($i = $from_year; $i<=$to_year; $i++) {			// cykluje vsetky vybrane roky
 				if ($from_year == $to_year) {			// ak su vybrate mesiace len v jednom roku
 					for ($j = $from_month; $j<= $to_month; $j++) {
@@ -217,7 +240,7 @@ class CategoriesController extends AppController {
 			$series1->addName('Kategória za mesiace')->addData($chartData1);
 		}
 		else
-			if ($data['year_month_day'] == '3') {		// filtrovanie podla dni
+			if ($filterdata['year_month_day'] == '3') {		// filtrovanie podla dni
 			for ($i = $from_year; $i<=$to_year; $i++) {			// cykluje vsetky vybrane roky
 				if ($from_year == $to_year) {			// ak su vybrate mesiace len v jednom roku
 					for ($j = $from_month; $j<= $to_month; $j++) {
@@ -297,7 +320,7 @@ class CategoriesController extends AppController {
 					$date_array1[$r_year][$r_month][$r_day] += $row['Transaction']['amount'];
 				}
 				else {
-					$date_array2[$r_year][$r_month][$r_day] -= $row['Transaction']['amount'];
+					$date_array1[$r_year][$r_month][$r_day] -= $row['Transaction']['amount'];
 				}
 			}
 		
@@ -388,4 +411,17 @@ class CategoriesController extends AppController {
 		$this->Session->setFlash(__('Category was not deleted'));
 		$this->redirect(array('action' => 'index'));
 	}
+	
+	private function check_ownership($id) {
+		$user_category = $this->Category->find('first', array(
+				'conditions' => array('Category.id' => $id),));
+		if ($this->Session->read('User.id') == $user_category['Category']['user_id']) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	
 }
