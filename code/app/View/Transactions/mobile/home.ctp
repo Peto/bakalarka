@@ -95,32 +95,19 @@
 </div>
 <div class="actions">
 	<h3><?php echo __('Prehľad'); ?></h3>
-	<div class="left_box">
-		<div class="small_box">
-			<?php echo 'Aktuálny stav: '?>
-			<div class="suma_box"> 
-				<?php echo $aktualnystav .' €' ;?><br />
-			</div>
-		</div>
-		<div class="small_box">
-			<?php echo 'Plánované výdavky na najbližšie 3 mesiace: '?>
-			<div class="suma_box"> 
-				<?php echo $dalsistav .' €' ;?><br />
-			</div>
-		</div>
-		<div class="small_box">
-			<?php echo 'Príjmy za posledný mesiac: '?>
-			<div class="suma_box"> 
-				<?php echo $minulystav .' €' ;?><br />
-			</div>
-		</div>
-		<div class="small_box">
-			<?php echo 'Výdavky za posledný mesiac: '?>
-			<div class="suma_box"> 
-				<?php echo $minulystavexp .' €' ;?><br />
-			</div>
-		</div>
-	</div>
-
+	<div id="balance">
+	<?php echo 'Aktuálny stav: '.$aktualnystav .' €' ;?><br />
+	<?php echo 'Plánované výdavky na najbližšie 3 mesiace: '.$dalsistav .' €' ;?><br />
+	<?php echo 'Príjmy za posledný mesiac: '.$minulystav .' €' ;?><br />
+	<?php echo 'Výdavky za posledný mesiac: '.$minulystavexp .' €' ;?><br />
+</div>
 	
+	<ul>
+		<li><?php echo $this->Html->link(__('Nová transakcia'), array('action' => 'add')); ?></li>
+		<li><?php echo $this->Html->link(__('Zobraz kategórie'), array('controller' => 'categories', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('Zobraz subkategórie'), array('controller' => 'subcategories', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('Nová kategória'), array('controller' => 'categories', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('Nová subkategória'), array('controller' => 'subcategories', 'action' => 'add')); ?> </li>
+	</ul>
+	<?= $this->element('default_footer') ?>
 </div>

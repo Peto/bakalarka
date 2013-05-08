@@ -49,7 +49,7 @@ class TransactionsController extends AppController {
 						'title'					=> 'Príjmy verzus výdavky',
 						'titleAlign'				=> 'left',
 						'titleFloating'				=> TRUE,
-						'titleStyleFont'			=> '18px Metrophobic, Arial, sans-serif',
+						'titleStyleFont'			=> '15px Metrophobic, Arial, sans-serif',
 						'titleStyleColor'			=> '#0099ff',
 						'titleX'				=> 20,
 						'titleY'				=> 20,
@@ -401,6 +401,19 @@ class TransactionsController extends AppController {
 		$mychart->addSeries($series1);
 		$mychart->addSeries($series2);
 		$mychart->addSeries($rozdiel);
+		
+		$finalBalance = $this->balance(0);
+		$this->set('aktualnystav', $finalBalance);
+		
+		$lastIncome = $this->incomeLastMonths(1);
+		$this->set('minulystav', $lastIncome);
+		
+		$lastExpense = $this->expenseLastMonths(1);
+		$this->set('minulystavexp', $lastExpense);
+		
+		$nextBalance = $this->balance(3);
+		$this->set('dalsistav', $nextBalance);
+		
 	}
 	
 public function home() {
@@ -430,7 +443,7 @@ public function home() {
 					'title'					=> 'Príjmy verzus výdavky za posledný mesiac',
 					'titleAlign'				=> 'left',
 					'titleFloating'				=> TRUE,
-					'titleStyleFont'			=> '18px Metrophobic, Arial, sans-serif',
+					'titleStyleFont'			=> '15px Metrophobic, Arial, sans-serif',
 					'titleStyleColor'			=> '#0099ff',
 					'titleX'				=> 20,
 					'titleY'				=> 20,
@@ -692,7 +705,7 @@ public function home() {
 					'title'					=> 'Transakcie podľa kategórií',
 					'titleAlign'				=> 'left',
 					'titleFloating'				=> TRUE,
-					'titleStyleFont'			=> '18px Metrophobic, Arial, sans-serif',
+					'titleStyleFont'			=> '15px Metrophobic, Arial, sans-serif',
 					'titleStyleColor'			=> '#0099ff',
 					'titleX'				=> 20,
 					'titleY'				=> 20,
@@ -771,12 +784,12 @@ public function home() {
 				$chartName,
 				array(
 						'renderTo'				=> 'columnwrapper',  // div to display chart inside
-						'chartWidth'				=> 800,
-						'chartHeight'				=> 600,
-						'chartMarginTop' 			=> 60,
+						'chartWidth'				=> 860,
+						'chartHeight'				=> 300,
+						'chartMarginTop' 			=> 50,
 						'chartMarginLeft'			=> 90,
 						'chartMarginRight'			=> 30,
-						'chartMarginBottom'			=> 110,
+						'chartMarginBottom'			=> 60,
 						'chartSpacingRight'			=> 10,
 						'chartSpacingBottom'			=> 15,
 						'chartSpacingLeft'			=> 0,
@@ -787,7 +800,7 @@ public function home() {
 						'title'					=> 'Príjmy a výdavky podľa kategórií',
 						'titleAlign'				=> 'left',
 						'titleFloating'				=> TRUE,
-						'titleStyleFont'			=> '18px Metrophobic, Arial, sans-serif',
+						'titleStyleFont'			=> '15px Metrophobic, Arial, sans-serif',
 						'titleStyleColor'			=> '#0099ff',
 						'titleX'				=> 20,
 						'titleY'				=> 20,
@@ -827,7 +840,7 @@ public function home() {
 		
 		$series = $this->HighCharts->addChartSeries();
 		
-		if(!isset($this->request->data['Filter'])) {
+		/*if(!isset($this->request->data['Filter'])) {
 			$time = strtotime("-11 month", time());
 			$data['from_date'] = date("Y-m-d", $time);
 			$data['to_date'] = date('Y-m-d');
@@ -846,7 +859,40 @@ public function home() {
 						'Transaction.post_date >=' => $data['from_date'],
 						'Transaction.post_date <=' => $data['to_date'],
 				),
+		);*/
+		
+		if(!isset($this->request->data['Filter'])) {
+			$time = strtotime("-11 month", time());
+			$data['from_date'] = date("Y-m-d", $time);
+			$data['to_date'] = date('Y-m-d');
+			$data['year_month_day'] = '2';
+			if (!$this->Session->check('filterdata')) {
+				$this->Session->write('filterdata', $data);
+			}
+		} else {
+			$data= $this->request->data['Filter'];
+			$data['year_month_day'] = '2';
+			$this->Session->write('filterdata', $data);
+			$this->redirect(array('action' => 'category', 'page' => 1));
+		}
+		
+		$filterdata = $this->Session->read('filterdata');
+		
+		
+		$this->paginate = array(
+				'limit' => 20,
+				'order' => array(
+						'Transaction.post_date' => 'asc'
+				),
+				'conditions' => array(
+						'Transaction.user_id' => $this->Session->read('User.id'),
+						'Transaction.post_date >=' => $filterdata['from_date'],
+						'Transaction.post_date <=' => $filterdata['to_date'],
+				),
 		);
+		$this->set('from_date', $filterdata['from_date']);
+		$this->set('to_date', $filterdata['to_date']);
+		
 		
 		$this->Transaction->recursive = 0;
 		$transactions = $this->paginate();
@@ -855,8 +901,8 @@ public function home() {
 		$alltransactions = $this->Transaction->find('all', array(
 				'conditions' => array(
 						'Transaction.user_id' => $this->Session->read('User.id'),
-						'Transaction.post_date >=' => $data['from_date'],
-						'Transaction.post_date <=' => $data['to_date'],
+						'Transaction.post_date >=' => $filterdata['from_date'],
+						'Transaction.post_date <=' => $filterdata['to_date'],
 				)
 		));
 		
@@ -1013,6 +1059,18 @@ public function home() {
 		
 		//print_r($chartData);*/
 		
+		$finalBalance = $this->balance(0);
+		$this->set('aktualnystav', $finalBalance);
+		
+		$lastIncome = $this->incomeLastMonths(1);
+		$this->set('minulystav', $lastIncome);
+		
+		$lastExpense = $this->expenseLastMonths(1);
+		$this->set('minulystavexp', $lastExpense);
+		
+		$nextBalance = $this->balance(3);
+		$this->set('dalsistav', $nextBalance);
+		
 	}
 
 
@@ -1032,6 +1090,18 @@ public function home() {
 		}
 		$options = array('conditions' => array('Transaction.' . $this->Transaction->primaryKey => $id));
 		$this->set('transaction', $this->Transaction->find('first', $options));
+		
+		$finalBalance = $this->balance(0);
+		$this->set('aktualnystav', $finalBalance);
+		
+		$lastIncome = $this->incomeLastMonths(1);
+		$this->set('minulystav', $lastIncome);
+		
+		$lastExpense = $this->expenseLastMonths(1);
+		$this->set('minulystavexp', $lastExpense);
+		
+		$nextBalance = $this->balance(3);
+		$this->set('dalsistav', $nextBalance);
 	}
 
 /**
@@ -1095,6 +1165,18 @@ public function home() {
 		$this->set('subcategories', $this->Transaction->Subcategory->find('all', array('fields' => array('Subcategory.category_id', 'Subcategory.id', 'Subcategory.name'), 'recursive' => 1, 'conditions' => array('Subcategory.user_id' => $user_id))));
 		$this->set('user', $user_id); 	
 		$this->set(compact('users'));
+		
+		$finalBalance = $this->balance(0);
+		$this->set('aktualnystav', $finalBalance);
+		
+		$lastIncome = $this->incomeLastMonths(1);
+		$this->set('minulystav', $lastIncome);
+		
+		$lastExpense = $this->expenseLastMonths(1);
+		$this->set('minulystavexp', $lastExpense);
+		
+		$nextBalance = $this->balance(3);
+		$this->set('dalsistav', $nextBalance);
 	}
 
 /**
@@ -1157,6 +1239,18 @@ public function home() {
 		$this->set('subcategories', $this->Transaction->Subcategory->find('all', array('fields' => array('Subcategory.category_id', 'Subcategory.id', 'Subcategory.name'), 'recursive' => 1, 'conditions' => array('Subcategory.user_id' => $user_id))));
 		$this->set('user', $user_id);
 		$this->set(compact('users'));
+		
+		$finalBalance = $this->balance(0);
+		$this->set('aktualnystav', $finalBalance);
+		
+		$lastIncome = $this->incomeLastMonths(1);
+		$this->set('minulystav', $lastIncome);
+		
+		$lastExpense = $this->expenseLastMonths(1);
+		$this->set('minulystavexp', $lastExpense);
+		
+		$nextBalance = $this->balance(3);
+		$this->set('dalsistav', $nextBalance);
 	}
 
 /**
@@ -1400,6 +1494,7 @@ public function home() {
 			return false;
 		}
  	}
+ 	
 
  	
 }

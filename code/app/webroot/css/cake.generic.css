@@ -23,7 +23,7 @@
 
 /** General Style Info **/
 body {
-	background: #003d4c;
+	background: #35794B;   // farba dolarovej bankovky
 	color: #fff;
 	font-family:'lucida grande',verdana,helvetica,arial,sans-serif;
 	font-size:90%;
@@ -42,24 +42,24 @@ a img {
 	border:none;
 }
 h1, h2, h3, h4 {
-	font-weight: normal;
+	font-weight: bold;
 	margin-bottom:0.5em;
 }
 h1 {
 	background:#fff;
 	color: #003d4c;
-	font-size: 130%;
+	font-size: 120%;
 }
 h2 {
 	background:#fff;
-	color: #e32;
+	color: #777777;
 	font-family:'Gill Sans','lucida grande', helvetica, arial, sans-serif;
-	font-size: 190%;
+	font-size: 110%;
 }
 h3 {
 	color: #2c6877;
 	font-family:'Gill Sans','lucida grande', helvetica, arial, sans-serif;
-	font-size: 165%;
+	font-size: 110%;
 }
 h4 {
 	color: #993;
@@ -89,19 +89,19 @@ p {
 }
 #header h1 {
 	line-height:24px;
-	background: #003d4c url('../img/coins_24.png') no-repeat left;
+	background: #35794B url('../img/coins_24.png') no-repeat left;
 	color: #fff;
 	padding: 0px 30px;
 }
 #header h1 a {
 	color: #fff;
-	background: #003d4c;
-	font-weight: normal;
+	background: #35794B;
+	font-weight: bold;
 	text-decoration: none;
 }
 #header h1 a:hover {
 	color: #fff;
-	background: #003d4c;
+	background: #35794B;
 	text-decoration: underline;
 }
 #content{
@@ -145,6 +145,15 @@ table {
 	margin-bottom: 10px;
 	width: 100%;
 }
+
+.table_siroka {
+	border-right:0;
+	clear: both;
+	color: #333;
+	margin-bottom: 10px;
+	width: 860px;
+} 
+
 th {
 	border:0;
 	border-bottom:2px solid #555;
@@ -269,13 +278,13 @@ form {
 }
 fieldset {
 	border: none;
-	margin-bottom: 1em;
-	padding: 16px 10px;
+	//margin-bottom: 1em;
+	padding: 5px 0px;
 }
 fieldset legend {
-	color: #e32;
-	font-size: 160%;
-	font-weight: bold;
+	color: #777777;
+	font-size: 110%;
+	//font-weight: bold;
 }
 fieldset fieldset {
 	margin-top: 0;
@@ -291,15 +300,17 @@ fieldset fieldset div {
 }
 form div {
 	clear: both;
-	margin-bottom: 1em;
+	//margin-bottom: 1em;
 	padding: .5em;
 	vertical-align: text-top;
+	padding-left: 0em;
 }
 form .input {
 	color: #444;
 }
 form .required {
 	font-weight: bold;
+	float: left;
 }
 form .required label:after {
 	color: #e32;
@@ -313,7 +324,7 @@ form div.submit {
 }
 label {
 	display: block;
-	font-size: 15px;
+	font-size: 13px;
 	margin-bottom:3px;
 }
 input, textarea {
@@ -321,10 +332,10 @@ input, textarea {
 	font-size: 100%;
 	font-family: "frutiger linotype", "lucida grande", "verdana", sans-serif;
 	padding: 2px;
-	width:200px;
+	width:150px;
 }
 select {
-	clear: both;
+	//clear: both;
 	font-size: 120%;
 	vertical-align: text-bottom;
 }
@@ -347,13 +358,13 @@ div.checkbox label {
 input[type=radio] {
 	float:left;
 	width:auto;
-	margin: 6px 0;
+	margin: 3px 0;
 	padding: 0;
-	line-height: 26px;
+	line-height: 15px;
 }
 .radio label {
 	margin: 0 0 6px 20px;
-	line-height: 26px;
+	line-height: 15px;
 }
 input[type=submit] {
 	display: inline;
@@ -746,7 +757,7 @@ pre {
 }
 
 #UserLoginForm  {
-	width: 220px;
+	width: 155px;
 	margin:0 auto;
 	position: relative;
 	margin-top: 30px;
@@ -760,14 +771,14 @@ pre {
 #login_submit {
 	margin: 0 auto;
 	position: relative;
-	width: 130px;
+	width: 110px;
 }
 
 #zaregistrujte_sa {
 	margin:0 auto;
 	margin-top: 30px;
 	position: relative;
-	width: 250px;
+	width: 200px;
 }
 
 #grafbox {
@@ -788,4 +799,66 @@ pre {
 
 table a {
 	font-weight: normal;
+}
+
+#footer a {
+	color: white;
+}
+
+.rozsah {
+	margin-up: 10px;
+	margin-bottom: 10px;
+	width: 840px;
+	background: #EEEDEC;
+    // background: #A6CE95;
+	padding: 10px;
+	-moz-border-radius: 5px;
+	 border-radius: 5px;
+}
+
+.left_box {
+	margin-up: 10px;
+	margin-bottom: 5px;
+	width: 200px;
+	background: #EEEDEC;
+	padding: 10px;
+	-moz-border-radius: 5px;
+	 border-radius: 5px;
+}
+
+.small_box {
+	margin-up: 10px;
+	margin-bottom: 5px;
+	width: 190px;
+	background: white;
+	padding: 5px;
+	-moz-border-radius: 5px;
+	 border-radius: 5px;
+	//border: solid 1px black;
+}
+
+.suma_box {
+	margin-up: 10px;
+	padding: 2px;
+	-moz-border-radius: 5px;
+	 border-radius: 5px;
+	border: solid 2px #EEEDEC;
+	font-size: 15px;
+	clear: both;
+	text-align: center;
+	font-weight: bold;
+}
+
+.input_polia {
+	//float: left;
+	//clear: none;
+}
+
+.input_polia label {
+	display: inline;
+	padding-right: 5px;
+}
+
+.input_polia input {
+	//float: right;
 }

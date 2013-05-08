@@ -16,7 +16,7 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
-$siteDescription = __d('cake_dev', 'Domáce účtovníctvo');
+$siteDescription = __d('cake_dev', 'MOBILE');
 ?>
 <!DOCTYPE html>
 <html>
@@ -58,7 +58,7 @@ $( "#datepicker" ).datepicker( "option", "dateFormat", 'yy-mm-dd' );
 			<li><h1><?php echo $this->Html->link('Domov', '/'); ?></h1></li>
 			<li><h1><?php echo $this->Html->link('Transakcie', '/transactions'); ?></h1></li>
 			<li><h1><?php echo $this->Html->link('Pridanie transakcie', '/transactions/add'); ?></h1></li>
-			<li><h1><?php echo $this->Html->link('Kategórie', '/transactions/category/'); ?></h1></li>
+			<li><h1><?php echo $this->Html->link('Kategórie', '/categories'); ?></h1></li>
 			<li><h1><?php echo $this->Html->link('Import', '/imports'); ?></h1></li>
 			<li><h1><?php
 				echo $this->Session->check('Auth.User') 
@@ -87,7 +87,6 @@ $( "#datepicker" ).datepicker( "option", "dateFormat", 'yy-mm-dd' );
 			<?php echo $this->fetch('content'); ?>
 		</div>
 		<div id="footer">
-		<?= $this->element('default_footer') ?>
 			<?php echo $this->Html->link(
 					$this->Html->image('cake.power.gif', array('alt' => $siteDescription, 'border' => '0')),
 					'http://www.cakephp.org/',

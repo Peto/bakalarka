@@ -1,12 +1,11 @@
 <div class="transactions index">
-	<h2><?php echo __('Transakcie podľa kategórií'); ?></h2>
+	<h2><?php echo __('Transakcie'); ?></h2>
+	
 	
 	<script>
 	
   $(function() {
     $( "#from" ).datepicker({
-
-    	
     
       changeMonth: true,
       numberOfMonths: 3,
@@ -15,14 +14,6 @@
         $( "#to" ).datepicker( "option", "minDate", selectedDate );
       }
     });
-
-    // getter
-	var firstDay = $( "#from" ).datepicker( "option", "firstDay" );  
-	 
-	 
-	// setter
-	$( "#from" ).datepicker( "option", "firstDay", 1 );   // nastavenie zaciatocneho dna v tyzdni
-    
     $("#from").datepicker('setDate', new Date('<?php echo $from_date; ?>'));
     $( "#from" ).datepicker( "option", "dateFormat", 'yy-mm-dd' );
     $( "#to" ).datepicker({
@@ -35,26 +26,22 @@
     });
     $("#to").datepicker('setDate', new Date('<?php echo $to_date; ?>'));
     $( "#to" ).datepicker( "option", "dateFormat", 'yy-mm-dd' );
-
-    // getter
-	var firstDay = $( "#to" ).datepicker( "option", "firstDay" );  
-	 
-	 
-	// setter
-	$( "#to" ).datepicker( "option", "firstDay", 1 );   // nastavenie zaciatocneho dna v tyzdni
-    
   });
   </script>
   
-  <div class="chart">
+  <?php 
+  	echo 'Transakcie od: '.date("d.m.Y", strtotime($from_date));
+	echo 'Transakcie do: '.date("d.m.Y", strtotime($to_date));
+  ?>
 	
+<div class="chart">
 	<div id="columnwrapper" style="display: block; float: left; width:90%; margin-bottom: 20px;"></div>
     <div class="clear"></div>	
 	
 	<?php echo $this->HighCharts->render('Column Chart'); ?>
 
 </div>
-	<div class="table_siroka">
+
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 			<th><?php echo $this->Paginator->sort('id'); ?></th>
@@ -99,49 +86,20 @@
 		echo $this->Paginator->next(__('ďalej') . ' >', array(), null, array('class' => 'next disabled'));
 	?>
 	</div>
-	</div>
 </div>
 <div class="actions">
-	<h3><?php echo __('Prehľad'); ?></h3>
-	<div class="left_box">
-		<div class="small_box">
-		<?php echo $this->Form->create('Filter'); 
-		  echo $this->Form->input('from_date', array('type' => 'text', 'id' => 'from', 'label' => 'Od:', 'default' => $from_date ));
-		  echo $this->Form->input('to_date', array('type' => 'text', 'id' => 'to', 'label' => 'Do:', 'default' => $to_date  ));
-		 // echo $this->Form->input('year_month_day', array('options' => array('1' => 'ročný', '2' => 'mesačný', '3' => 'denný'), 'value' => '2', 'type' => 'radio', 'id'=> 'year_month_day' , 'legend' => 'Rozdeliť na:' ));
-		  echo $this->Form->end(__('Filtruj'));
-		 ?>
-		 </div>
-	 </div>
-	<div class="left_box">
-		<div class="small_box">
-			<?php echo 'Aktuálny stav: '?>
-			<div class="suma_box"> 
-				<?php echo $aktualnystav .' €' ;?><br />
-			</div>
-		</div>
-		<div class="small_box">
-			<?php echo 'Plánované výdavky na najbližšie 3 mesiace: '?>
-			<div class="suma_box"> 
-				<?php echo $dalsistav .' €' ;?><br />
-			</div>
-		</div>
-		<div class="small_box">
-			<?php echo 'Príjmy za posledný mesiac: '?>
-			<div class="suma_box"> 
-				<?php echo $minulystav .' €' ;?><br />
-			</div>
-		</div>
-		<div class="small_box">
-			<?php echo 'Výdavky za posledný mesiac: '?>
-			<div class="suma_box"> 
-				<?php echo $minulystavexp .' €' ;?><br />
-			</div>
-		</div>
-	</div>
+	<h3><?php echo __('Prehľad na mobile'); ?></h3>
+	<?php echo $this->Form->create('Filter'); 
+	  echo $this->Form->input('from_date', array('type' => 'text', 'id' => 'from', 'label' => 'Od:', 'default' => $from_date ));
+	  echo $this->Form->input('to_date', array('type' => 'text', 'id' => 'to', 'label' => 'Do:', 'default' => $to_date  ));
+	  echo $this->Form->input('year_month_day', array('options' => array('1' => 'ročný', '2' => 'mesačný', '3' => 'denný'), 'value' => '2', 'type' => 'radio', 'id'=> 'year_month_day' , 'legend' => 'Rozdeliť na:' ));
+	  echo $this->Form->end(__('Filtruj'));
+	 ?>
 	<ul>
-		<li><?php echo $this->Html->link(__('Zoznam kategórií'), array('controller' => 'categories', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('Zoznam podkategórií'), array('controller' => 'subcategories', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('Nová podkategória'), array('controller' => 'subcategories', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('Nová transakcia'), array('action' => 'add')); ?></li>
+		<li><?php echo $this->Html->link(__('Zobraz kategórie'), array('controller' => 'categories', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('Zobraz subkategórie'), array('controller' => 'subcategories', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('Nová kategória'), array('controller' => 'categories', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('Nová subkategória'), array('controller' => 'subcategories', 'action' => 'add')); ?> </li>
 	</ul>
 </div>

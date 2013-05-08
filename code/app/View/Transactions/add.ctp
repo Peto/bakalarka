@@ -6,6 +6,13 @@
 		$(document).ready(function () {
 			$("#TransactionSubcategoryId").chained("#TransactionCategoryId");
 			$("#datepicker").datepicker('setDate', new Date());   // nastavenie defaultneho datumu na aktualny
+
+			// getter
+			var firstDay = $( "#datepicker" ).datepicker( "option", "firstDay" );  
+			 
+			 
+			// setter
+			$( "#datepicker" ).datepicker( "option", "firstDay", 1 );   // nastavenie zaciatocneho dna v tyzdni
 			
 			$('#opakovanie_nastavenia').hide();
 		    if ($('#Repeat0').attr('checked', true)) {
@@ -25,28 +32,23 @@
 	
 		<legend><?php echo __('Pridaj transakciu'); ?></legend>
 	<?php
-		echo $this->Form->input('transaction_type_id', array('options' => array('1' => 'príjem', '2' => 'výdavok'), 'value' => '1', 'type' => 'radio', 'id'=> 'transaction_type_id' , 'legend' => 'Typ transakcie' ));
-		echo $this->Form->input('name', array('label' => 'Názov transakcie'));
-		echo $this->Form->input('amount', array('label' => 'Suma'));
-		//$categories[0] = 'Vyberte kategóriu';
-		//ksort($categories);
-		//echo $this->Form->input('category_id', array('options' => $categories, 'label' => 'Kategória'), array('id' => 'data[Transaction][category_id]'));
-		// echo $this->Form->input('subcategory_id', array('options' => $subcategories, 'label' => 'Podkategória')); ?>
-		<select id="TransactionCategoryId" name="data[Transaction][category_id]">
+		echo $this->Form->input('transaction_type_id', array('options' => array('1' => 'príjem', '2' => 'výdavok'), 'value' => '1', 'type' => 'radio', 'id'=> 'transaction_type_id' , 'legend' => 'Typ transakcie' ));?>
+		<div class="input_polia"><?php echo $this->Form->input('name', array('label' => 'Názov transakcie:'));?></div>
+		<div class="input_polia"><?php echo $this->Form->input('amount', array('label' => 'Suma:'));?></div>
+		<div><select id="TransactionCategoryId" name="data[Transaction][category_id]">
 		<option value="">Vyberte kategóriu</option>
 		<?php foreach ($categories as $key => $row) {
 			echo '<option value="'.$key.'" >'.$row.'</option>';
 		}?>
-		</select>
-		<select id="TransactionSubcategoryId" name="data[Transaction][subcategory_id]">
+		</select></div>
+		<div><select id="TransactionSubcategoryId" name="data[Transaction][subcategory_id]">
 		<option value="">Vyberte podkategóriu</option>
 		<?php foreach ($subcategories as $row) {
 			echo '<option value="'.$row['Subcategory']['id'].'" class="'.$row['Subcategory']['category_id'].'">'.$row['Subcategory']['name'].'</option>';
 		}?>
-		</select>
-		<?php echo $this->Form->input('user_id', array('type' => 'hidden','value' => $user));
-		//echo $this->Form->input('original_transaction_id');
-		echo $this->Form->input('post_date', array('type' => 'text', 'id' => 'datepicker', 'label' => 'Dátum transakcie' ));?>
+		</select></div>
+		<?php echo $this->Form->input('user_id', array('type' => 'hidden','value' => $user));?>
+		<div class="input_polia"><?php echo $this->Form->input('post_date', array('type' => 'text', 'id' => 'datepicker', 'label' => 'Dátum transakcie:' ));?></div>
 		<div id='opakovanie'>
 		<?php echo $this->Form->input('repeat',
 				array(
@@ -55,32 +57,50 @@
 						'id' => 'repeat',
 						'legend' => 'Opakovanie transakcie')); ?> </div>
 		<div id='opakovanie_nastavenia'>
-		<?php echo $this->Form->input('repeat_every', 
+		<div class="input_polia"><?php echo $this->Form->input('repeat_every', 
 				array(
 						'type' => 'select', 
 						'options' => array('tyzden' => 'tyždeň', 'mesiac' => 'mesiac', 'rok' => 'rok'), 
 						'selected' => 'mesiac',
-						'label' => 'Opakovať každý'
+						'label' => 'Opakovať každý:'
 						
 				)
-		); 
-		 echo $this->Form->input('number_of_cycles', array('label' => 'Počet opakovaní', 'value' => '0'));
+		); ?></div>
+		 <div class="input_polia"><?php echo $this->Form->input('number_of_cycles', array('label' => 'Počet opakovaní:', 'value' => '0'));
 		 
 		?></div>
 		
 		
 	
 	</fieldset>
-<?php echo $this->Form->end(__('Submit')); ?>
+<?php echo $this->Form->end(__('Pridať')); ?>
 </div>
 <div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
-
-		<li><?php echo $this->Html->link(__('List Transactions'), array('action' => 'index')); ?></li>
-		<li><?php echo $this->Html->link(__('List Categories'), array('controller' => 'categories', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Subcategories'), array('controller' => 'subcategories', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Category'), array('controller' => 'categories', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Subcategory'), array('controller' => 'subcategories', 'action' => 'add')); ?> </li>
-	</ul>
+	<h3><?php echo __('Prehľad'); ?></h3>
+	<div class="left_box">
+		<div class="small_box">
+			<?php echo 'Aktuálny stav: '?>
+			<div class="suma_box"> 
+				<?php echo $aktualnystav .' €' ;?><br />
+			</div>
+		</div>
+		<div class="small_box">
+			<?php echo 'Plánované výdavky na najbližšie 3 mesiace: '?>
+			<div class="suma_box"> 
+				<?php echo $dalsistav .' €' ;?><br />
+			</div>
+		</div>
+		<div class="small_box">
+			<?php echo 'Príjmy za posledný mesiac: '?>
+			<div class="suma_box"> 
+				<?php echo $minulystav .' €' ;?><br />
+			</div>
+		</div>
+		<div class="small_box">
+			<?php echo 'Výdavky za posledný mesiac: '?>
+			<div class="suma_box"> 
+				<?php echo $minulystavexp .' €' ;?><br />
+			</div>
+		</div>
+	</div>
 </div>

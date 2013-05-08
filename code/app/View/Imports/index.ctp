@@ -1,11 +1,10 @@
 <div class="imports index">
-	<h2><?php echo __('Imports'); ?></h2>
+	<h2><?php echo __('Importy'); ?></h2>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 			<th><?php echo $this->Paginator->sort('id'); ?></th>
 			<th><?php echo $this->Paginator->sort('date_from'); ?></th>
 			<th><?php echo $this->Paginator->sort('date_to'); ?></th>
-			<th><?php echo $this->Paginator->sort('xml_file'); ?></th>
 			<th><?php echo $this->Paginator->sort('processed'); ?></th>
 			<th><?php echo $this->Paginator->sort('filename'); ?></th>
 			<th><?php echo $this->Paginator->sort('user_id'); ?></th>
@@ -16,7 +15,6 @@
 		<td><?php echo h($import['Import']['id']); ?>&nbsp;</td>
 		<td><?php echo h($import['Import']['date_from']); ?>&nbsp;</td>
 		<td><?php echo h($import['Import']['date_to']); ?>&nbsp;</td>
-		<td><?php echo h($import['Import']['xml_file']); ?>&nbsp;</td>
 		<td><?php echo h($import['Import']['processed']); ?>&nbsp;</td>
 		<td><?php echo h($import['Import']['filename']); ?>&nbsp;</td>
 		<td>
@@ -32,10 +30,10 @@
 	</table>
 	<p>
 	<?php
-	echo $this->Paginator->counter(array(
-	'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
-	));
-	?>	</p>
+		echo $this->Paginator->counter(array(
+		'format' => __('Stránka {:page} z {:pages}, zobrazuje {:current} záznamov zo {:count} celkovo, začína na zázname {:start}, končí na zázname {:end}')
+		));
+		?>	</p>
 	<div class="paging">
 	<?php
 		echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));
@@ -45,8 +43,8 @@
 	</div>
 </div>
 <div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
+	<h3><?php echo __('Akcie'); ?></h3>
 	<ul>
-		<li><?php echo $this->Html->link(__('New Import'), array('action' => 'add')); ?></li>
+		<li><?php echo $this->Html->link(__('Nový import'), array('action' => 'add')); ?></li>
 	</ul>
 </div>

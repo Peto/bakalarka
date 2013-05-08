@@ -64,7 +64,7 @@ class CategoriesController extends AppController {
 				$chartName,
 				array(
 						'renderTo'				=> 'columnwrapper',  // div to display chart inside
-						'chartWidth'				=> 800,
+						'chartWidth'				=> 860,
 						'chartHeight'				=> 300,
 						'chartMarginTop' 			=> 50,
 						'chartMarginLeft'			=> 90,
