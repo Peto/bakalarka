@@ -408,9 +408,53 @@ Neprihlásený používateľ môže:
 \end{itemize}
 
 \section{Používateľské rozhranie}
-Ako som spomenul už v časti Porovnanie s mojimi cieľami, v aplikácii Domáce účtovníctvo sa snažím implementovať príjemné, intuitívne a hlavne jednoduché používateľské rozhranie. Na vrch stránky som umiestnil navigáciu so všetkými potrebnými základnými položkami. Pod navigáciou sa v ľavej časti stránky nachadza dodatočné menu s odkazmi na konkrétnejšie podstránky. Okrem nich sa tam nachádzajú aj akcie ktoré možno aplikovať na aktuálnej stránke. Napríklad pri prehľade konkrétnej transakcie sú tam zobrazené možnosti na jej editáciu alebo prípadne na jej zmazanie. Ako som spomenul táto ponuka sa mení v závislosti od vybranej stránky. Pri prehľadoch transakcií sa v tejto časti nachádza nastavenie filtra, podľa ktorého sa zobrazia transakcie.
+\subsection{Webové rozhranie}
+Ako som spomenul už v časti Porovnanie s mojimi cieľami, v aplikácii Domáce účtovníctvo sa snažím implementovať príjemné, intuitívne a hlavne jednoduché používateľské rozhranie. Na vrchnú časť stránky som umiestnil navigáciu so všetkými potrebnými základnými položkami. Vľavo pod navigáciou sa nachádza aktuálna bilancia financií používateľa. Prvý je aktuálny stav zobrazujúci aktuálnu sumu jeho financií. Pod ním sa nachádza suma za plánované výdavky na najbližšie 3 mesiace. Nakoniec sú to sumy príjmov a taktiež aj výdavkov za posledný mesiac. Pokiaľ to je potrebné, tak sa pod týmto prehľadom zobrazuje dodatočné menu s odkazmi na konkrétnejšie podstránky. Okrem nich sa na tomto mieste nachádzajú aj akcie, ktoré možno aplikovať na aktuálnej stránke. Napríklad pri prehľade konkrétnej transakcie sú tam zobrazené možnosti na jej editáciu alebo prípadne na jej zmazanie. Ako som spomenul táto ponuka sa mení v závislosti od aktuálne vybranej stránky. Pri prehľadoch transakcií sa v tejto časti zobrazí aj nastavenie filtra, podľa ktorého sa vyberú transakcie. Na výber je rozsah dátumov od a do a taktiež môže byť dostupná možnosť rozdelenia transakcií v grafe podľa rokov, mesiacov alebo dní.
 
-Napravo od tohoto menu sa nachádza obsah stránky. Pri prehľadoch ide zvyčajne o graf pod ktorým je umiestnená tabuľka s možnosťou triedenia podľa stípcov a jednoduchého stránkovania.
+Napravo od tohoto menu sa nachádza obsah stránky. Pri prehľadoch ide zvyčajne o graf pod ktorým je umiestnená tabuľka s možnosťou triedenia podľa rôznych stĺpcov a jednoduchého stránkovania. Nižšie rozoberiem stránky so základnej ponuky navigácie. 
+
+\subsubsection{Domov}
+Základná domovská stránka je trochu špecifickejšia. Používateľovi sa snažím poskytnúť všetky základne informácie bez potreby skrolovania po stránke. Nachádza sa tu základný graf príjmov a výdavkov rozdelených podľa dní za poslední mesiac. Hneď pod ním sa nachádza ďalší graf zobrazujúci celkové sumy v rôznych transakciách za rovnake mesačné obdobie. Tento graf je má však len polovičnú šírku vrchného grafu a tak sa vedľa neho zmestil aj tabuľkový rozpis posledných transakcií aj s možnosťou stránkovania a usporiadávania podľa rôznych stĺpcov. Ako som už v úvede naznačil, všetky tieto informácie uvidí používateľ bez nutnosti skrolovania.
+
+\subsubsection{Transakcie}
+
+TODO
+
+\subsubsection{Pridanie transakcie}
+
+TODO
+
+\subsubsection{Kategórie}
+
+TODO
+
+\subsubsection{Import}
+
+Import bankových výpisov vo formáte ABO zo Slovenskej sporiteľne. TODO
+
+\subsubsection{Nastavenia}
+
+Základné nastavenia účtu používateľa. Na tejto stránke si má používateľ možnosť zmeniť meno, priezvisko, prípadne prihlasovacie heslo. TODO
+
+\subsubsection{Odhlásiť sa}
+
+Používateľ je po kliknutí odhlásený z aplikácie, zároveň je zrušená jeho session a je presmerovaný na prihlasovaciu stránku.
+
+\subsection{Mobilné rozhranie}
+Pre zjednodušenie ovládania aplikácie na mobilných zariadeniach som pracoval aj na mobilnom rozhraní. Veľmi nápomocnou mi v tomto bola knižnica jQuery Mobile \cite{jQueryMobile}\, ktorá mi pomohla okrem funkčnosti aj s grafickým prevedením aplikácie vďaka jej základnému css layoutu pre mobilné prehliadače. Navigáciu som pri tomto rozhraní presunu spodnú časť stránky, tak ako to býva zvykom pri mobilných zariadeniach. Pokiaľ nie je potrebná tak sa automaticky zroluje, aby bola využitá maximálna plocha a mohlo byť zobrazených čo najviac informácií. V tejto spodnej časti stránky sa nachádza aj prepnutie na plnú verziu stránky a taktiež aj tlačítko na odhlásenie sa z aplikácie. 
+
+Pre zachovanie prehľadnosti a jednoduchosti ovládania som počet odkazov v navigácii znížil na základné 4, ktoré ďalej opíšem trochu podrobnejšie. 
+
+\subsubsection{Domov}
+Základná stránka aplikácie, ktorú uvidí používateľ po prihlásení. Zobrazuje prehľadnú aktuálnu bilanciu financií používateľa. Je to ten istý prehľad ktorý nájde použivateľ vo webovom rozhraní  vľavo pod navigáciou. Pod touto bilanciou sa nachádza graf transakcií podľa kategórií. V tomto grafe su zarátané transakcie za posledný mesiac. Pod ním je prehľadná tabuľka s transakciami. Zobrazuje dátum, názov, sumu a kategóriu do ktorej je zaradená konkrétna transakcia. Graf zobrazujúci transakcie za určité obdobie som vynechal. Vzhľadom na malé rozlíšenie by nemal dostatočne dobrý informatívny charakter.
+\subsubsection{Transakcie}
+Prehľadný tabuľkový zoznam transakcií za posledný mesiac. Možnosť triedenia podľa rôznych stĺpcov je samozrejmosť. Každá transakcia zobrazuje svoj dátum, názov, sumu, kategóriu a podkategóriu. Na rozdiel od zoznamu na domovskej stránke je pri transakcii aj možnosť jej úpravy, zmazania. Taktiež sa tu nachádza aj možnosť zmazania vybranej transakcie a zároveň aj všetkých jej budúcich opakovaní.
+
+Pod touto tabuľkou je umiestnené filtrovacie menu, ktoré som opisoval už pri webovom rozhraní.
+\subsubsection{Pridanie transakcie}
+TODO
+\subsubsection{Kategórie}
+TODO
 
 
 \section{Databázový model}
@@ -427,7 +471,7 @@ Tabuľka \texttt{user} types slúži na identifikáciu a pomenovanie typu použ�
 \subsubsection{Transaction\_types}
 Tabuľka \texttt{transaction\_types} slúži na identifikáciu a pomenovanie typu transakcie. Tie sú rozdelené na príjmy a výdavky.
 \subsubsection{Imports}
-Tabuľka obsahujúca len jeden cudzí kľúč \texttt{user\_id}, ktorý definuje vzťah \texttt{belongsTo} k tabuľke \texttt{user} a konkrétnemu userovi(používateľovi).
+Tabuľka obsahujúca len jeden cudzí kľúč \texttt{user\_id}, ktorý definuje vzťah \texttt{belongsTo} k tabuľke \texttt{user} a konkrétnemu userovi(používateľovi). TODO
 \begin{figure}[ht]
   \centering
       \includegraphics[width=15cm]{databazovy_model}
