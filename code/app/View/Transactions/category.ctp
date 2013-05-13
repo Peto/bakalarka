@@ -121,7 +121,7 @@
 			</div>
 		</div>
 		<div class="small_box">
-			<?php echo 'Plánované výdavky na najbližšie 3 mesiace: '?>
+			<?php echo 'Plánovaný stav o 3 mesiace: '?>
 			<div class="suma_box"> 
 				<?php echo $dalsistav .' €' ;?><br />
 			</div>
@@ -141,6 +141,7 @@
 	</div>
 	<ul>
 		<li><?php echo $this->Html->link(__('Zoznam kategórií'), array('controller' => 'categories', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('Nová kategória'), array('controller' => 'categories', 'action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('Zoznam podkategórií'), array('controller' => 'subcategories', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('Nová podkategória'), array('controller' => 'subcategories', 'action' => 'add')); ?> </li>
 	</ul>

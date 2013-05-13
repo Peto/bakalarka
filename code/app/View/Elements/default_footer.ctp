@@ -1,4 +1,3 @@
-<ul>
     <?php
         $paramsQuery = $this->params->query;
         if(!is_array($paramsQuery))
@@ -15,8 +14,7 @@
     ?>
 
     <?php if($is_mobile): ?>
-        <li><?= $this->Html->link('Plná verzia stránky', $desktop_url, array('target' => '', 'class' => '')) ?></li>
+        <div class="switch_mobile"><?= $this->Html->link('Plná verzia stránky', $desktop_url, array('target' => '', 'class' => '')) ?></div>
     <?php else: ?>
-        <li><?= $this->Html->link('Mobilná verzia stránky', $mobile_url, array('target' => '', 'class' => '')) ?></li>
+        <div class="switch_full"><?= $this->Html->link('Mobilná verzia stránky', $mobile_url, array('target' => '', 'class' => '')) ?></div>
     <?php endif; ?>
-</ul>

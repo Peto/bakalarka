@@ -1,0 +1,238 @@
+h2 {
+	margin: 1px;
+}
+
+#UserLoginForm  {
+	//width: 100%;
+	margin:0 auto;
+	position: relative;
+	margin-top: 30px;
+	background: #EDF0F2;
+	padding: 20px;
+	padding-bottom: 0px;
+	border: 1px solid #CFD2D4;
+	border-radius: 10px 10px 10px 10px;
+}
+
+#login_submit {
+	margin: 0 auto;
+	position: relative;
+	//width: 80%;
+}
+
+#zaregistrujte_sa {
+	margin:0 auto;
+	margin-top: 30px;
+	position: relative;
+	//width: 200px;
+}
+
+#grafbox {
+	position: relative;
+	float: left;
+}
+
+#paginbox {
+	position: relative;
+	float: left;
+	width: 520px;
+	margin-left: 20px;
+}
+
+.left {
+	text-align: right;
+}
+
+table a {
+	font-weight: normal;
+}
+
+#footer a {
+	color: white;
+}
+
+.rozsah {
+	//margin-up: 10px;
+	//width: 840px;
+	background: #EEEDEC;
+    // background: #A6CE95;
+	padding: 3px;
+	-moz-border-radius: 5px;
+	 border-radius: 5px;
+}
+
+.left_box {
+	margin-up: 10px;
+	margin-bottom: 5px;
+	//width: 200px;
+	background: #EEEDEC;
+	padding: 10px;
+	-moz-border-radius: 5px;
+	 border-radius: 5px;
+}
+
+.small_box {
+	margin-up: 10px;
+	margin-bottom: 5px;
+	//width: 190px;
+	background: white;
+	padding: 5px;
+	-moz-border-radius: 5px;
+	 border-radius: 5px;
+	//border: solid 1px black;
+}
+
+.suma_box {
+	margin-up: 10px;
+	padding: 2px;
+	-moz-border-radius: 5px;
+	 border-radius: 5px;
+	border: solid 2px #EEEDEC;
+	font-size: 15px;
+	clear: both;
+	text-align: center;
+	font-weight: bold;
+}
+
+.input_polia {
+	//float: left;
+	//clear: none;
+}
+
+.input_polia label {
+	display: inline;
+	padding-right: 5px;
+}
+
+.input_polia input {
+	//float: right;
+}
+
+#paginbox {
+	position: relative;
+	float: left;
+	//width: 520px;
+	margin-left: 20px;
+	clear: both;
+	font-size: 10px;
+	width: 100%;
+}
+
+table {
+	border-right:0;
+	clear: both;
+	color: #333;
+	margin-bottom: 10px;
+	width: 100%;
+}
+
+.table_siroka {
+	border-right:0;
+	clear: both;
+	color: #333;
+	margin-bottom: 10px;
+	width: 100%;
+	font-size: 10px;
+} 
+
+th {
+	border:0;
+	border-bottom:2px solid #555;
+	text-align: left;
+	padding:4px;
+}
+th a {
+	display: block;
+	padding: 2px 4px;
+	text-decoration: none;
+}
+th a.asc:after {
+	content: ' ⇣';
+}
+th a.desc:after {
+	content: ' ⇡';
+}
+table tr td {
+	padding: 6px;
+	text-align: left;
+	vertical-align: top;
+	border-bottom:1px solid #ddd;
+}
+table tr:nth-child(even) {
+	background: #f9f9f9;
+}
+td.actions {
+	text-align: center;
+	white-space: nowrap;
+}
+table td.actions a {
+	margin: 0px 6px;
+	padding:2px 5px;
+}
+
+/** Paging **/
+.paging {
+	background:#fff;
+	color: #ccc;
+	margin-top: 1em;
+	clear:both;
+}
+.paging .current,
+.paging .disabled,
+.paging a {
+	text-decoration: none;
+	padding: 5px 8px;
+	display: inline-block
+}
+.paging > span {
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-left: 0;
+}
+.paging > span:hover {
+	background: #efefef;
+}
+.paging .prev {
+	border-left: 1px solid #ccc;
+	-moz-border-radius: 4px 0 0 4px;
+	-webkit-border-radius: 4px 0 0 4px;
+	border-radius: 4px 0 0 4px;
+}
+.paging .next {
+	-moz-border-radius: 0 4px 4px 0;
+	-webkit-border-radius: 0 4px 4px 0;
+	border-radius: 0 4px 4px 0;
+}
+.paging .disabled {
+	color: #ddd;
+}
+.paging .disabled:hover {
+	background: transparent;
+}
+.paging .current {
+	background: #efefef;
+	color: #c73e14;
+}
+
+/** Scaffold View **/
+dl {
+	line-height: 2em;
+	margin: 0em 0em;
+	width: 60%;
+}
+dl dd:nth-child(4n+2),
+dl dt:nth-child(4n+1) {
+	background: #f4f4f4;
+}
+
+dt {
+	font-weight: bold;
+	padding-left: 4px;
+	vertical-align: top;
+	width: 10em;
+}
+dd {
+	margin-left: 10em;
+	margin-top: -2em;
+	vertical-align: top;
+}

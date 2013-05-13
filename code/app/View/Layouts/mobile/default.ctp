@@ -21,80 +21,82 @@ $siteDescription = __d('cake_dev', 'MOBILE');
 <!DOCTYPE html>
 <html>
 <head>
-	<?php echo $this->Html->charset(); ?>
-	<title>
-		<?php echo $siteDescription ?>:
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <title>
+  	<?php echo $siteDescription ?>:
 		<?php echo $title_for_layout; ?>
-	</title>
-	<?php
+  </title>
+  
+  <?php
 		echo $this->Html->meta('icon');
 
 		echo $this->Html->css('jquery-ui');
-		echo $this->Html->css('cake.generic');
+		echo $this->Html->css('mobile');
+		echo $this->Html->css('jquery.mobile-1.3.1.min');
 		
 		echo $this->Html->script(array('jquery.min.js'));
 		echo $this->Html->script(array('jquery.chained.js'));
 		echo $this->Html->script(array('jquery-ui.js'));
+		echo $this->Html->script(array('jquery.mobile-1.3.1.min.js'));
 
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
 		echo $this->fetch('script');
 	?>
-<!-- <script src="http://code.jquery.com/jquery-1.9.1.js"></script> -->
+  
+
+  
+  <!-- Extra Codiqa features -->
+  <link rel="stylesheet" href="codiqa.ext.css">
 
 
-<script>
-$(function() {
-$( "#datepicker" ).datepicker();
-$( "#datepicker" ).datepicker( "option", "dateFormat", 'yy-mm-dd' );
-});
-</script>
-
+  <!-- Extra Codiqa features -->
+  <script src="https://d10ajoocuyu32n.cloudfront.net/codiqa.ext.js"></script>
+   
 </head>
 <body>
-	<div id="container">
-		<div id="header">
-		<ul>
-			<li><h1><?php echo $this->Html->link('Domov', '/'); ?></h1></li>
-			<li><h1><?php echo $this->Html->link('Transakcie', '/transactions'); ?></h1></li>
-			<li><h1><?php echo $this->Html->link('Pridanie transakcie', '/transactions/add'); ?></h1></li>
-			<li><h1><?php echo $this->Html->link('Kategórie', '/categories'); ?></h1></li>
-			<li><h1><?php echo $this->Html->link('Import', '/imports'); ?></h1></li>
-			<li><h1><?php
-				echo $this->Session->check('Auth.User') 
-				 ? 
-				$this->Html->link(
+<!-- Home -->
+<div data-role="page" id="page1">
+    <div data-theme="a" data-role="header">
+        <h3>
+            Domáce účtovníctvo
+        </h3>
+    </div>
+    <div data-role="content">
+    	<?php echo $this->Session->flash(); ?>
+		<?php echo $this->fetch('content'); ?>
+    </div>
+    <div data-theme="a" data-role="footer" data-position="fixed">
+	    <div data-role="navbar" data-iconpos="top">
+	            <ul>
+	                <li><?php echo $this->Html->link('Domov', '/', array('data-transition' => 'fade', 'data-icon' => 'home')); ?>
+	                
+	                </li>
+	                <li>
+	                    <?php echo $this->Html->link('Transakcie', '/transactions', array('data-transition' => 'fade', 'data-icon' => 'bars')); ?>
+	                </li>
+	                <li>
+	                    <?php echo $this->Html->link('Pridanie transakcie', '/transactions/add', array('data-transition' => 'fade', 'data-icon' => 'plus')); ?>
+	                </li>
+	                <li>
+	                    <?php echo $this->Html->link('Kategórie', '/transactions/category/', array('data-transition' => 'fade', 'data-icon' => 'grid')); ?>
+	                </li>
+	            </ul>
+	        </div>
+    <?= $this->element('default_footer') ?>
+        <h4>
+            <?php echo $this->Html->link(
 				              'Odhlásiť sa',
 				               array(
 				                  'controller' => 'users',
 				                  'action' => 'logout',
 				                  'admin' => false
-				               ))
-				: 
-				$this->Html->link(
-				               'Prihlásiť sa',
-				                array(
-				                   'controller' => 'users',
-				                   'action' => 'login'
-				                ));
-				?></h1></li>
-		</ul>
-		</div>
-		<div id="content">
-
-			<?php echo $this->Session->flash(); ?>
-
-			<?php echo $this->fetch('content'); ?>
-		</div>
-		<div id="footer">
-			<?php echo $this->Html->link(
-					$this->Html->image('cake.power.gif', array('alt' => $siteDescription, 'border' => '0')),
-					'http://www.cakephp.org/',
-					array('target' => '_blank', 'escape' => false)
-				);
-			?>
-		</div>
-	</div>
-	<?php echo $this->element('sql_dump'); ?>
+				               )); ?>
+        </h4>
+    </div>
+</div>
 </body>
 </html>

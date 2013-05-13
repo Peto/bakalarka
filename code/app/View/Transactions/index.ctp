@@ -68,7 +68,7 @@
 			<th><?php echo $this->Paginator->sort('name','Názov'); ?></th>
 			<th><?php echo $this->Paginator->sort('amount','Suma'); ?></th>
 			<th><?php echo $this->Paginator->sort('category_id','Kategória'); ?></th>
-			<th><?php echo $this->Paginator->sort('subcategory_id','Subkategória'); ?></th>
+			<th><?php echo $this->Paginator->sort('subcategory_id','Podkategória'); ?></th>
 			<th class="actions"><?php echo __('Akcie'); ?></th>
 	</tr>
 	<?php foreach ($transactions as $transaction): ?>
@@ -86,8 +86,8 @@
 		<td><?php echo $this->Html->link($transaction['Subcategory']['name'], array('controller' => 'subcategories', 'action' => 'view', $transaction['Subcategory']['id'])); ?>&nbsp;</td>
 		<td class="actions">
 			<?php echo $this->Html->link($this->Html->image('/img/edit.png', array('alt' => 'Editovať')), array('action' => 'edit', $transaction['Transaction']['id']), array('escape' => false)); ?>
-			<?php echo $this->Form->postLink($this->Html->image('/img/deletered.png', array('alt' => 'Zmazať')), array('action' => 'delete', $transaction['Transaction']['id']), array('escape' => false), __('Ste si istý, že chcete zmazať túto transakciu: id # %s?', $transaction['Transaction']['id'])); ?>
-			<?php echo $this->Form->postLink($this->Html->image('/img/deleteall.png', array('alt' => 'Zmazať aktuálnu a všetky ďalšie')), array('action' => 'delete_next_repeats', $transaction['Transaction']['id']), array('escape' => false), __('Ste si istý, že chcete zmazať túto transakciu a všetky jej ďalšie opakovania?: id # %s?', $transaction['Transaction']['id'])); ?>
+			<?php echo $this->Form->postLink($this->Html->image('/img/deletered.png', array('alt' => 'Zmazať')), array('action' => 'delete', $transaction['Transaction']['id']), array('escape' => false), __('Ste si istý, že chcete zmazať túto transakciu: %s?', $transaction['Transaction']['name'])); ?>
+			<?php echo $this->Form->postLink($this->Html->image('/img/deleteall.png', array('alt' => 'Zmazať aktuálnu a všetky ďalšie')), array('action' => 'delete_next_repeats', $transaction['Transaction']['id']), array('escape' => false), __('Ste si istý, že chcete zmazať túto transakciu a všetky jej ďalšie opakovania?: %s?', $transaction['Transaction']['name'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
@@ -127,7 +127,7 @@
 			</div>
 		</div>
 		<div class="small_box">
-			<?php echo 'Plánované výdavky na najbližšie 3 mesiace: '?>
+			<?php echo 'Plánovaný stav o 3 mesiace: '?>
 			<div class="suma_box"> 
 				<?php echo $dalsistav .' €' ;?><br />
 			</div>
@@ -149,6 +149,6 @@
 	<ul>
 		<li><?php echo $this->Html->link(__('Zobraz subkategórie'), array('controller' => 'subcategories', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('Nová kategória'), array('controller' => 'categories', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('Nová subkategória'), array('controller' => 'subcategories', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('Nová podkategória'), array('controller' => 'subcategories', 'action' => 'add')); ?> </li>
 	</ul>
 </div>

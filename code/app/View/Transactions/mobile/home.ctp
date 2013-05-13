@@ -1,8 +1,3 @@
-<div class="transactions index">
-	<h2><?php echo __('Prehľad za posledný mesiac'); ?></h2>
-	
-	
-	
 	<script>
 	
   $(function() {
@@ -36,6 +31,32 @@
   	echo 'Rozsah zobrazených transakcií: '.date("d.m.Y", strtotime($from_date)).' - '.date("d.m.Y", strtotime($to_date));
   ?>
 </div>
+	<div class="left_box">
+		<div class="small_box">
+			<?php echo 'Aktuálny stav: '?>
+			<div class="suma_box"> 
+				<?php echo $aktualnystav .' €' ;?><br />
+			</div>
+		</div>
+		<div class="small_box">
+			<?php echo 'Plánovaný stav o 3 mesiace: '?>
+			<div class="suma_box"> 
+				<?php echo $dalsistav .' €' ;?><br />
+			</div>
+		</div>
+		<div class="small_box">
+			<?php echo 'Príjmy za posledný mesiac: '?>
+			<div class="suma_box"> 
+				<?php echo $minulystav .' €' ;?><br />
+			</div>
+		</div>
+		<div class="small_box">
+			<?php echo 'Výdavky za posledný mesiac: '?>
+			<div class="suma_box"> 
+				<?php echo $minulystavexp .' €' ;?><br />
+			</div>
+		</div>
+	</div>
 	
 <div class="chart">
 	<div id="columnwrapper" style="display: block; float: left; width:90%; margin-bottom: 20px;"></div>
@@ -61,7 +82,7 @@
 					<th><?php echo $this->Paginator->sort('name','Názov'); ?></th>
 					<th><?php echo $this->Paginator->sort('amount','Suma'); ?></th>
 					<th><?php echo $this->Paginator->sort('category_id','Kategória'); ?></th>
-					<th><?php echo $this->Paginator->sort('subcategory_id','Subkategória'); ?></th>
+					
 			</tr>
 			<?php foreach ($transactions as $transaction): ?>
 			<tr>
@@ -73,7 +94,7 @@
 				}; ?>
 				<?php echo h($transaction['Transaction']['amount']); ?> € &nbsp;</td>
 				<td><?php echo $this->Html->link($transaction['Category']['name'], array('controller' => 'categories', 'action' => 'view', $transaction['Category']['id'])); ?>&nbsp;</td>
-				<td><?php echo $this->Html->link($transaction['Subcategory']['name'], array('controller' => 'subcategories', 'action' => 'view', $transaction['Subcategory']['id'])); ?>&nbsp;</td>
+				
 			</tr>
 		<?php endforeach; ?>
 			</table>
@@ -92,22 +113,5 @@
 		?>
 		</div>
 	</div>
-</div>
-<div class="actions">
-	<h3><?php echo __('Prehľad'); ?></h3>
-	<div id="balance">
-	<?php echo 'Aktuálny stav: '.$aktualnystav .' €' ;?><br />
-	<?php echo 'Plánované výdavky na najbližšie 3 mesiace: '.$dalsistav .' €' ;?><br />
-	<?php echo 'Príjmy za posledný mesiac: '.$minulystav .' €' ;?><br />
-	<?php echo 'Výdavky za posledný mesiac: '.$minulystavexp .' €' ;?><br />
-</div>
-	
-	<ul>
-		<li><?php echo $this->Html->link(__('Nová transakcia'), array('action' => 'add')); ?></li>
-		<li><?php echo $this->Html->link(__('Zobraz kategórie'), array('controller' => 'categories', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('Zobraz subkategórie'), array('controller' => 'subcategories', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('Nová kategória'), array('controller' => 'categories', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('Nová subkategória'), array('controller' => 'subcategories', 'action' => 'add')); ?> </li>
-	</ul>
-	<?= $this->element('default_footer') ?>
-</div>
+
+

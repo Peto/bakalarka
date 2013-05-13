@@ -96,16 +96,13 @@
 				
 				?></div>
 	</fieldset>
-<?php echo $this->Form->end(__('Submit')); ?>
+<?php echo $this->Form->end(__('Upraviť')); ?>
 </div>
 <div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
+	<h3><?php echo __('Akcie'); ?></h3>
 	<ul>
 
-		<li><?php echo $this->Form->postLink(__('Zmazať transakciu'), array('action' => 'delete', $this->Form->value('Transaction.id')), null, __('Ste si istý, že chcete zmazať túto transakciu: id # %s?', $this->Form->value('Transaction.id'))); ?></li>
-		<li><?php echo $this->Form->postLink(__('Zmazať všetky ďalšie opakovania'), array('action' => 'delete_next_repeats', $this->Form->value('Transaction.id')), null, __('Ste si istý, že chcete zmazať túto transakciu a všetky jej ďalšie opakovania?: id # %s?', $this->Form->value('Transaction.id'))); ?></li>
-		<li><?php echo $this->Html->link(__('List Transactions'), array('action' => 'index')); ?></li>
-		<li><?php echo $this->Html->link(__('List Users'), array('controller' => 'users', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New User'), array('controller' => 'users', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Form->postLink(__('Zmazať transakciu'), array('action' => 'delete', $this->Form->value('Transaction.id')), null, __('Ste si istý, že chcete zmazať túto transakciu: %s?', $this->Form->value('Transaction.name'))); ?></li>
+		<li><?php echo $this->Form->postLink(__('Zmazať všetky ďalšie opakovania'), array('action' => 'delete_next_repeats', $this->Form->value('Transaction.id')), null, __('Ste si istý, že chcete zmazať túto transakciu a všetky jej ďalšie opakovania?: %s?', $this->Form->value('Transaction.name'))); ?></li>
 	</ul>
 </div>

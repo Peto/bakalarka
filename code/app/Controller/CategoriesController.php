@@ -351,10 +351,10 @@ class CategoriesController extends AppController {
 		if ($this->request->is('post')) {
 			$this->Category->create();
 			if ($this->Category->save($this->request->data)) {
-				$this->Session->setFlash(__('The category has been saved'));
+				$this->Session->setFlash(__('Kategória bola uložená.'));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The category could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('Kategóriu sa nepodarilo uložiť. Skúste prosím znovu.'));
 			}
 		}
 		$user_id = $this->Session->read('User.id');
@@ -373,14 +373,14 @@ class CategoriesController extends AppController {
  */
 	public function edit($id = null) {
 		if (!$this->Category->exists($id)) {
-			throw new NotFoundException(__('Invalid category'));
+			throw new NotFoundException(__('Zlá kategória'));
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this->Category->save($this->request->data)) {
-				$this->Session->setFlash(__('The category has been saved'));
+				$this->Session->setFlash(__('Kategória bola uložená.'));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The category could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('Kategóriu sa nepodarilo uložiť. Skúste prosím znovu.'));
 			}
 		} else {
 			$options = array('conditions' => array('Category.' . $this->Category->primaryKey => $id));
@@ -401,14 +401,14 @@ class CategoriesController extends AppController {
 	public function delete($id = null) {
 		$this->Category->id = $id;
 		if (!$this->Category->exists()) {
-			throw new NotFoundException(__('Invalid category'));
+			throw new NotFoundException(__('Zlá kategória'));
 		}
 		$this->request->onlyAllow('post', 'delete');
 		if ($this->Category->delete()) {
-			$this->Session->setFlash(__('Category deleted'));
+			$this->Session->setFlash(__('Kategória bola vymazaná.'));
 			$this->redirect(array('action' => 'index'));
 		}
-		$this->Session->setFlash(__('Category was not deleted'));
+		$this->Session->setFlash(__('Kategória nebola vymazaná.'));
 		$this->redirect(array('action' => 'index'));
 	}
 	

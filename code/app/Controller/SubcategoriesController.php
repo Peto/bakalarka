@@ -49,14 +49,13 @@ class SubcategoriesController extends AppController {
 		if ($this->request->is('post')) {
 			$this->Subcategory->create();
 			if ($this->Subcategory->save($this->request->data)) {
-				$this->Session->setFlash(__('The subcategory has been saved'));
+				$this->Session->setFlash(__('Podkategória bola uložená.'));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The subcategory could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('Podkategóriu sa nepodarilo uložiť. Skúste prosím znovu.'));
 			}
 		}
 		$user_id = $this->Session->read('User.id');
-		//$categories = $this->Subcategory->Category->find('list');
 		$this->set('categories', $this->Subcategory->Category->find('list', array('conditions' => array('Category.user_id' => $user_id))));
 		$this->set(compact('categories'));
 		$this->set('user', $user_id);
@@ -71,21 +70,24 @@ class SubcategoriesController extends AppController {
  */
 	public function edit($id = null) {
 		if (!$this->Subcategory->exists($id)) {
-			throw new NotFoundException(__('Invalid subcategory'));
+			throw new NotFoundException(__('Zlá podkategória'));
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this->Subcategory->save($this->request->data)) {
-				$this->Session->setFlash(__('The subcategory has been saved'));
+				$this->Session->setFlash(__('Podkategória bola uložená.'));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The subcategory could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('Podkategóriu sa nepodarilo uložiť. Skúste prosím znovu.'));
 			}
 		} else {
 			$options = array('conditions' => array('Subcategory.' . $this->Subcategory->primaryKey => $id));
 			$this->request->data = $this->Subcategory->find('first', $options);
 		}
-		$categories = $this->Subcategory->Category->find('list');
+		$user_id = $this->Session->read('User.id');
+		$this->set('categories', $this->Subcategory->Category->find('list', array('conditions' => array('Category.user_id' => $user_id))));
 		$this->set(compact('categories'));
+		
+		$this->set('user', $user_id);
 	}
 
 /**
@@ -99,14 +101,14 @@ class SubcategoriesController extends AppController {
 	public function delete($id = null) {
 		$this->Subcategory->id = $id;
 		if (!$this->Subcategory->exists()) {
-			throw new NotFoundException(__('Invalid subcategory'));
+			throw new NotFoundException(__('Zlá podkategória'));
 		}
 		$this->request->onlyAllow('post', 'delete');
 		if ($this->Subcategory->delete()) {
-			$this->Session->setFlash(__('Subcategory deleted'));
+			$this->Session->setFlash(__('Podkategória bola vymazaná.'));
 			$this->redirect(array('action' => 'index'));
 		}
-		$this->Session->setFlash(__('Subcategory was not deleted'));
+		$this->Session->setFlash(__('Podkategória nebola vymazaná.'));
 		$this->redirect(array('action' => 'index'));
 	}
 }

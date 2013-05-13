@@ -103,7 +103,7 @@
 			</div>
 		</div>
 		<div class="small_box">
-			<?php echo 'Plánované výdavky na najbližšie 3 mesiace: '?>
+			<?php echo 'Plánovaný stav o 3 mesiace: '?>
 			<div class="suma_box"> 
 				<?php echo $dalsistav .' €' ;?><br />
 			</div>

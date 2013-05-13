@@ -29,9 +29,13 @@ $siteDescription = __d('cake_dev', 'Login: Domáce účtovníctvo');
 	<?php
 		echo $this->Html->meta('icon');
 
-		echo $this->Html->css('cake.generic');
+		echo $this->Html->css('jquery-ui');
+		echo $this->Html->css('mobile');
+		echo $this->Html->css('jquery.mobile-1.3.1.min');
 		
-		echo $this->Html->script(array('https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'));
+		echo $this->Html->script(array('jquery.min.js'));
+		echo $this->Html->script(array('jquery-ui.js'));
+		echo $this->Html->script(array('jquery.mobile-1.3.1.min.js'));
 
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
@@ -39,26 +43,24 @@ $siteDescription = __d('cake_dev', 'Login: Domáce účtovníctvo');
 	?>
 
 
+
 </head>
 <body>
-	<div id="container">
-		<div id="header">
-		<ul>
-			<li><h1><?php echo $this->Html->link('Domáce účtovníctvo', '/'); ?></h1></li>
-			
-		</ul>
-		</div>
-		<div id="content">
-
-			<?php echo $this->Session->flash(); ?>
-
-			<?php echo $this->fetch('content'); ?>
-		</div>
-		<div id="footer">
-			<h4>Peter Kotulič 2013</h4>
-		</div>
-	</div>
-	<?= $this->element('default_footer') ?>
-	
+<!-- Home -->
+<div data-role="page" id="page1">
+    <div data-theme="a" data-role="header">
+        <h3>
+            Domáce účtovníctvo
+        </h3>
+    </div>
+    <div data-role="content">
+    	<?php echo $this->Session->flash(); ?>
+		<?php echo $this->fetch('content'); ?>
+    </div>
+    <div data-theme="a" data-role="footer" data-position="fixed">
+    <?= $this->element('default_footer') ?>
+        
+    </div>
+</div>
 </body>
 </html>

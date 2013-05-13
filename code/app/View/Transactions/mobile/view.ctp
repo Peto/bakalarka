@@ -1,5 +1,5 @@
 <div class="transactions view">
-<h2><?php  echo __('Transaction'); ?></h2>
+<h2><?php  echo __('Transakcia'); ?></h2>
 	<dl>
 		<dt><?php echo __('Id'); ?></dt>
 		<dd>
@@ -8,55 +8,41 @@
 		</dd>
 		<dt><?php echo __('Transaction Type Id'); ?></dt>
 		<dd>
-			<?php echo h($transaction['Transaction']['transaction_type_id']); ?>
+			<?php if ($transaction['Transaction']['transaction_type_id'] == 2){
+					echo 'výdavok';}
+					else {echo 'príjem';}
+				 ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('Name'); ?></dt>
+		<dt><?php echo __('Názov transakcie'); ?></dt>
 		<dd>
 			<?php echo h($transaction['Transaction']['name']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('Amount'); ?></dt>
+		<dt><?php echo __('Suma'); ?></dt>
 		<dd>
 			<?php echo h($transaction['Transaction']['amount']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('Category Id'); ?></dt>
+		<dt><?php echo __('Kategória'); ?></dt>
 		<dd>
-			<?php echo h($transaction['Transaction']['category_id']); ?>
-			&nbsp;
+			<?php echo $this->Html->link($transaction['Category']['name'], array('controller' => 'categories', 'action' => 'view', $transaction['Category']['id'])); ?>&nbsp;
 		</dd>
-		<dt><?php echo __('Subcategory Id'); ?></dt>
+		<dt><?php echo __('Podkategória'); ?></dt>
 		<dd>
-			<?php echo h($transaction['Transaction']['subcategory_id']); ?>
-			&nbsp;
+			<?php echo $this->Html->link($transaction['Subcategory']['name'], array('controller' => 'subcategories', 'action' => 'view', $transaction['Subcategory']['id'])); ?>&nbsp;
 		</dd>
-		<dt><?php echo __('User'); ?></dt>
+		<dt><?php echo __('Dátum transakcie'); ?></dt>
 		<dd>
-			<?php echo $this->Html->link($transaction['User']['name'], array('controller' => 'users', 'action' => 'view', $transaction['User']['id'])); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Original Transaction Id'); ?></dt>
-		<dd>
-			<?php echo h($transaction['Transaction']['original_transaction_id']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Post Date'); ?></dt>
-		<dd>
-			<?php echo h($transaction['Transaction']['post_date']); ?>
-			&nbsp;
+			<?php echo h(CakeTime::format('d.m.Y',$transaction['Transaction']['post_date'])); ?>&nbsp;
 		</dd>
 	</dl>
 </div>
 <div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
+	<h3><?php echo __('Akcie'); ?></h3>
 	<ul>
 		<li><?php echo $this->Html->link(__('Edituj transakciu'), array('action' => 'edit', $transaction['Transaction']['id'])); ?> </li>
 		<li><?php echo $this->Form->postLink(__('Zmazať transakciu'), array('action' => 'delete', $transaction['Transaction']['id']), null, __('Ste si istý, že chcete zmazať túto transakciu: id # %s?', $transaction['Transaction']['id'])); ?> </li>
 		<li><?php echo $this->Form->postLink(__('Zmazať všetky ďalšie opakovania'), array('action' => 'delete_next_repeats', $transaction['Transaction']['id']), null, __('Ste si istý, že chcete zmazať túto transakciu a všetky jej ďalšie opakovania?: id # %s?', $transaction['Transaction']['id'])); ?> </li>
-		<li><?php echo $this->Html->link(__('List Transactions'), array('action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Transaction'), array('action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Users'), array('controller' => 'users', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New User'), array('controller' => 'users', 'action' => 'add')); ?> </li>
 	</ul>
 </div>

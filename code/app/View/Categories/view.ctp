@@ -58,16 +58,14 @@
 <div class="table_siroka">
 <table cellpadding="0" cellspacing="0">
 	<tr>
-			<th><?php echo $this->Paginator->sort('id'); ?></th>
 			<th><?php echo $this->Paginator->sort('post_date','Dátum'); ?></th>
 			<th><?php echo $this->Paginator->sort('name','Názov'); ?></th>
 			<th><?php echo $this->Paginator->sort('amount','Suma'); ?></th>
-			<th><?php echo $this->Paginator->sort('subcategory_id','Subkategória'); ?></th>
+			<th><?php echo $this->Paginator->sort('subcategory_id','Podkategória'); ?></th>
 			<th class="actions"><?php echo __('Akcie'); ?></th>
 	</tr>
 	<?php foreach ($transactions as $transaction): ?>
 	<tr>
-		<td><?php echo h($transaction['Transaction']['id']); ?>&nbsp;</td>
 		<td><?php echo h(CakeTime::format('d.m.Y',$transaction['Transaction']['post_date'])); ?>&nbsp;</td>
 		<td><?php echo $this->Html->link($transaction['Transaction']['name'], array('controller' => 'transactions', 'action' => 'view', $transaction['Transaction']['id'])); ?>&nbsp;</td>
 		<td class="left">

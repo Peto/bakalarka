@@ -21,6 +21,7 @@
 			<?php echo $this->Html->link($import['User']['name'], array('controller' => 'users', 'action' => 'view', $import['User']['id'])); ?>
 		</td>
 		<td class="actions">
+			<?php echo $this->Html->link(__('Spracuj'), array('action' => 'process_import', $import['Import']['id'])); ?>
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $import['Import']['id'])); ?>
 			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $import['Import']['id'])); ?>
 			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $import['Import']['id']), null, __('Are you sure you want to delete # %s?', $import['Import']['id'])); ?>

@@ -1235,7 +1235,7 @@ public function home() {
 		$users = $this->Transaction->User->find('list');
 		$this->set('transaction_types', $this->Transaction->TransactionType->find('list'));
 		$this->set('categories', $this->Transaction->Category->find('list', array('conditions' => array('Category.user_id' => $user_id))));
-		//$this->set('subcategories', $this->Transaction->Subcategory->find('list', array('conditions' => array('Subcategory.user_id' => $user_id))));
+
 		$this->set('subcategories', $this->Transaction->Subcategory->find('all', array('fields' => array('Subcategory.category_id', 'Subcategory.id', 'Subcategory.name'), 'recursive' => 1, 'conditions' => array('Subcategory.user_id' => $user_id))));
 		$this->set('user', $user_id);
 		$this->set(compact('users'));

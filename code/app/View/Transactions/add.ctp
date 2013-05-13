@@ -40,13 +40,13 @@
 		<?php foreach ($categories as $key => $row) {
 			echo '<option value="'.$key.'" >'.$row.'</option>';
 		}?>
-		</select></div>
+		</select><?php echo $this->Html->link(__(' Nová kategória'), array('controller' => 'categories', 'action' => 'add')); ?></div>
 		<div><select id="TransactionSubcategoryId" name="data[Transaction][subcategory_id]">
 		<option value="">Vyberte podkategóriu</option>
 		<?php foreach ($subcategories as $row) {
 			echo '<option value="'.$row['Subcategory']['id'].'" class="'.$row['Subcategory']['category_id'].'">'.$row['Subcategory']['name'].'</option>';
 		}?>
-		</select></div>
+		</select><?php echo $this->Html->link(__(' Nová podkategória'), array('controller' => 'subcategories', 'action' => 'add')); ?></div>
 		<?php echo $this->Form->input('user_id', array('type' => 'hidden','value' => $user));?>
 		<div class="input_polia"><?php echo $this->Form->input('post_date', array('type' => 'text', 'id' => 'datepicker', 'label' => 'Dátum transakcie:' ));?></div>
 		<div id='opakovanie'>
@@ -85,7 +85,7 @@
 			</div>
 		</div>
 		<div class="small_box">
-			<?php echo 'Plánované výdavky na najbližšie 3 mesiace: '?>
+			<?php echo 'Plánovaný stav o 3 mesiace: '?>
 			<div class="suma_box"> 
 				<?php echo $dalsistav .' €' ;?><br />
 			</div>
