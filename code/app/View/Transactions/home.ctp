@@ -61,7 +61,7 @@
 					<th><?php echo $this->Paginator->sort('name','Názov'); ?></th>
 					<th><?php echo $this->Paginator->sort('amount','Suma'); ?></th>
 					<th><?php echo $this->Paginator->sort('category_id','Kategória'); ?></th>
-					<th><?php echo $this->Paginator->sort('subcategory_id','Subkategória'); ?></th>
+					<th><?php echo $this->Paginator->sort('subcategory_id','Podkategória'); ?></th>
 			</tr>
 			<?php foreach ($transactions as $transaction): ?>
 			<tr>

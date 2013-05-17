@@ -33,7 +33,7 @@ class TransactionsController extends AppController {
 				$chartName,
 				array(
 						'renderTo'				=> 'columnwrapper',  // div to display chart inside
-						'chartWidth'				=> 860,
+						'chartWidth'				=> 800,
 						'chartHeight'				=> 400,
 						'chartMarginTop' 			=> 50,
 						'chartMarginLeft'			=> 90,
@@ -239,6 +239,9 @@ class TransactionsController extends AppController {
 					if ($pocet_mesiacov > 12) {
 						$xAxisCategories[] = $month;
 					}
+					elseif ($this->is_mobile) {    // ak je na mobile zobrazim len cisla mesiacov
+						$xAxisCategories[] = $month;
+					} 
 					else
 						$xAxisCategories[] = $mesiace_preklady[$month];
 				}
@@ -396,7 +399,15 @@ class TransactionsController extends AppController {
 			$rozdiel->addName('Výdavky za dni')->addData($rozdielData);
 		}
 		
-		$this->HighCharts->setChartParams( $chartName,	array('xAxisCategories'	=> $xAxisCategories ));
+		$this->HighCharts->setChartParams( $chartName,	array('xAxisCategories'	=> $xAxisCategories 
+															  	 ));
+		
+		if ($this->is_mobile) {
+			$this->HighCharts->setChartParams( $chartName,	array('xAxisCategories'	=> $xAxisCategories, 
+															  'chartWidth'				=> 320	 ));
+		}
+		
+		//$this->HighCharts->setChartParams( $chartName,	array('chartWidth'				=> 320 ));
 		
 		$mychart->addSeries($series1);
 		$mychart->addSeries($series2);
@@ -420,6 +431,7 @@ public function home() {
 	$chartData1 = array();
 	$chartData2 = array();
 	$rozdielData = array();
+	$rozdielData1 = array();
 		
 	$chartName = 'Column Chart';
 	$mychart = $this->HighCharts->create( $chartName, 'column' );
@@ -427,7 +439,7 @@ public function home() {
 			$chartName,
 			array(
 					'renderTo'				=> 'columnwrapper',  // div to display chart inside
-					'chartWidth'				=> 860,
+					'chartWidth'				=> 800,
 					'chartHeight'				=> 300,
 					'chartMarginTop' 			=> 50,
 					'chartMarginLeft'			=> 90,
@@ -478,7 +490,7 @@ public function home() {
 	$rozdiel = $this->HighCharts->addChartSeries();
 	$rozdiel->type = 'spline';
 	$rozdiel->type = 'line';
-	$rozdiel->addName('Rozdiel')->addData($this->rozdielData);
+	$rozdiel->addName('Rozdiel')->addData($this->rozdielData1);
 	
 	$time = strtotime("-1 month", time());
 	$data['from_date'] = date("Y-m-d", $time);
@@ -645,6 +657,8 @@ public function home() {
 				}
 			}
 		}
+		
+		
 			
 		foreach ($date_array3 as $year => $val1) {
 			foreach ($val1 as $month => $val2) {
@@ -653,13 +667,24 @@ public function home() {
 				}
 			}
 		}
+		
+		$doteraz = 0;
+		foreach ($rozdielData as $den => $hodnota) {  		// pocitanie array pre priebeznu bilanciu
+			$doteraz = $doteraz + $chartData1[$den] + $chartData2[$den];
+			$rozdielData1[] = $doteraz;
+		}
 			
 		$series1->addName('Príjmy za dni')->addData($chartData1);
 		$series2->addName('Výdavky za dni')->addData($chartData2);
-		$rozdiel->addName('Priebežná bilancia')->addData($rozdielData);
+		$rozdiel->addName('Priebežná bilancia')->addData($rozdielData1);
 	
 	
 	$this->HighCharts->setChartParams( $chartName,	array('xAxisCategories'	=> $xAxisCategories ));
+	
+	if ($this->is_mobile) {
+		$this->HighCharts->setChartParams( $chartName,	array('xAxisCategories'	=> $xAxisCategories,
+				'chartWidth'				=> 320	 ));
+	}
 	
 	$mychart->addSeries($series1);
 	$mychart->addSeries($series2);
@@ -689,7 +714,7 @@ public function home() {
 			$chartNameTwo,
 			array(
 					'renderTo'				=> 'barwrapper',  // div to display chart inside
-					'chartWidth'				=> 320,
+					'chartWidth'				=> 260,
 					'chartHeight'				=> 350,
 					'chartMarginTop' 			=> 70,
 					'chartMarginLeft'			=> 90,
@@ -772,6 +797,11 @@ public function home() {
 	
 	$this->HighCharts->setChartParams( $chartNameTwo,	array('xAxisCategories'	=> $xAxisCategoriesNew ));
 	
+	if ($this->is_mobile) {
+		$this->HighCharts->setChartParams( $chartNameTwo,	array('xAxisCategories'	=> $xAxisCategoriesNew,
+				'chartWidth'				=> 320	 ));
+	}
+	
 	$mychartTwo->addSeries($series);
 	}
 	
@@ -784,7 +814,7 @@ public function home() {
 				$chartName,
 				array(
 						'renderTo'				=> 'columnwrapper',  // div to display chart inside
-						'chartWidth'				=> 860,
+						'chartWidth'				=> 800,
 						'chartHeight'				=> 300,
 						'chartMarginTop' 			=> 50,
 						'chartMarginLeft'			=> 90,
@@ -939,125 +969,12 @@ public function home() {
 		
 		$this->HighCharts->setChartParams( $chartName,	array('xAxisCategories'	=> $xAxisCategories ));
 		
+		if ($this->is_mobile) {
+			$this->HighCharts->setChartParams( $chartName,	array('xAxisCategories'	=> $xAxisCategories,
+					'chartWidth'				=> 320	 ));
+		}
+		
 		$mychart->addSeries($series);
-		
-		/*$chartName = 'Stacked Column Chart';   // snaha o STACKED COLUMN so subkategoriami
-
-        $mychart = $this->HighCharts->create(
-                        $chartName,
-                        array(
-                            'type' => 'column',
-                            'exporting' => TRUE
-                        )
-                    );
-
-
-        $this->HighCharts->setChartParams(
-                $chartName,
-                array(
-                    'renderTo'			=> 'columnwrapper',  // div to display chart inside
-                    'chartWidth'		=> 1000,
-                    'chartHeight'		=> 750,
-                    'chartBackgroundColorLinearGradient' 	=> array(0,0,0,300),
-                    'chartBackgroundColorStops'	=> array(array(0,'rgb(217, 217, 217)'),array(1,'rgb(255, 255, 255)')),
-                    'title'			=> 'Stacked Column Chart',
-                    'subtitle'			=> 'Source: World Bank',
-                    'xAxisLabelsEnabled' 	=> TRUE,
-                    'xAxisCategories'       	=> array( 'Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas' ),
-                    'yAxisTitleText' 		=> 'Total Fruit Consumption',
-                    'enableAutoStep' 		=> FALSE,
-                    'creditsEnabled'		=> FALSE,
-                    'plotOptionsSeriesStacking' => 'normal' // other options is 'percent'
-                )
-        );
-		
-		if(!isset($this->request->data['Filter'])) {
-			$time = strtotime("-11 month", time());
-			$data['from_date'] = date("Y-m-d", $time);
-			$data['to_date'] = date('Y-m-d');
-			$data['year_month_day'] = '2';
-		} else {
-			$data= $this->request->data['Filter'];
-		}
-		
-		$this->paginate = array(
-				'limit' => 20,
-				'order' => array(
-						'Transaction.post_date' => 'asc'
-				),
-				'conditions' => array(
-						'Transaction.user_id' => $this->Session->read('User.id'),
-						'Transaction.post_date >=' => $data['from_date'],
-						'Transaction.post_date <=' => $data['to_date'],
-				),
-		);
-		
-		$this->Transaction->recursive = 0;
-		$transactions = $this->paginate();
-		$this->set('transactions', $transactions);
-		
-		$alltransactions = $this->Transaction->find('all', array(
-				'conditions' => array(
-						'Transaction.user_id' => $this->Session->read('User.id'),
-						'Transaction.post_date >=' => $data['from_date'],
-						'Transaction.post_date <=' => $data['to_date'],
-				)
-		));
-		
-		$category_array = array();
-		
-		foreach ($alltransactions as $row) {
-			$category = $row['Transaction']['category_id'];
-			$subcategory = $row['Transaction']['subcategory_id'];
-		
-			if ($row['Transaction']['transaction_type_id'] == '1') {
-				$category_array[$category][$subcategory] += $row['Transaction']['amount'];
-			}
-			else {
-				$category_array[$category][$subcategory] -= $row['Transaction']['amount'];
-			}
-		}
-		
-		foreach ($category_array as $kategoria => $val) {
-			foreach ($val as $subkategoria => $val2) {
-			$chartData[] = $val2;
-			$xAxisCategories[] = $kategoria;
-			$category_sub[$kategoria][] = $subkategoria;
-			}
-		}
-		
-		//print_r($category_array);
-		
-		print_r($category_sub[8]);		
-		
-		////////////
-// 		$johnSeries = $this->HighCharts->addChartSeries();
-// 		$janeSeries = $this->HighCharts->addChartSeries();
-// 		$joeSeries  = $this->HighCharts->addChartSeries();
-		
-// 		$johnSeries->addName('John')
-// 		->addData($this->johnData);
-// 		$janeSeries->addName('Jane')
-// 		->addData($this->janeData);
-// 		$joeSeries->addName('Joe')
-// 		->addData($this->joeData);
-		
-// 		$mychart->addSeries($johnSeries);
-// 		$mychart->addSeries($janeSeries);
-// 		$mychart->addSeries($joeSeries);
-		/////////////
-		
-		$series1 = $this->HighCharts->addChartSeries();
-		$series2 = $this->HighCharts->addChartSeries();
-		$series1->addName('Subkategórie 1')->addData($chartData);
-		$series2->addName('Subkategórie 2')->addData($category_sub[8][11]);
-		
-		$this->HighCharts->setChartParams( $chartName,	array('xAxisCategories'	=> $xAxisCategories ));
-		
-		$mychart->addSeries($series1);
-		$mychart->addSeries($series2);
-		
-		//print_r($chartData);*/
 		
 		$finalBalance = $this->balance(0);
 		$this->set('aktualnystav', $finalBalance);

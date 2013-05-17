@@ -50,7 +50,7 @@ class CategoriesController extends AppController {
 		}
 		Controller::loadModel('Transaction');
 		if (!$this->Category->exists($id)) {
-			throw new NotFoundException(__('Invalid category'));
+			throw new NotFoundException(__('Zlá kategória'));
 		}
 		$options = array('conditions' => array('Category.' . $this->Category->primaryKey => $id));
 		$this->set('category', $this->Category->find('first', $options));
@@ -64,7 +64,7 @@ class CategoriesController extends AppController {
 				$chartName,
 				array(
 						'renderTo'				=> 'columnwrapper',  // div to display chart inside
-						'chartWidth'				=> 860,
+						'chartWidth'				=> 800,
 						'chartHeight'				=> 300,
 						'chartMarginTop' 			=> 50,
 						'chartMarginLeft'			=> 90,
@@ -232,6 +232,9 @@ class CategoriesController extends AppController {
 					if ($pocet_mesiacov > 12) {
 						$xAxisCategories[] = $month;
 					}
+					elseif ($this->is_mobile) {    // ak je na mobile zobrazim len cisla mesiacov
+						$xAxisCategories[] = $month;
+					}
 					else
 						$xAxisCategories[] = $mesiace_preklady[$month];
 				}
@@ -338,6 +341,11 @@ class CategoriesController extends AppController {
 		}
 		
 		$this->HighCharts->setChartParams( $chartName,	array('xAxisCategories'	=> $xAxisCategories ));
+		
+		if ($this->is_mobile) {
+			$this->HighCharts->setChartParams( $chartName,	array('xAxisCategories'	=> $xAxisCategories,
+					'chartWidth'				=> 320	 ));
+		}
 		
 		$mychart->addSeries($series1);	
 	}

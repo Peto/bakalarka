@@ -71,7 +71,7 @@ class UsersController extends AppController {
 				$this->Session->setFlash(__('Registrácia prebehla úspešne.'));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('Registrácie neprebehla úspešne. Skúste prosím znovu.'));
+				$this->Session->setFlash(__('Registrácia neprebehla úspešne. Skúste prosím znovu.'));
 			}
 		}
 	}
@@ -89,10 +89,10 @@ class UsersController extends AppController {
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this->User->save($this->request->data)) {
-				$this->Session->setFlash(__('The user has been saved'));
+				$this->Session->setFlash(__('Vaše údaje boli uložené.'));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The user could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('Vaše údaje sa nepodarilo uložiť. SKúste prosím znovu.'));
 			}
 		} else {
 			$options = array('conditions' => array('User.' . $this->User->primaryKey => $id));
@@ -111,14 +111,14 @@ class UsersController extends AppController {
 	public function delete($id = null) {
 		$this->User->id = $id;
 		if (!$this->User->exists()) {
-			throw new NotFoundException(__('Invalid user'));
+			throw new NotFoundException(__('Zlý používateľ'));
 		}
 		$this->request->onlyAllow('post', 'delete');
 		if ($this->User->delete()) {
-			$this->Session->setFlash(__('User deleted'));
+			$this->Session->setFlash(__('Používateľ bol vymazaný.'));
 			$this->redirect(array('action' => 'index'));
 		}
-		$this->Session->setFlash(__('User was not deleted'));
+		$this->Session->setFlash(__('Používateľ nebol vymazaný.'));
 		$this->redirect(array('action' => 'index'));
 	}
 	
@@ -136,7 +136,7 @@ class UsersController extends AppController {
 			}
 		}
 		if ($this->Session->read('Auth.User')) {
-			$this->Session->setFlash('You are logged in!');
+			$this->Session->setFlash('Ste prihlásený.');
 			$this->redirect('/', null, false);
 	
 		}

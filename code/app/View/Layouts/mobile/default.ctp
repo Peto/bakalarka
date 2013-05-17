@@ -46,15 +46,6 @@ $siteDescription = __d('cake_dev', 'MOBILE');
 		echo $this->fetch('css');
 		echo $this->fetch('script');
 	?>
-  
-
-  
-  <!-- Extra Codiqa features -->
-  <link rel="stylesheet" href="codiqa.ext.css">
-
-
-  <!-- Extra Codiqa features -->
-  <script src="https://d10ajoocuyu32n.cloudfront.net/codiqa.ext.js"></script>
    
 </head>
 <body>

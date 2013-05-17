@@ -3,12 +3,11 @@
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 			<th><?php echo $this->Paginator->sort('id'); ?></th>
-			<th><?php echo $this->Paginator->sort('date_from'); ?></th>
-			<th><?php echo $this->Paginator->sort('date_to'); ?></th>
-			<th><?php echo $this->Paginator->sort('processed'); ?></th>
-			<th><?php echo $this->Paginator->sort('filename'); ?></th>
-			<th><?php echo $this->Paginator->sort('user_id'); ?></th>
-			<th class="actions"><?php echo __('Actions'); ?></th>
+			<th><?php echo $this->Paginator->sort('date_from','Dátum od'); ?></th>
+			<th><?php echo $this->Paginator->sort('date_to','Dátum do'); ?></th>
+			<th><?php echo $this->Paginator->sort('processed','Spracovaný'); ?></th>
+			<th><?php echo $this->Paginator->sort('Názov súboru'); ?></th>
+			<th class="actions"><?php echo __('Akcie'); ?></th>
 	</tr>
 	<?php foreach ($imports as $import): ?>
 	<tr>
@@ -16,15 +15,11 @@
 		<td><?php echo h($import['Import']['date_from']); ?>&nbsp;</td>
 		<td><?php echo h($import['Import']['date_to']); ?>&nbsp;</td>
 		<td><?php echo h($import['Import']['processed']); ?>&nbsp;</td>
-		<td><?php echo h($import['Import']['filename']); ?>&nbsp;</td>
-		<td>
-			<?php echo $this->Html->link($import['User']['name'], array('controller' => 'users', 'action' => 'view', $import['User']['id'])); ?>
-		</td>
+		<td><?php echo $this->Html->link($import['Import']['filename'], array('action' => 'view', $import['Import']['id'])); ?>&nbsp;</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('Spracuj'), array('action' => 'process_import', $import['Import']['id'])); ?>
-			<?php echo $this->Html->link(__('View'), array('action' => 'view', $import['Import']['id'])); ?>
-			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $import['Import']['id'])); ?>
-			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $import['Import']['id']), null, __('Are you sure you want to delete # %s?', $import['Import']['id'])); ?>
+			<?php echo $this->Html->link($this->Html->image('/img/edit.png', array('alt' => 'Editovať')), array('action' => 'edit', $import['Import']['id']), array('escape' => false)); ?>
+			<?php echo $this->Form->postLink($this->Html->image('/img/deletered.png', array('alt' => 'Zmazať')), array('action' => 'delete', $import['Import']['id']), array('escape' => false), __('Ste si istý, že chcete zmazať tento výpis: %s?', $import['Import']['filename'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
@@ -32,15 +27,16 @@
 	<p>
 	<?php
 		echo $this->Paginator->counter(array(
-		'format' => __('Stránka {:page} z {:pages}, zobrazuje {:current} záznamov zo {:count} celkovo, začína na zázname {:start}, končí na zázname {:end}')
+		'format' => __('Stránka {:page} z {:pages}, zobrazuje {:current} výpisov zo {:count} celkovo, začína na výpise {:start}, končí na výpise {:end}')
 		));
-		?>	</p>
-	<div class="paging">
-	<?php
-		echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));
-		echo $this->Paginator->numbers(array('separator' => ''));
-		echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
-	?>
+		?>	
+		</p>
+		<div class="paging">
+		<?php
+			echo $this->Paginator->prev('< ' . __('naspäť'), array(), null, array('class' => 'prev disabled'));
+			echo $this->Paginator->numbers(array('separator' => ''));
+			echo $this->Paginator->next(__('ďalej') . ' >', array(), null, array('class' => 'next disabled'));
+		?>
 	</div>
 </div>
 <div class="actions">

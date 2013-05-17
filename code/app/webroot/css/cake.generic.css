@@ -151,7 +151,7 @@ table {
 	clear: both;
 	color: #333;
 	margin-bottom: 10px;
-	width: 860px;
+	width: 800px;
 } 
 
 th {
@@ -808,7 +808,7 @@ table a {
 .rozsah {
 	margin-up: 10px;
 	margin-bottom: 10px;
-	width: 840px;
+	width: 780px;
 	background: #EEEDEC;
     // background: #A6CE95;
 	padding: 10px;

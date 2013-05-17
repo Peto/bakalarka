@@ -1,12 +1,7 @@
 <div class="transactions view">
 <h2><?php  echo __('Transakcia'); ?></h2>
 	<dl>
-		<dt><?php echo __('Id'); ?></dt>
-		<dd>
-			<?php echo h($transaction['Transaction']['id']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Transaction Type Id'); ?></dt>
+		<dt><?php echo __('Typ transakcie'); ?></dt>
 		<dd>
 			<?php if ($transaction['Transaction']['transaction_type_id'] == 2){
 					echo 'výdavok';}
