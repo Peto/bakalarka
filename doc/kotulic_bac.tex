@@ -1,4 +1,4 @@
-\documentclass[12pt,onesided]{book}
+\documentclass[12pt,oneside]{book}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
@@ -64,16 +64,16 @@ FAKULTA MATEMATIKY, FYZIKY A INFORMATIKY\\
 \vfill
 \begin{minipage}{0.8\textwidth}
 \begin{center}
-\LARGE\bf\sc\mftitle
+\LARGE\bf\sc\mftitle \\
+\smallskip
+\large\bf\mfthesistype
 \end{center}
 \end{minipage}
 \vfill
-{\large\bf 2013}\\
-
-{\large\bf \mfauthor}
+\vspace{7\baselineskip}
+{\large\bf 2013 \hfill \mfauthor}
 \eject
 
-\thispagestyle{empty}~\vfill\eject
 
 \thispagestyle{empty}
 
@@ -93,23 +93,18 @@ FAKULTA MATEMATIKY, FYZIKY A INFORMATIKY
 \end{center}
 \end{minipage}
 \vfill
-
-\begin{table}[h]
-  \begin{tabular}{ l }
-	Študijný program : Aplikovaná informatika\\
-	Študijný odbor: 9.2.9 Aplikovaná informatika\\
-	Školiteľ: \mfadvisor \\
-	\\
-	\\	
-	{\large\bf\mfplacedate}\\
-	\\
-	{\large\bf\mfauthor}
+\noindent
+  \begin{tabular}{ @{} l l  }
+	Študijný program: 		&Aplikovaná informatika \\
+	Študijný odbor: 		&9.2.9 Aplikovaná informatika\\
+	Školiace pracovisko: 	&Katedra aplikovanej informatiky\\
+	Školiteľ: 			&\mfadvisor \\
   \end{tabular}
-\end{table}
 
+\vspace{3\baselineskip}
+\noindent{\large\bf\mfplacedate \hfill \mfauthor\par}
 \eject
 
-\thispagestyle{empty}~\vfill\eject
 
 \thispagestyle{empty}
 
@@ -151,7 +146,6 @@ Fakulta Matematiky, Fyziky a Informatiky
 
 \eject
 
-\thispagestyle{empty}~\vfill\eject
 
 \section*{Abstrakt}
 KOTULIČ, Peter: \mftitle. [\mfthesistype] – Univerzita Komenského v Bratislave. Fakulta matematiky, fyziky a informatiky; Katedra aplikovanej informatiky. – Školiteľ: Mgr. Ján Kľuka, PhD.. 
@@ -169,8 +163,6 @@ TODO
 
 \eject
 
-\thispagestyle{empty}~\vfill\eject
-
 {~}\vspace{12cm}
 
 \noindent
@@ -180,7 +172,7 @@ TODO
 
 \bigskip\bigskip
 
-V Bratislave XX. júna \hfill\hbox to 6cm{\dotfill}
+V Bratislave 31. mája \hfill\hbox to 6cm{\dotfill}
 \end{minipage}
 \vfill\eject
 
@@ -277,7 +269,7 @@ Poslednou Android aplikáciou ktorú som testoval bol Expense Manager. Klasicke 
 Prehľad v transakciách ponúkajú koláčové a stĺpcové grafy príjmov alebo výdavkov triedených podľa kategórií a podľa mesiacov. Podkategórie si tiež môžeme zobraziť na koláčovom alebo stĺpcovom grafe. Graf je možné si vytvoriť aj zadaním vlastných kritérií(dátum od/do, príjem, výdavok, rozdiel, typ grafu).
 Expense Manager ponúka ešte aj ďalšie možnosti ako je kalkulačka, prepočet meny, výpočet sprepitného, výpočet zľavy a dane alebo výpočet splatenia dlhov na kreditnej karte.
 
-\subsection{Porovnanie s mojimi cieľami}
+\subsection{Porovnanie s mojimi cieľmi}
 Mojim hlavným cieľom je vytvoriť prehľadnú a užívateľsky jednoducho ovládajúcu sa aplikáciu. Všetky spomenuté podobné riešenia sa to tiež snažili splniť. Nie každému sa to však podarilo. Väčšina z aplikácií obsahovala okrem základnej funkcionality aj možnosti, ktoré bežný používateľ asi nikdy nevyužije. To by nevadilo, pokiaľ by tým aplikácia nestrácala na prehľadnosti. Bežný používateľ nemá čas a chuť zisťovať a učiť sa nanovo ovládať aplikáciu. Je zvyknutý na určité ovládacie prvky a ich prehľadné rozloženie. Napríklad pri aplikácii Budgetpulse je problém vykonať aj tú najzákladnejšiu akciu akou je pridanie novej transakcie. A keď to užívateľ konečne nájde, zistí, že rovno pod sebou ma 2 odkazy na pridanie transakcie pričom oba vykonajú rovnakú akciu. Toto riešenie je ideálne ak sa tvorcovia snažia ešte viac domýliť používateľa. A toto je len jedna z množsta vecí, ktoré sa dajú urobiť oveľa lepšie. V jednoduchosti je krása.
 
 Druhou veľkou zmenou oproti ostatným riešeniam bude vytvorenie mobilnej webovej verzie mojej aplikácie. Existujúce riešenia boli zamerané vždy na určitý segment. Išlo vždy buď o webovú, desktopovú alebo mobilnú aplikáciu. Mobilná aplikácia nebola prepojená s webovým riešením a opačne. Tým, že vytvorím aj mobilnú webovú verziu odvodenú od klasickej webovej aplikácie bude tento problém vyriešený. Poslednou veľkou zmenou bude možnosť importu bankových výpisov, čím používateľovi uľahčím zadávanie nových transakcií do aplikácie. Túto možnosť u nás neposkytovala žiadna zo skúšaných aplikácií.
@@ -409,28 +401,34 @@ Neprihlásený používateľ môže:
 
 \section{Používateľské rozhranie}
 \subsection{Webové rozhranie}
-Ako som spomenul už v časti Porovnanie s mojimi cieľami, v aplikácii Domáce účtovníctvo sa snažím implementovať príjemné, intuitívne a hlavne jednoduché používateľské rozhranie. Na vrchnú časť stránky som umiestnil navigáciu so všetkými potrebnými základnými položkami. Vľavo pod navigáciou sa nachádza aktuálna bilancia financií používateľa. Prvý je aktuálny stav zobrazujúci aktuálnu sumu jeho financií. Pod ním sa nachádza suma za plánované výdavky na najbližšie 3 mesiace. Nakoniec sú to sumy príjmov a taktiež aj výdavkov za posledný mesiac. Pokiaľ to je potrebné, tak sa pod týmto prehľadom zobrazuje dodatočné menu s odkazmi na konkrétnejšie podstránky. Okrem nich sa na tomto mieste nachádzajú aj akcie, ktoré možno aplikovať na aktuálnej stránke. Napríklad pri prehľade konkrétnej transakcie sú tam zobrazené možnosti na jej editáciu alebo prípadne na jej zmazanie. Ako som spomenul táto ponuka sa mení v závislosti od aktuálne vybranej stránky. Pri prehľadoch transakcií sa v tejto časti zobrazí aj nastavenie filtra, podľa ktorého sa vyberú transakcie. Na výber je rozsah dátumov od a do a taktiež môže byť dostupná možnosť rozdelenia transakcií v grafe podľa rokov, mesiacov alebo dní.
+Ako som spomenul už v časti Porovnanie s mojimi cieľmi, v aplikácii Domáce účtovníctvo sa snažím implementovať príjemné, intuitívne a hlavne jednoduché používateľské rozhranie. Na vrchnú časť stránky som umiestnil navigáciu so všetkými potrebnými základnými položkami. Vľavo pod navigáciou sa nachádza aktuálna bilancia financií používateľa. Prvý je aktuálny stav zobrazujúci aktuálnu sumu jeho financií. Pod ním sa nachádza suma za plánované výdavky na najbližšie 3 mesiace. Nakoniec sú to sumy príjmov a taktiež aj výdavkov za posledný mesiac. Pokiaľ to je potrebné, tak sa pod týmto prehľadom zobrazuje dodatočné menu s odkazmi na konkrétnejšie podstránky. Okrem nich sa na tomto mieste nachádzajú aj akcie, ktoré možno aplikovať na aktuálnej stránke. Napríklad pri prehľade konkrétnej transakcie sú tam zobrazené možnosti na jej editáciu alebo prípadne na jej zmazanie. Ako som spomenul táto ponuka sa mení v závislosti od aktuálne vybranej stránky. Pri prehľadoch transakcií sa v tejto časti zobrazí aj nastavenie filtra, podľa ktorého sa vyberú transakcie. Na výber je rozsah dátumov od a do a taktiež môže byť dostupná možnosť rozdelenia transakcií v grafe podľa rokov, mesiacov alebo dní.
 
-Napravo od tohoto menu sa nachádza obsah stránky. Pri prehľadoch ide zvyčajne o graf pod ktorým je umiestnená tabuľka s možnosťou triedenia podľa rôznych stĺpcov a jednoduchého stránkovania. Nižšie rozoberiem stránky so základnej ponuky navigácie. 
+Napravo od tohto menu sa nachádza obsah stránky. Pri prehľadoch ide zvyčajne o graf pod ktorým je umiestnená tabuľka s možnosťou triedenia podľa rôznych stĺpcov a jednoduchého stránkovania. Nižšie rozoberiem stránky so základnej ponuky navigácie. 
 
 \subsubsection{Domov}
-Základná domovská stránka je trochu špecifickejšia. Používateľovi sa snažím poskytnúť všetky základne informácie bez potreby skrolovania po stránke. Nachádza sa tu základný graf príjmov a výdavkov rozdelených podľa dní za poslední mesiac. Hneď pod ním sa nachádza ďalší graf zobrazujúci celkové sumy v rôznych transakciách za rovnake mesačné obdobie. Tento graf je má však len polovičnú šírku vrchného grafu a tak sa vedľa neho zmestil aj tabuľkový rozpis posledných transakcií aj s možnosťou stránkovania a usporiadávania podľa rôznych stĺpcov. Ako som už v úvede naznačil, všetky tieto informácie uvidí používateľ bez nutnosti skrolovania.
+Základná domovská stránka je trochu špecifickejšia. Používateľovi sa snažím poskytnúť všetky základne informácie bez potreby skrolovania po stránke. Nachádza sa tu základný graf príjmov a výdavkov rozdelených podľa dní za poslední mesiac. Na x-ovej súradnici sa nachádzajú dni a na y-ovej suma. Výdavky nadobúdajú mínusové hodnoty. Príjmy smerujú do plusových hodnôt. Sumy za konkrétny deň sa vyrátané sčítaním výdavkov, respektíve vkladov. Okrem týchto údajov sa v grafe nachádza aj krivka s priebežnou bilanciou. Tá je počítaná od vybraného časového obdobia a pri každom vklade, prípadne výdavku, zobrazuje aktuálnu bilanciu financií za toto obdobie. Z toho vyplýva, že krivka pri veľkých výdavkoch a nedostatku financií môže smerovať aj do mínusových hodnôt. Pod každým grafom sú umiestnené jeho ovládacie prvky na ktorých si používateľ vyberie ktoré údaje chce zobraziť. Pri tomto sú to príjmy za dni, výdavky za dni a pribežná bilancia.
+
+Hneď pod ním sa nachádza ďalší graf zobrazujúci celkové sumy v rôznych kategóriách za rovnaké mesačné obdobie. Tento graf je má však len polovičnú šírku vrchného grafu a tak sa vedľa neho zmestil aj tabuľkový rozpis posledných transakcií aj s možnosťou stránkovania a usporiadania podľa rôznych stĺpcov. Ako som už v úvede naznačil, všetky tieto informácie uvidí používateľ bez nutnosti skrolovania. Pôvodne som chcel tieto informácie s kategóriami zobrazovať v koláčovom grafe. Po dohode s pánom školiteľom som od toho upustil, pretože použitý graf je prehľadnejší a v koláčovom grafe ma človek väčší problém porovnať uhly a zistiť ktorý je väčší. Pri aktuálnom grafe to je možné rozpoznať ihneď.
 
 \subsubsection{Transakcie}
+Hlavným zámerom tejto stránky je používateľovi sprostredkovať prehľad vo všetkých transakciách a grafické porovnanie príjmov a výdavkov v určitom období. Pod navigáciu som umiestnil graf podobný tomu z domovskej stránky. Obsahuje však niekoľko rozdielov. Príjmy aj výdavky sú v ňom zobrazované do plusových hodnôt. Tým je zjednodušené ich porovnávanie. Narozdiel od krivky s priebežnou bilanciou sa tu nachádza rozdielová krivka. Pri každom dni, prípadne mesiaci alebo roku, zobrazuje rozdiel príjmov výdavkov. Ak teda v určitý deň(mesiac, rok) presiahne suma výdavkoch sumu príjmov tak bude táto krivka v mínusých hodnotách. 
 
-TODO
+Pod grafom sa nachádza tabuľka s rozpisom transakcií. Okrem údajov ktoré ponuka podobná tabuľka z domovskej stránky obsahuje táto naviac aj tlačítka s akciami ktoré sa dajú použiť pri každej transakcii. Ide o editovanie transakcie, vymazanie transakcie a posledným je vymazanie vybratej transakcie a zároveň všetkých jej ďalších opakovaní  v budúcnosti. Jej predchádzajúce opakovania zostanú uložené.
+
+Všetky údaje pre grafy a transakcie je možné filtrovať pomocou ponuky v ľavej časti stránky. Používateľ si vyberie časový rozsah od-do a rozdelenie v grafe podľa rokov, mesiacov alebo dní.
 
 \subsubsection{Pridanie transakcie}
-
-TODO
+Jednoduchá stránka na pridávanie transakcií. Používateľ vyberá typ transakcie(príjem alebo výdavok). Názov transakcie, sumu, kategóriu, podkategóriu ktorá je zreťazená s kategóriou a dátum transakcie. Nakoniec má možnosť vybrať či pojde o jednorázovú alebo opakovanú transakciu. Pri vybratí opakovanej sa mu zobrazia ďalšie možnosti. Interval opakovania a počet opakovaní. V tomto prípade sa vytvorí jedna pôvodná transakcia a ďalšie jej opakovania, ktoré budu v obsahovať pole \texttt{original\_transaction\_id} s \texttt{id} ich pôvodnej transakcie.
 
 \subsubsection{Kategórie}
+Základný graf na tejto stránke zobrazuje príjmy a výdavky podľa kategórií za vybraté obdobie pomocou filtra. Prednastavené obdobie je rok dozadu od aktuálneho dátumu. Pod ním sa nachádza tabuľkový výpis transakcií ako na stránke \emph{Transakcie}. Na tejto stránke je taktiež možné použit filter na rozsah dátumov od-do. Pri vybratí konkrétnej kategórie je používateľovi zobrazený graf kategórie v čase. Tento graf je tiež možné filtrovať. V spodnej časti stránky sú vtedy zobrazené aj podkategórie ktoré patria do vybranej kategórie. 
 
-TODO
+Po vybratí podkategórie sa zobrazí používateľovi informácia o nadradenej kategórii a taktiež tabuľka so všetkými transakciami, ktoré patria do tejto podkategórie. Samozrejmosťou sú tlačidlá s akciami, ktoré je možné aplikovať na vybratú podkategóriu. Ide o mazanie a editovanie a nachádzajú sa v ľavej časti stránky. 
+
+
 
 \subsubsection{Import}
-
-Import bankových výpisov vo formáte ABO zo Slovenskej sporiteľne. TODO
+Stránka import poskytuje používateľovi tabuľkový prehľad importovaných výpisov z banky. Pri každom výpise sú na výber akcie spracovať, editovať a vymazať výpis. Najdôležitejšia akcia je spracovanie výpisu. Spracovanie výpisu podporuje aktuálne len výpisy Slovenskej Sporiteľne vo formáte ABO. Importovaný výpis z banky je spracovaný a používateľ dostane stránku s dodatočnou možnosťou upraviť kategórie a podkategórie každej transakcie z importovaného výpisu.
 
 \subsubsection{Nastavenia}
 
@@ -441,20 +439,20 @@ Základné nastavenia účtu používateľa. Na tejto stránke si má používat
 Používateľ je po kliknutí odhlásený z aplikácie, zároveň je zrušená jeho session a je presmerovaný na prihlasovaciu stránku.
 
 \subsection{Mobilné rozhranie}
-Pre zjednodušenie ovládania aplikácie na mobilných zariadeniach som pracoval aj na mobilnom rozhraní. Veľmi nápomocnou mi v tomto bola knižnica jQuery Mobile \cite{jQueryMobile}\, ktorá mi pomohla okrem funkčnosti aj s grafickým prevedením aplikácie vďaka jej základnému css layoutu pre mobilné prehliadače. Navigáciu som pri tomto rozhraní presunu spodnú časť stránky, tak ako to býva zvykom pri mobilných zariadeniach. Pokiaľ nie je potrebná tak sa automaticky zroluje, aby bola využitá maximálna plocha a mohlo byť zobrazených čo najviac informácií. V tejto spodnej časti stránky sa nachádza aj prepnutie na plnú verziu stránky a taktiež aj tlačítko na odhlásenie sa z aplikácie. 
+Pre zjednodušenie ovládania aplikácie na mobilných zariadeniach som pracoval aj na mobilnom rozhraní. Veľmi nápomocnou mi v tomto bola knižnica jQuery Mobile \cite{jQueryMobile}\, ktorá mi pomohla okrem funkčnosti aj s grafickým prevedením aplikácie vďaka jej základnému css layoutu pre mobilné prehliadače. Navigáciu som pri tomto rozhraní presunu spodnú časť stránky, tak ako to býva zvykom pri mobilných zariadeniach. Pokiaľ nie je potrebná tak sa automaticky zroluje, aby bola využitá maximálna plocha a mohlo byť zobrazených čo najviac informácií. V tejto spodnej časti stránky sa nachádza aj tlačidlo na prepnutie na plnú verziu stránky a taktiež aj tlačidlo na odhlásenie sa z aplikácie. 
 
 Pre zachovanie prehľadnosti a jednoduchosti ovládania som počet odkazov v navigácii znížil na základné 4, ktoré ďalej opíšem trochu podrobnejšie. 
 
 \subsubsection{Domov}
-Základná stránka aplikácie, ktorú uvidí používateľ po prihlásení. Zobrazuje prehľadnú aktuálnu bilanciu financií používateľa. Je to ten istý prehľad ktorý nájde použivateľ vo webovom rozhraní  vľavo pod navigáciou. Pod touto bilanciou sa nachádza graf transakcií podľa kategórií. V tomto grafe su zarátané transakcie za posledný mesiac. Pod ním je prehľadná tabuľka s transakciami. Zobrazuje dátum, názov, sumu a kategóriu do ktorej je zaradená konkrétna transakcia. Graf zobrazujúci transakcie za určité obdobie som vynechal. Vzhľadom na malé rozlíšenie by nemal dostatočne dobrý informatívny charakter.
+Základná stránka aplikácie, ktorú uvidí používateľ po prihlásení. Zobrazuje prehľadnú aktuálnu bilanciu financií používateľa. Je to ten istý prehľad ktorý nájde použivateľ v plnom webovom rozhraní  vľavo pod navigáciou. Pod touto bilanciou sa nachádza graf transakcií podľa kategórií. V tomto grafe su zarátané transakcie za posledný mesiac. Pod ním je prehľadná tabuľka s transakciami. Zobrazuje dátum, názov, sumu a kategóriu do ktorej je zaradená konkrétna transakcia. Graf zobrazujúci transakcie za určité obdobie som vynechal. Vzhľadom na malé rozlíšenie by nemal dostatočne dobrý informatívny charakter.
 \subsubsection{Transakcie}
 Prehľadný tabuľkový zoznam transakcií za posledný mesiac. Možnosť triedenia podľa rôznych stĺpcov je samozrejmosť. Každá transakcia zobrazuje svoj dátum, názov, sumu, kategóriu a podkategóriu. Na rozdiel od zoznamu na domovskej stránke je pri transakcii aj možnosť jej úpravy, zmazania. Taktiež sa tu nachádza aj možnosť zmazania vybranej transakcie a zároveň aj všetkých jej budúcich opakovaní.
 
 Pod touto tabuľkou je umiestnené filtrovacie menu, ktoré som opisoval už pri webovom rozhraní.
 \subsubsection{Pridanie transakcie}
-TODO
+Pridávanie transakcie je nastaveniami zhodné s pridávaním transakcie v plnom webovom rozhraní. Upravený je len dizajn tak aby vyhovoval mobilným zariadeniam.
 \subsubsection{Kategórie}
-TODO
+Stránka kategórie zobrazuje graf príjmov a výdavkov podľa kategórií za posledný rok. Pod grafom za nachádza rozpis týchto kategórií s podrobnými informáciami o každej z nich tak ako je to aj na stránke \emph{Transakcie}. 
 
 
 \section{Databázový model}
@@ -484,6 +482,12 @@ Tabuľka obsahujúca len jeden cudzí kľúč \texttt{user\_id}, ktorý definuje
 TODO
 
 Vystupy pre highcharts plugin - rozne typy prehladov podla casovych obdobi (den, mesiac, rok)
+
+PAGINATE PROBLEM a filter
+
+parsovanie vypisov
+
+mobilna aplikacia
 
 
 \chapter{Záver}\label{chap:outro}
