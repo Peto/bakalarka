@@ -380,6 +380,9 @@ class CategoriesController extends AppController {
  * @return void
  */
 	public function edit($id = null) {
+		if (!$this->check_ownership($id) ) {
+			throw new PrivateActionException(__('Na editáciu tejto kategórie nemáte oprávnenie.'));
+		}
 		if (!$this->Category->exists($id)) {
 			throw new NotFoundException(__('Zlá kategória'));
 		}
@@ -407,6 +410,9 @@ class CategoriesController extends AppController {
  * @return void
  */
 	public function delete($id = null) {
+		if (!$this->check_ownership($id) ) {
+			throw new PrivateActionException(__('Na prístup k tejto kategórii nemáte oprávnenie.'));
+		}
 		$this->Category->id = $id;
 		if (!$this->Category->exists()) {
 			throw new NotFoundException(__('Zlá kategória'));

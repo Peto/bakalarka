@@ -1,26 +1,21 @@
 <div class="imports form">
 <?php echo $this->Form->create('Import'); ?>
 	<fieldset>
-		<legend><?php echo __('Edit Import'); ?></legend>
+		<legend><?php echo __('Editacia importu'); ?></legend>
 	<?php
-		echo $this->Form->input('id');
-		echo $this->Form->input('date_from');
-		echo $this->Form->input('date_to');
+		echo $this->Form->input('date_from', array('label' => 'Dátum od'));
+		echo $this->Form->input('date_to', array('label' => 'Dátum do'));
 		echo $this->Form->input('xml_file');
-		echo $this->Form->input('processed');
-		echo $this->Form->input('filename');
-		echo $this->Form->input('user_id');
+		echo $this->Form->input('filename', array('label' => 'Názov súboru'));
 	?>
 	</fieldset>
-<?php echo $this->Form->end(__('Submit')); ?>
+<?php echo $this->Form->end(__('Upraviť')); ?>
 </div>
 <div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
+	<h3><?php echo __('Akcie'); ?></h3>
 	<ul>
-
-		<li><?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $this->Form->value('Import.id')), null, __('Are you sure you want to delete # %s?', $this->Form->value('Import.id'))); ?></li>
-		<li><?php echo $this->Html->link(__('List Imports'), array('action' => 'index')); ?></li>
-		<li><?php echo $this->Html->link(__('List Users'), array('controller' => 'users', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New User'), array('controller' => 'users', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('Editovať import'), array('action' => 'edit', $import['Import']['id'])); ?> </li>
+		<li><?php echo $this->Form->postLink(__('Vymazať import'), array('action' => 'delete', $import['Import']['id']), null, __('Ste si istý, že chcete vymazať import # %s?', $import['Import']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(__('Nový import'), array('action' => 'add')); ?> </li>
 	</ul>
 </div>

@@ -16,11 +16,6 @@
 			<?php echo h($import['Import']['date_to']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('Spracovaný'); ?></dt>
-		<dd>
-			<?php echo h($import['Import']['processed']); ?>
-			&nbsp;
-		</dd>
 		<dt><?php echo __('Názov súboru'); ?></dt>
 		<dd>
 			<?php echo h($import['Import']['filename']); ?>
@@ -32,7 +27,7 @@
 	<h3><?php echo __('Akcie'); ?></h3>
 	<ul>
 		<li><?php echo $this->Html->link(__('Editovať import'), array('action' => 'edit', $import['Import']['id'])); ?> </li>
-		<li><?php echo $this->Form->postLink(__('Vymazať import'), array('action' => 'delete', $import['Import']['id']), null, __('Are you sure you want to delete # %s?', $import['Import']['id'])); ?> </li>
+		<li><?php echo $this->Form->postLink(__('Vymazať import'), array('action' => 'delete', $import['Import']['id']), null, __('Vymazať import # %s?', $import['Import']['id'])); ?> </li>
 		<li><?php echo $this->Html->link(__('Nový import'), array('action' => 'add')); ?> </li>
 	</ul>
 </div>

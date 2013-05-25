@@ -23,6 +23,9 @@
 App::uses('Controller', 'Controller');
 App::uses('CakeTime', 'Utility');
 
+App::uses('CakeEmail', 'Network/Email');  // potrebne pre posielanie mailov, nahradza stary EmailComponent
+
+
 /**
  * Application Controller
  *
@@ -70,10 +73,12 @@ class AppController extends Controller {
 		if($role == '1')
 		{
 			$this->set('is_admin', true);
+			
 		}
 		else
 		{
 			$this->set('is_admin', false);
+			
 		}
 		
 		////// MOBILE VIEW stuff //////

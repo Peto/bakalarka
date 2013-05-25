@@ -62,7 +62,8 @@ h3 {
 	font-size: 110%;
 }
 h4 {
-	color: #993;
+	//color: #993;
+	color: white;
 	font-weight: normal;
 }
 
@@ -85,7 +86,7 @@ p {
 }
 
 #header{
-	padding: 10px 20px;
+	padding: 10px 5px;
 }
 #header h1 {
 	line-height:24px;
@@ -108,8 +109,9 @@ p {
 	background: #fff;
 	clear: both;
 	color: #333;
-	padding: 10px 20px 40px 20px;
+	padding: 5px 5px 35px 5px;
 	overflow: auto;
+	min-height: 450px;
 }
 #footer {
 	clear: both;
@@ -789,8 +791,8 @@ pre {
 #paginbox {
 	position: relative;
 	float: left;
-	width: 520px;
-	margin-left: 20px;
+	width: 505px;
+	margin-left: 5px;
 }
 
 .left {
@@ -819,7 +821,7 @@ table a {
 .left_box {
 	margin-up: 10px;
 	margin-bottom: 5px;
-	width: 200px;
+	width: 150px;
 	background: #EEEDEC;
 	padding: 10px;
 	-moz-border-radius: 5px;
@@ -829,7 +831,7 @@ table a {
 .small_box {
 	margin-up: 10px;
 	margin-bottom: 5px;
-	width: 190px;
+	width: 140px;
 	background: white;
 	padding: 5px;
 	-moz-border-radius: 5px;
@@ -861,4 +863,23 @@ table a {
 
 .input_polia input {
 	//float: right;
+}
+
+#from , #to {
+	width: 100px;
+}
+
+.transakcia_import {
+	border-bottom: solid 2px black;
+	padding-left: 10px;
+	margin-bottom: 10px;
+}
+
+.transakcia_import input {
+	width: 250px;
+}
+
+.transakcia_import_udaje {
+	padding: 2px;
+	
 }

@@ -12,9 +12,18 @@ class UserTypesController extends AppController {
  *
  * @return void
  */
+	
+
+	
 	public function index() {
+		 if ($this->Session->read('User.user_type_id') == '2') {
+			throw new PrivateActionException(__('Na prístup nemáte oprávnenie.'));
+		} 
 		$this->UserType->recursive = 0;
 		$this->set('userTypes', $this->paginate());
+		
+		
+		
 	}
 
 /**
@@ -25,8 +34,11 @@ class UserTypesController extends AppController {
  * @return void
  */
 	public function view($id = null) {
+		if ($this->Session->read('User.user_type_id') == '2') {
+			throw new PrivateActionException(__('Na prístup nemáte oprávnenie.'));
+		}
 		if (!$this->UserType->exists($id)) {
-			throw new NotFoundException(__('Invalid user type'));
+			throw new NotFoundException(__('Zlý typ používateľa'));
 		}
 		$options = array('conditions' => array('UserType.' . $this->UserType->primaryKey => $id));
 		$this->set('userType', $this->UserType->find('first', $options));
@@ -38,13 +50,16 @@ class UserTypesController extends AppController {
  * @return void
  */
 	public function add() {
+		if ($this->Session->read('User.user_type_id') == '2') {
+			throw new PrivateActionException(__('Na prístup nemáte oprávnenie.'));
+		}
 		if ($this->request->is('post')) {
 			$this->UserType->create();
 			if ($this->UserType->save($this->request->data)) {
-				$this->Session->setFlash(__('The user type has been saved'));
+				$this->Session->setFlash(__('Typ používateľa bol uložený.'));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The user type could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('Typ používateľa nebol uložený. Skúste prosím znovu.'));
 			}
 		}
 	}
@@ -57,6 +72,9 @@ class UserTypesController extends AppController {
  * @return void
  */
 	public function edit($id = null) {
+		if ($this->Session->read('User.user_type_id') == '2') {
+			throw new PrivateActionException(__('Na prístup nemáte oprávnenie.'));
+		}
 		if (!$this->UserType->exists($id)) {
 			throw new NotFoundException(__('Invalid user type'));
 		}
@@ -82,6 +100,9 @@ class UserTypesController extends AppController {
  * @return void
  */
 	public function delete($id = null) {
+		if ($this->Session->read('User.user_type_id') == '2') {
+			throw new PrivateActionException(__('Na prístup nemáte oprávnenie.'));
+		}
 		$this->UserType->id = $id;
 		if (!$this->UserType->exists()) {
 			throw new NotFoundException(__('Invalid user type'));
@@ -94,4 +115,5 @@ class UserTypesController extends AppController {
 		$this->Session->setFlash(__('User type was not deleted'));
 		$this->redirect(array('action' => 'index'));
 	}
+	
 }

@@ -88,6 +88,7 @@ $( "#datepicker" ).datepicker( "option", "dateFormat", 'yy-mm-dd' );
 		</div>
 		<div id="footer">
 		<?= $this->element('default_footer') ?>
+		<div><?php echo $this->Html->link("Nastavenia",array("controller"=>"users","action"=>"index")); ?></div>
 			
 		</div>
 	</div>

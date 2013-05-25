@@ -33,6 +33,9 @@ class ImportsController extends AppController {
  * @return void
  */
 	public function view($id = null) {
+		if (!$this->check_ownership($id) ) {
+			throw new PrivateActionException(__('Na prístup k tomuto importu nemáte oprávnenie.'));
+		}
 		if (!$this->Import->exists($id)) {
 			throw new NotFoundException(__('Invalid import'));
 		}
@@ -97,6 +100,9 @@ class ImportsController extends AppController {
  * @return void
  */
 	public function edit($id = null) {
+		if (!$this->check_ownership($id) ) {
+			throw new PrivateActionException(__('Na prístup k tomuto importu nemáte oprávnenie.'));
+		}
 		if (!$this->Import->exists($id)) {
 			throw new NotFoundException(__('Zlý import'));
 		}
@@ -113,6 +119,7 @@ class ImportsController extends AppController {
 		}
 		$users = $this->Import->User->find('list');
 		$this->set(compact('users'));
+		$this->set('import', $this->Import->find('first', $options));
 	}
 
 /**
@@ -124,6 +131,9 @@ class ImportsController extends AppController {
  * @return void
  */
 	public function delete($id = null) {
+		if (!$this->check_ownership($id) ) {
+			throw new PrivateActionException(__('Na prístup k tomuto importu nemáte oprávnenie.'));
+		}
 		$this->Import->id = $id;
 		if (!$this->Import->exists()) {
 			throw new NotFoundException(__('Zlý import'));
@@ -138,6 +148,7 @@ class ImportsController extends AppController {
 	}
 	
 	public function parsing_slsp_abo($file_content) {
+		
 		$lines = split("\n", $file_content);
 		
 		for ($i = 0; $i < count($lines) - 1; $i++) {
@@ -339,6 +350,17 @@ class ImportsController extends AppController {
 		$this->set('subcategories', $this->Transaction->Subcategory->find('all', array('fields' => array('Subcategory.category_id', 'Subcategory.id', 'Subcategory.name'), 'recursive' => 1, 'conditions' => array('Subcategory.user_id' => $user_id))));
 		$this->set('user', $user_id);
 		
+	}
+	
+	private function check_ownership($id) {
+		$user_import = $this->Import->find('first', array(
+				'conditions' => array('Import.id' => $id),));
+		if ($this->Session->read('User.id') == $user_import['Import']['user_id']) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	
 

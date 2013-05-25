@@ -18,3 +18,4 @@
     <?php else: ?>
         <div class="switch_full"><?= $this->Html->link('Mobilná verzia stránky', $mobile_url, array('target' => '', 'class' => '')) ?></div>
     <?php endif; ?>
+    

@@ -33,8 +33,11 @@ class SubcategoriesController extends AppController {
  * @return void
  */
 	public function view($id = null) {
+		if (!$this->check_ownership($id) ) {
+			throw new PrivateActionException(__('Na prístup k tejto kategórii nemáte oprávnenie.'));
+		}
 		if (!$this->Subcategory->exists($id)) {
-			throw new NotFoundException(__('Invalid subcategory'));
+			throw new NotFoundException(__('Neechistujúca podkategória'));
 		}
 		$options = array('conditions' => array('Subcategory.' . $this->Subcategory->primaryKey => $id));
 		$this->set('subcategory', $this->Subcategory->find('first', $options));
@@ -69,6 +72,9 @@ class SubcategoriesController extends AppController {
  * @return void
  */
 	public function edit($id = null) {
+		if (!$this->check_ownership($id) ) {
+			throw new PrivateActionException(__('Na prístup k tejto podkategórii nemáte oprávnenie.'));
+		}
 		if (!$this->Subcategory->exists($id)) {
 			throw new NotFoundException(__('Zlá podkategória'));
 		}
@@ -99,6 +105,9 @@ class SubcategoriesController extends AppController {
  * @return void
  */
 	public function delete($id = null) {
+		if (!$this->check_ownership($id) ) {
+			throw new PrivateActionException(__('Na zmazanie tejto podkategórie nemáte oprávnenie.'));
+		}
 		$this->Subcategory->id = $id;
 		if (!$this->Subcategory->exists()) {
 			throw new NotFoundException(__('Zlá podkategória'));
@@ -110,5 +119,16 @@ class SubcategoriesController extends AppController {
 		}
 		$this->Session->setFlash(__('Podkategória nebola vymazaná.'));
 		$this->redirect(array('action' => 'index'));
+	}
+	
+	private function check_ownership($id) {
+		$user_subcategory = $this->Subcategory->find('first', array(
+				'conditions' => array('Subcategory.id' => $id),));
+		if ($this->Session->read('User.id') == $user_subcategory['Subcategory']['user_id']) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 }

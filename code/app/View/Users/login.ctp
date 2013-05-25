@@ -12,7 +12,8 @@
          'action' => 'add',
      	 
      ));
-     ?>
+     ?><br /><br />
+     <?php echo $this->Html->link("Zabudli ste heslo?",array("controller"=>"users","action"=>"forgetpwd")); ?>
 	 </div>
 <?php
 ?>

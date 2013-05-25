@@ -12,10 +12,16 @@ $(document).ready(function () {
 		<?php $transaction_count = 0; 
 			foreach ($parsed['content'] as $transakcia) {   // form pre kazdu transakciu
 				 ?>
+			<div class='transakcia_import'>
 				<div class="input_polia"><?php echo $this->Form->input('Transaction.'.$transaction_count.'.name', array('default'=>$transakcia['detail'], 'label' => 'Názov transakcie:'));?></div>
-				<?php echo $transakcia['post_date'] ?>
-				<?php echo $transakcia['amount'] ?>
-				<?php echo $transakcia['payment_type'] ?>
+				<div class='transakcia_import_udaje'>Dátum:<?php echo $transakcia['post_date'] ?></div>
+				<div class='transakcia_import_udaje'>Suma:<?php echo $transakcia['amount'] ?> €</div>
+				<div class='transakcia_import_udaje'>Typ transakcie: <?php echo $transakcia['payment_type'] ?></div>
+				<div class='transakcia_import_udaje'>Číslo účtu odosielaťeľa: <?php echo $transakcia['partner_account_number'] ?> / <?php echo $transakcia['partner_account_prefix'] ?></div>
+				<div class='transakcia_import_udaje'>Číslo účtu prijímateľa: <?php echo $transakcia['account_number'] ?> / <?php echo $transakcia['account_prefix'] ?></div>
+				<div class='transakcia_import_udaje'>Variabilný symbol: <?php echo $transakcia['original_variable_symbol'] ?></div>
+				
+				
 				<?php echo $this->Form->input('Transaction.'.$transaction_count.'.post_date', array('type' => 'hidden','value' => $transakcia['post_date']));?>
 				<?php echo $this->Form->input('Transaction.'.$transaction_count.'.amount', array('type' => 'hidden','value' => $transakcia['amount']));?>
 				<?php echo $this->Form->input('Transaction.'.$transaction_count.'.transaction_type_id', array('type' => 'hidden','value' => $transakcia['p_type_id']));?>
@@ -33,7 +39,7 @@ $(document).ready(function () {
 					echo '<option value="'.$row['Subcategory']['id'].'" class="'.$row['Subcategory']['category_id'].'">'.$row['Subcategory']['name'].'</option>';
 				}?>
 				</select><?php echo $this->Html->link(__(' Nová podkategória'), array('controller' => 'subcategories', 'action' => 'add')); ?></div>
-					
+			</div>		
 		<?php $transaction_count++; 
 			}  ?>
 		</fieldset>
