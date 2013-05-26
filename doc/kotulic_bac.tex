@@ -40,6 +40,29 @@
     urlcolor=blue           % color of external links
 }
 
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=php,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true
+  tabsize=3
+}
 
 \renewcommand\baselinestretch{1.3} 
 
@@ -96,7 +119,7 @@ FAKULTA MATEMATIKY, FYZIKY A INFORMATIKY
 \noindent
   \begin{tabular}{ @{} l l  }
 	Študijný program: 		&Aplikovaná informatika \\
-	Študijný odbor: 		&9.2.9 Aplikovaná informatika\\
+	Študijný odbor: 		&2511 Aplikovaná informatika\\
 	Školiace pracovisko: 	&Katedra aplikovanej informatiky\\
 	Školiteľ: 			&\mfadvisor \\
   \end{tabular}
@@ -210,9 +233,9 @@ HTML \cite{HTML}\ je skratka pre HyperText Markup Language. Je to najpoužívane
 
 Aktuálna verzia tohto jazyka je HTML 5 \cite{HTML5}\ . Táto verzia priniesla mnoho výhod. Okrem tagu video, ktorý by sa mal stať novým štandardom na prezeranie videí a filmov na webe ide hlavne o nové štrukturálne elementy.
  
-Element \texttt{div} teraz môže byť nahradený presnejšie definovanými elementami ako sú \texttt{header}, nav, section, article, aside a footer. Na jednej strane to pomáha k prehľadnejšiemu kódu a na druhú stranu aj koncovému používateľovi pri jednoduchšom pohybe na stránke. Napríklad môže ísť o rýchle preskočenie navigácie alebo jednoduchší pohyb medzi rôznymi článkami.
+Element \texttt{div} teraz môže byť nahradený presnejšie definovanými elementmi ako sú \texttt{header}, nav, section, article, aside a footer. Na jednej strane to pomáha k prehľadnejšiemu kódu a na druhú stranu aj koncovému používateľovi pri jednoduchšom pohybe na stránke. Napríklad môže ísť o rýchle preskočenie navigácie alebo jednoduchší pohyb medzi rôznymi článkami.
 
-Dalšou novinkou sú nové atribúty ktoré môžeme využiť pri formulároch a inputoch. Pre mňa poslednou dôležitou výhodou HTML 5 ktorú by som rád spomenul je použitie Inline SVG(Scalable Vector Graphics) . Ide o vektorovú grafiku ktorú používa aj mnou neskôr spomínaná javascriptová Highcharts knižnica.
+Ďalšou novinkou sú nové atribúty ktoré môžeme využiť pri formulároch a inputoch. Pre mňa poslednou dôležitou výhodou HTML 5 ktorú by som rád spomenul je použitie Inline SVG(Scalable Vector Graphics) . Ide o vektorovú grafiku ktorú používa aj mnou neskôr spomínaná javascriptová Highcharts knižnica.
 
 CSS \cite{CSS21}\ (Cascading Style Sheets - kaskádové štýly) je štýlovací jazyk, ktorý popisuje ako budú zobrazené stránky, ktoré boli napísané v (X)HTML. CSS umožňujú vizuálne formátovať webové dokumenty. Vytvárame tak štruktúrované dokumenty v ktorých oddeľujeme obsah dokumentu(HTML) od jeho vzhľadu(CSS). Hlavné z výhod použitia CSS su prehľadnejší kód, menšia dátová náročnosť a jednoduchá zmena formátovania určitých elementov na celej stránke bez nutnosti formátovania každého elementu zvlášť. 
 
@@ -246,21 +269,21 @@ Druhá podobná webová aplikácia ktorú som testoval bola Buxfer. Hneď na prv
 \subsection{Desktopové aplikácie}
 \subsubsection{RQ Money \cite{RQMoney}\ }
 
-Jedinou desktopovou aplikáciou ktorá sa mi páčila a stála za otestovanie bolo RQMoney od slovenského autora. Aplikácia je vytvorená v Delphi. V porovaní s predchádzajúcimi aplikáciami je RQMoney oveľa komplexnejšia a ponúka oveľa väčšiu funkcionalitu. V tomto sa dosť odlišuje od mojej webovej aplikácie Domáce účtovníctvo. Tá ma za cieľ prehľadnosť a jednoduchosť. 
+Jedinou desktopovou aplikáciou ktorá sa mi páčila a stála za otestovanie bolo RQMoney od slovenského autora. Aplikácia je vytvorená v Delphi. V porovnaní s predchádzajúcimi aplikáciami je RQMoney oveľa komplexnejšia a ponúka oveľa väčšiu funkcionalitu. V tomto sa dosť odlišuje od mojej webovej aplikácie Domáce účtovníctvo. Tá ma za cieľ prehľadnosť a jednoduchosť. 
 
-RQMoney ponúka klasickú evidenciu príjmov, výdavkov a presunov. Používateľovi sú dostupné rôzne typy filtrov a radeni podľa vlastného výberu. Užitočná funkcia je plánovanie transakcií s možnosťou prezerania platobného kalendára. S tým súvisí aj možnosť porovnania plánovaných a skutočných transakcií za mesiac. Štatistiky ponúkajú podrobné prehľady za rôzne časové obdobia vďaka tabuľkám a grafom. Používateľ môže v aplikácii použiť vlastné SQL príkazy. RQMoney obsahuje aj prehľadné tlačové zostavy a exporty tabuliek do MS Excel. Rovnako je možné exportovať aj grafy. 
+RQMoney ponúka klasickú evidenciu príjmov, výdavkov a presunov. Používateľovi sú dostupné rôzne typy filtrov a radení podľa vlastného výberu. Užitočná funkcia je plánovanie transakcií s možnosťou prezerania platobného kalendára. S tým súvisí aj možnosť porovnania plánovaných a skutočných transakcií za mesiac. Štatistiky ponúkajú podrobné prehľady za rôzne časové obdobia vďaka tabuľkám a grafom. Používateľ môže v aplikácii použiť vlastné SQL príkazy. RQMoney obsahuje aj prehľadné tlačové zostavy a exporty tabuliek do MS Excel. Rovnako je možné exportovať aj grafy. 
 
 \subsection{Mobilné aplikácie}
 Zaoberal som sa len aplikáciami pre systém Android
 \subsubsection{Easy Money - Android \cite{EasyMoney}\ }
 
-Prvá aplikácia pre Android ktorú som testoval bola Easy Money. Ponúka rôzne typy účtov. Napríklad cash, kreditná karta, účet v banke. Pri pridávaní transakcií určujeme jej názov, cenu, kategóriu, dátum, či ide o príjem alebo výdavok a opakovanie. Okrem toho máme možnosť rozdeliť transakciu do viacerých kategórií a taktiež určit, že ide len o prevod medzi účtami. 
+Prvá aplikácia pre Android ktorú som testoval bola Easy Money. Ponúka rôzne typy účtov. Napríklad cash, kreditná karta, účet v banke. Pri pridávaní transakcií určujeme jej názov, cenu, kategóriu, dátum, či ide o príjem alebo výdavok a opakovanie. Okrem toho máme možnosť rozdeliť transakciu do viacerých kategórií a taktiež určiť, že ide len o prevod medzi účtami. 
 
-V prehľadoch nám aplikácia ponúka zobrazenie príjmov alebo výdavkov podľa kategórií v stĺpcových grafoch. Okrem nich aj denne porovnanie príjmov a výdavkov a tiež ich mesačný zoznam a sumy za konkrétne mesiace. Ďalšou užitočnou vlastnosťou je pripomienkovač platenia faktúr a účtov. Zaujímavou funkciou je aj nastavenie mesačného rozpočtu a prehľad jeho využitia počas mesiaca. Easy Money podporuje import a export do QIF a CSV.  Medzi transakciami môže použivateľ prehľadávať pomocou keywords.
+V prehľadoch nám aplikácia ponúka zobrazenie príjmov alebo výdavkov podľa kategórií v stĺpcových grafoch. Okrem nich aj denne porovnanie príjmov a výdavkov a tiež ich mesačný zoznam a sumy za konkrétne mesiace. Ďalšou užitočnou vlastnosťou je pripomienkovač platenia faktúr a účtov. Zaujímavou funkciou je aj nastavenie mesačného rozpočtu a prehľad jeho využitia počas mesiaca. Easy Money podporuje import a export do QIF a CSV.  Medzi transakciami môže používateľ prehľadávať pomocou keywords.
 
 \subsubsection{Money Lover - Android \cite{MoneyLover}\ }
 
-Money Lover je najprehľadnejšia a najintuitívnejšia mobilná aplikácia, ktorú som testoval. Obsahuje jednoduché pridávanie transakcií pri ktorom určujeme či ide o príjem, výdaj, pôžičku alebo dlh. Potom vypĺňame polia názov, kategória, suma, poznámka, dátum, učet a prípadne nastavenie opakovania. Pri opakovaniach sa nedá nastaviť konkrétny dátum, ale len začiatok alebo koniec týždňa, pripadne mesiaca. Ako je možné už vidieť z vyplnených polí, môžeme používať rôzne typy účtov. Transakcie môžeme prehliadať v tabuľkových prehľadoch s možnosťou triedenia podľa dátumov, kategórií alebo príjmu a výdavkov. Koláčový graf kategórií za určité obdobie je už samozrejmosť. Aplikácia obsahuje aj menej zvyčajné funkcie ako je správa dlhov, prepočet meny, výpočet vrcholu, vyhľadanie bankomatu, banky a počítanie úroku. Zaujímavou funkciou je aj sprievodca pri nastavení aplikácie, ktorý by sa zišiel hlavne pri ostatných menej prehľadných aplikáciach. 
+Money Lover je najprehľadnejšia a najintuitívnejšia mobilná aplikácia, ktorú som testoval. Obsahuje jednoduché pridávanie transakcií pri ktorom určujeme či ide o príjem, výdaj, pôžičku alebo dlh. Potom vypĺňame polia názov, kategória, suma, poznámka, dátum, účet a prípadne nastavenie opakovania. Pri opakovaniach sa nedá nastaviť konkrétny dátum, ale len začiatok alebo koniec týždňa, pripadne mesiaca. Ako je možné už vidieť z vyplnených polí, môžeme používať rôzne typy účtov. Transakcie môžeme prehliadať v tabuľkových prehľadoch s možnosťou triedenia podľa dátumov, kategórií alebo príjmu a výdavkov. Koláčový graf kategórií za určité obdobie je už samozrejmosť. Aplikácia obsahuje aj menej zvyčajné funkcie ako je správa dlhov, prepočet meny, výpočet vrcholu, vyhľadanie bankomatu, banky a počítanie úroku. Zaujímavou funkciou je aj sprievodca pri nastavení aplikácie, ktorý by sa zišiel hlavne pri ostatných menej prehľadných aplikáciách. 
 
 \subsubsection{Expense Manager - Android \cite{ExpenseManager}\ }
 
@@ -270,7 +293,7 @@ Prehľad v transakciách ponúkajú koláčové a stĺpcové grafy príjmov aleb
 Expense Manager ponúka ešte aj ďalšie možnosti ako je kalkulačka, prepočet meny, výpočet sprepitného, výpočet zľavy a dane alebo výpočet splatenia dlhov na kreditnej karte.
 
 \subsection{Porovnanie s mojimi cieľmi}
-Mojim hlavným cieľom je vytvoriť prehľadnú a užívateľsky jednoducho ovládajúcu sa aplikáciu. Všetky spomenuté podobné riešenia sa to tiež snažili splniť. Nie každému sa to však podarilo. Väčšina z aplikácií obsahovala okrem základnej funkcionality aj možnosti, ktoré bežný používateľ asi nikdy nevyužije. To by nevadilo, pokiaľ by tým aplikácia nestrácala na prehľadnosti. Bežný používateľ nemá čas a chuť zisťovať a učiť sa nanovo ovládať aplikáciu. Je zvyknutý na určité ovládacie prvky a ich prehľadné rozloženie. Napríklad pri aplikácii Budgetpulse je problém vykonať aj tú najzákladnejšiu akciu akou je pridanie novej transakcie. A keď to užívateľ konečne nájde, zistí, že rovno pod sebou ma 2 odkazy na pridanie transakcie pričom oba vykonajú rovnakú akciu. Toto riešenie je ideálne ak sa tvorcovia snažia ešte viac domýliť používateľa. A toto je len jedna z množsta vecí, ktoré sa dajú urobiť oveľa lepšie. V jednoduchosti je krása.
+Mojim hlavným cieľom je vytvoriť prehľadnú a užívateľsky jednoducho ovládajúcu sa aplikáciu. Všetky spomenuté podobné riešenia sa to tiež snažili splniť. Nie každému sa to však podarilo. Väčšina z aplikácií obsahovala okrem základnej funkcionality aj možnosti, ktoré bežný používateľ asi nikdy nevyužije. To by nevadilo, pokiaľ by tým aplikácia nestrácala na prehľadnosti. Bežný používateľ nemá čas a chuť zisťovať a učiť sa nanovo ovládať aplikáciu. Je zvyknutý na určité ovládacie prvky a ich prehľadné rozloženie. Napríklad pri aplikácii Budgetpulse je problém vykonať aj tú najzákladnejšiu akciu akou je pridanie novej transakcie. A keď to užívateľ konečne nájde, zistí, že rovno pod sebou ma 2 odkazy na pridanie transakcie pričom oba vykonajú rovnakú akciu. Toto riešenie je ideálne ak sa tvorcovia snažia ešte viac domýliť používateľa. A toto je len jedna z množstva vecí, ktoré sa dajú urobiť oveľa lepšie. V jednoduchosti je krása.
 
 Druhou veľkou zmenou oproti ostatným riešeniam bude vytvorenie mobilnej webovej verzie mojej aplikácie. Existujúce riešenia boli zamerané vždy na určitý segment. Išlo vždy buď o webovú, desktopovú alebo mobilnú aplikáciu. Mobilná aplikácia nebola prepojená s webovým riešením a opačne. Tým, že vytvorím aj mobilnú webovú verziu odvodenú od klasickej webovej aplikácie bude tento problém vyriešený. Poslednou veľkou zmenou bude možnosť importu bankových výpisov, čím používateľovi uľahčím zadávanie nových transakcií do aplikácie. Túto možnosť u nás neposkytovala žiadna zo skúšaných aplikácií.
 
@@ -296,7 +319,7 @@ Controller(radič) je časť MVC architektúry ktorá reaguje na udalosti, ktor�
 
 Pri niektorých typoch implementácie MVC môže Controller priamo komunikovať s View. Controller môže v tomto prípade rozhodovať ktoré View sa majú zobraziť. Jeho hlavnou schopnosťou však naďalej ostáva schopnosť Controlleru upraviť model.
 
-Pri webovej implementácii MVC frameworku sa Controller najčastejšie skladá z dvoch hlavných častí. Prvou časťou je front controller. Tento Controller zachytí všetky http požiadavky, spracuje ich a potom pošle konkrétnym Controllerom. Druhá hlavná časť sú tieto konkrétne Controllery. Controller prijme dáta, ktoré pôvodne pochádzali z http pôžiadavky, uloží ich do Modelu a ten nasmeruje na špecifický View. Ten tieto spracované dáta zobrazí pre používateľa.
+Pri webovej implementácii MVC frameworku sa Controller najčastejšie skladá z dvoch hlavných častí. Prvou časťou je front controller. Tento Controller zachytí všetky http požiadavky, spracuje ich a potom pošle konkrétnym Controllerom. Druhá hlavná časť sú tieto konkrétne Controllery. Controller prijme dáta, ktoré pôvodne pochádzali z http požiadavky, uloží ich do Modelu a ten nasmeruje na špecifický View. Ten tieto spracované dáta zobrazí pre používateľa.
 
 \subsection{MVC verzus Passive View MVC}
 Ako som už spomínal vo východiskách, moja práca bude založená na frameworku CakePHP. V predchádzajúcej časti som opisoval časti z ktorých je zložená MVC architektúra. CakePHP a podobné webové frameworky však nepoužívajú klasickú MVC architektúru. Sú založené na od nej odvodenej architektúre s názvom PMVC (Passive Model View Controller). Základný rozdiel je v tom, že View v tomto modeli len pasívne zobrazuje dáta. View môže byť šablóna napísaná v niektorom zo šablónovacích jazykov. Samotné PHP, ktoré používa CakePHP je tiež šablónovací jazyk. Často sa však používajú aj iné: 
@@ -350,7 +373,6 @@ Funkčnosť webovej aplikácie sa líši z pohľadu rôznych typov používateľ
 Administrátor môže:
 \begin{itemize}
 \item{mazať používateľov}
-\item{resetovať heslá po žiadosti používateľa}
 \end{itemize}
 
 \subsubsection{Prihlásený používateľ}
@@ -367,14 +389,15 @@ Prihlásený používateľ môže:
 \item{vidieť informácie o tom koľko potrebuje ušetriť na výdavkoch, prípadne navýšiť príjmy pre úspešné zvládnutie platenia budúcich výdavkov}
 \item{importovať bankou zaslané výpisy transakcií, ktoré následne aplikácia spracuje a priradí základné kategórie k známym transakciám}
 \item{editovať a mazať príjmy a výdavky importované z výpisov transakcií banky}
-\item{editovať svoje heslo a e-mail v nastaveniach svojho účtu}
+\item{editovať svoje meno a priezvisko v nastaveniach svojho účtu}
+\item{požiadať o resetovanie hesla do aplikácie v nastaveniach svojho účtu}
 \end{itemize}
 
 \subsubsection{Neprihlásený používateľ}
 Neprihlásený používateľ môže:
 \begin{itemize}
 \item{registrovať sa alebo sa prihlásiť pokiaľ je už registrovaný}
-\item{požiadať admina o zresetovanie svojho hesla v prípade jeho zabudnutia}
+\item{požiadať o zresetovanie svojho hesla v prípade jeho zabudnutia}
 \end{itemize}
 \subsection{Mobilná webová verzia aplikácie}
 Funkčnosť mobilnej verzie aplikácie sa líši z pohľadu 2 typov používateľov.
@@ -396,7 +419,7 @@ Prihlásený používateľ môže:
 Neprihlásený používateľ môže:
 \begin{itemize}
 \item{registrovať sa alebo sa prihlásiť pokiaľ je už registrovaný}
-\item{požiadať admina o zresetovanie svojho hesla v prípade jeho zabudnutia}
+\item{požiadať o zresetovanie svojho hesla v prípade jeho zabudnutia}
 \end{itemize}
 
 \section{Používateľské rozhranie}
@@ -407,21 +430,48 @@ Napravo od tohto menu sa nachádza obsah stránky. Pri prehľadoch ide zvyčajne
 
 \subsubsection{Domov}
 Základná domovská stránka je trochu špecifickejšia. Používateľovi sa snažím poskytnúť všetky základne informácie bez potreby skrolovania po stránke. Nachádza sa tu základný graf príjmov a výdavkov rozdelených podľa dní za poslední mesiac. Na x-ovej súradnici sa nachádzajú dni a na y-ovej suma. Výdavky nadobúdajú mínusové hodnoty. Príjmy smerujú do plusových hodnôt. Sumy za konkrétny deň sa vyrátané sčítaním výdavkov, respektíve vkladov. Okrem týchto údajov sa v grafe nachádza aj krivka s priebežnou bilanciou. Tá je počítaná od vybraného časového obdobia a pri každom vklade, prípadne výdavku, zobrazuje aktuálnu bilanciu financií za toto obdobie. Z toho vyplýva, že krivka pri veľkých výdavkoch a nedostatku financií môže smerovať aj do mínusových hodnôt. Pod každým grafom sú umiestnené jeho ovládacie prvky na ktorých si používateľ vyberie ktoré údaje chce zobraziť. Pri tomto sú to príjmy za dni, výdavky za dni a pribežná bilancia.
+\begin{figure}[ht]
+  \centering
+      \includegraphics[width=11cm]{wireframe_home}
+  \caption{wireframe - domov}
+  \label{wireframe - domov}
+\end{figure}  
 
-Hneď pod ním sa nachádza ďalší graf zobrazujúci celkové sumy v rôznych kategóriách za rovnaké mesačné obdobie. Tento graf je má však len polovičnú šírku vrchného grafu a tak sa vedľa neho zmestil aj tabuľkový rozpis posledných transakcií aj s možnosťou stránkovania a usporiadania podľa rôznych stĺpcov. Ako som už v úvede naznačil, všetky tieto informácie uvidí používateľ bez nutnosti skrolovania. Pôvodne som chcel tieto informácie s kategóriami zobrazovať v koláčovom grafe. Po dohode s pánom školiteľom som od toho upustil, pretože použitý graf je prehľadnejší a v koláčovom grafe ma človek väčší problém porovnať uhly a zistiť ktorý je väčší. Pri aktuálnom grafe to je možné rozpoznať ihneď.
+Hneď pod ním sa nachádza ďalší graf zobrazujúci celkové sumy v rôznych kategóriách za rovnaké mesačné obdobie. Tento graf je má však len polovičnú šírku vrchného grafu a tak sa vedľa neho zmestil aj tabuľkový rozpis posledných transakcií aj s možnosťou stránkovania a usporiadania podľa rôznych stĺpcov. Ako som už v úvode naznačil, všetky tieto informácie uvidí používateľ bez nutnosti skrolovania. Pôvodne som chcel tieto informácie s kategóriami zobrazovať v koláčovom grafe. Po dohode s pánom školiteľom som od toho upustil, pretože použitý graf je prehľadnejší a v koláčovom grafe ma človek väčší problém porovnať uhly a zistiť ktorý je väčší. Pri aktuálnom grafe to je možné rozpoznať ihneď.
+
 
 \subsubsection{Transakcie}
-Hlavným zámerom tejto stránky je používateľovi sprostredkovať prehľad vo všetkých transakciách a grafické porovnanie príjmov a výdavkov v určitom období. Pod navigáciu som umiestnil graf podobný tomu z domovskej stránky. Obsahuje však niekoľko rozdielov. Príjmy aj výdavky sú v ňom zobrazované do plusových hodnôt. Tým je zjednodušené ich porovnávanie. Narozdiel od krivky s priebežnou bilanciou sa tu nachádza rozdielová krivka. Pri každom dni, prípadne mesiaci alebo roku, zobrazuje rozdiel príjmov výdavkov. Ak teda v určitý deň(mesiac, rok) presiahne suma výdavkoch sumu príjmov tak bude táto krivka v mínusých hodnotách. 
+Hlavným zámerom tejto stránky je používateľovi sprostredkovať prehľad vo všetkých transakciách a grafické porovnanie príjmov a výdavkov v určitom období. Pod navigáciu som umiestnil graf podobný tomu z domovskej stránky. Obsahuje však niekoľko rozdielov. Príjmy aj výdavky sú v ňom zobrazované do plusových hodnôt. Tým je zjednodušené ich porovnávanie. Narozdiel od krivky s priebežnou bilanciou sa tu nachádza rozdielová krivka. Pri každom dni, prípadne mesiaci alebo roku, zobrazuje rozdiel príjmov výdavkov. Ak teda v určitý deň(mesiac, rok) presiahne suma výdavkov sumu príjmov, tak bude táto krivka v mínusových hodnotách. 
+\begin{figure}[ht]
+  \centering
+      \includegraphics[width=11cm]{wireframe_transakcie}
+  \caption{wireframe - transakcie}
+  \label{wireframe - transakcie}
+\end{figure} 
 
-Pod grafom sa nachádza tabuľka s rozpisom transakcií. Okrem údajov ktoré ponuka podobná tabuľka z domovskej stránky obsahuje táto naviac aj tlačítka s akciami ktoré sa dajú použiť pri každej transakcii. Ide o editovanie transakcie, vymazanie transakcie a posledným je vymazanie vybratej transakcie a zároveň všetkých jej ďalších opakovaní  v budúcnosti. Jej predchádzajúce opakovania zostanú uložené.
+Pod grafom sa nachádza tabuľka s rozpisom transakcií. Okrem údajov ktoré ponúka podobná tabuľka z domovskej stránky obsahuje táto naviac aj tlačidlá s akciami, ktoré sa dajú použiť pri každej transakcii. Ide o editovanie transakcie, vymazanie transakcie a posledným je vymazanie vybratej transakcie a zároveň všetkých jej ďalších opakovaní  v budúcnosti. Jej predchádzajúce opakovania zostanú uložené.
 
 Všetky údaje pre grafy a transakcie je možné filtrovať pomocou ponuky v ľavej časti stránky. Používateľ si vyberie časový rozsah od-do a rozdelenie v grafe podľa rokov, mesiacov alebo dní.
 
+
 \subsubsection{Pridanie transakcie}
-Jednoduchá stránka na pridávanie transakcií. Používateľ vyberá typ transakcie(príjem alebo výdavok). Názov transakcie, sumu, kategóriu, podkategóriu ktorá je zreťazená s kategóriou a dátum transakcie. Nakoniec má možnosť vybrať či pojde o jednorázovú alebo opakovanú transakciu. Pri vybratí opakovanej sa mu zobrazia ďalšie možnosti. Interval opakovania a počet opakovaní. V tomto prípade sa vytvorí jedna pôvodná transakcia a ďalšie jej opakovania, ktoré budu v obsahovať pole \texttt{original\_transaction\_id} s \texttt{id} ich pôvodnej transakcie.
+Jednoduchá stránka na pridávanie transakcií. Používateľ vyberá typ transakcie(príjem alebo výdavok). Názov transakcie, sumu, kategóriu, podkategóriu ktorá je zreťazená s kategóriou a dátum transakcie. Nakoniec má možnosť vybrať či pôjde o jednorazovú alebo opakovanú transakciu. Pri vybratí opakovanej sa mu zobrazia ďalšie možnosti. Interval opakovania a počet opakovaní. V tomto prípade sa vytvorí jedna pôvodná transakcia a ďalšie jej opakovania, ktoré budú v obsahovať pole \texttt{original\_transaction\_id} s \texttt{id} ich pôvodnej transakcie.
+\begin{figure}[ht]
+  \centering
+      \includegraphics[width=11cm]{wireframe_add}
+  \caption{wireframe - pridanie transakcie}
+  \label{wireframe - pridanie transakcie}
+\end{figure}
+ 
 
 \subsubsection{Kategórie}
-Základný graf na tejto stránke zobrazuje príjmy a výdavky podľa kategórií za vybraté obdobie pomocou filtra. Prednastavené obdobie je rok dozadu od aktuálneho dátumu. Pod ním sa nachádza tabuľkový výpis transakcií ako na stránke \emph{Transakcie}. Na tejto stránke je taktiež možné použit filter na rozsah dátumov od-do. Pri vybratí konkrétnej kategórie je používateľovi zobrazený graf kategórie v čase. Tento graf je tiež možné filtrovať. V spodnej časti stránky sú vtedy zobrazené aj podkategórie ktoré patria do vybranej kategórie. 
+Základný graf na tejto stránke zobrazuje príjmy a výdavky podľa kategórií za vybraté obdobie pomocou filtra. Prednastavené obdobie je rok dozadu od aktuálneho dátumu. Pod ním sa nachádza tabuľkový výpis transakcií ako na stránke \emph{Transakcie}. Na tejto stránke je taktiež možné použiť filter na rozsah dátumov od-do. Pri vybratí konkrétnej kategórie je používateľovi zobrazený graf kategórie v čase. Tento graf je tiež možné filtrovať. V spodnej časti stránky sú vtedy zobrazené aj podkategórie ktoré patria do vybranej kategórie.
+\begin{figure}[ht]
+  \centering
+      \includegraphics[width=11cm]{wireframe_kategorie}
+  \caption{wireframe - kategorie}
+  \label{wireframe - kategorie}
+\end{figure} 
 
 Po vybratí podkategórie sa zobrazí používateľovi informácia o nadradenej kategórii a taktiež tabuľka so všetkými transakciami, ktoré patria do tejto podkategórie. Samozrejmosťou sú tlačidlá s akciami, ktoré je možné aplikovať na vybratú podkategóriu. Ide o mazanie a editovanie a nachádzajú sa v ľavej časti stránky. 
 
@@ -432,7 +482,7 @@ Stránka import poskytuje používateľovi tabuľkový prehľad importovaných v
 
 \subsubsection{Nastavenia}
 
-Základné nastavenia účtu používateľa. Na tejto stránke si má používateľ možnosť zmeniť meno, priezvisko, prípadne prihlasovacie heslo. TODO
+Základné nastavenia účtu používateľa. Na tejto stránke si má používateľ možnosť zmeniť meno, priezvisko alebo môže požiadať o zmenu svojho hesla. Z dôvodu zvýšenej bezpečnosti mu bude potom zaslaný email s resetovacím odkazom. Vzhľadom k tomu, že táto ponuka nastavení nebude veľmi často využívaná, umiestnil som odkaz s ňou na spodnú časť stránky do pätičky. 
 
 \subsubsection{Odhlásiť sa}
 
@@ -444,7 +494,7 @@ Pre zjednodušenie ovládania aplikácie na mobilných zariadeniach som pracoval
 Pre zachovanie prehľadnosti a jednoduchosti ovládania som počet odkazov v navigácii znížil na základné 4, ktoré ďalej opíšem trochu podrobnejšie. 
 
 \subsubsection{Domov}
-Základná stránka aplikácie, ktorú uvidí používateľ po prihlásení. Zobrazuje prehľadnú aktuálnu bilanciu financií používateľa. Je to ten istý prehľad ktorý nájde použivateľ v plnom webovom rozhraní  vľavo pod navigáciou. Pod touto bilanciou sa nachádza graf transakcií podľa kategórií. V tomto grafe su zarátané transakcie za posledný mesiac. Pod ním je prehľadná tabuľka s transakciami. Zobrazuje dátum, názov, sumu a kategóriu do ktorej je zaradená konkrétna transakcia. Graf zobrazujúci transakcie za určité obdobie som vynechal. Vzhľadom na malé rozlíšenie by nemal dostatočne dobrý informatívny charakter.
+Základná stránka aplikácie, ktorú uvidí používateľ po prihlásení. Zobrazuje prehľadnú aktuálnu bilanciu financií používateľa. Je to ten istý prehľad ktorý nájde používateľ v plnom webovom rozhraní  vľavo pod navigáciou. Pod touto bilanciou sa nachádza graf transakcií podľa kategórií. V tomto grafe sú zarátané transakcie za posledný mesiac. Pod ním je prehľadná tabuľka s transakciami. Zobrazuje dátum, názov, sumu a kategóriu do ktorej je zaradená konkrétna transakcia. Graf zobrazujúci transakcie za určité obdobie som vynechal. Vzhľadom na malé rozlíšenie by nemal dostatočne dobrý informatívny charakter.
 \subsubsection{Transakcie}
 Prehľadný tabuľkový zoznam transakcií za posledný mesiac. Možnosť triedenia podľa rôznych stĺpcov je samozrejmosť. Každá transakcia zobrazuje svoj dátum, názov, sumu, kategóriu a podkategóriu. Na rozdiel od zoznamu na domovskej stránke je pri transakcii aj možnosť jej úpravy, zmazania. Taktiež sa tu nachádza aj možnosť zmazania vybranej transakcie a zároveň aj všetkých jej budúcich opakovaní.
 
@@ -455,11 +505,82 @@ Pridávanie transakcie je nastaveniami zhodné s pridávaním transakcie v plnom
 Stránka kategórie zobrazuje graf príjmov a výdavkov podľa kategórií za posledný rok. Pod grafom za nachádza rozpis týchto kategórií s podrobnými informáciami o každej z nich tak ako je to aj na stránke \emph{Transakcie}. 
 
 
+\section{Objektový model}
+\subsubsection{Transactions}
+Pre aplikáciu Domáce účtovníctvo sú najdôležitejšou časťou transakcie. Rovnako je pre objektový model najvýznamnejšia trieda \texttt{transactions}. Táto trieda uchováva informácie o všetkých transakciách. Transakcie sú rozdelené na príjmy a výdavky podľa \texttt{transaction\_type\_id} a preto na ne nie sú nutné 2 špeciálne triedy. Každej transakcii je okrem jej typu priradená aj jej kategória, podkategória, id používateľa ktorému patrí a informácia či ide o transakciu ktorá sa opakuje. Takisto má každá transakcia svoj názov, sumu a dátum kedy prebehla.
+\subsubsection{Users}
+Druhou významnou triedou sú používatelia, ktorí sú reprezentovaní v triede \texttt{users}. Nájdeme v nej všetky informácie týkajúce sa používateľa. Zaujímavá je položka \texttt{active}. Určuje či je používateľ stále aktívny a má prístup do systému. V prípade zrušenia konta sa zmení len táto položka a tým je používateľovi zablokovaný ďalší prístup do aplikácie. Každý zaregistrovaný používateľ je zatriedený do jedného z dvoch typov. Môže ísť o admina alebo o bežného používateľa. Každý používateľ môže mať viacero svojich transakcií, kategórií, podkategórií a výpisov.
+\subsubsection{Categories}
+Trieda obsahujúca informácie o kategóriách transakcií. Každá kategória patrí určitému svojmu používateľovi. Kategória má minimálne jednu svoju podkategóriu.
+\subsubsection{Subcategories}
+Trieda obsahujúca informácie o podkategóriách. Každá podkategória patrí svojmu používateľovi a taktiež aj svojej nadradenej kategórii.
+\subsubsection{User\_types}
+Trieda \texttt{user} types slúži na identifikáciu a pomenovanie typu používateľa. Aktuálne sú možné 2 typy používateľov. Admin a bežný používateľ.
+\subsubsection{Transaction\_types}
+Trieda \texttt{transaction\_types} slúži na identifikáciu a pomenovanie typu transakcie. Tie sú rozdelené na príjmy a výdavky.
+\subsubsection{Imports}
+Trieda, ktorá obsahuje informácie o importoch používateľa. Každý import patrí svojmu konkrétnemu používateľovi.
+
+
+
+\chapter{Implementácia}
+
+TODO
+
+Vystupy pre highcharts plugin - rozne typy prehladov podla casovych obdobi (den, mesiac, rok)
+
+info napr o domovskej stranke ...v akom controlleri je atd, ako cake implementuje controller ...napr ako som includoval controller do ineho
+
+\section{CakePHP}
+Základná implementácia vo frameworku CakePHP je na princípe toho, že každá trieda z tabuľky má svoj vlastný \texttt{controller}, \texttt{model} a rôzne prislúchajúce \texttt{views}. Tento princíp som využíval aj ja. V každom controllery som si definoval potrebné funkcie, nazývané aj akcie tohto controllera. 
+
+\subsection{AppController}
+Všetky mnou vytvorené controllery rozširujú možnosti preddefinovanej triedy \texttt{AppController} a tá možnosti základnej triedy \texttt{Controller}. V triede \texttt{AppController} som si definoval všetky potrebné akcie, triedy a komponenty CakePHP, ktoré budem chcieť používať v ostatných mnou vytvorených controlleroch. U mňa to boli triedy \texttt{CakeTime}, \texttt{CakeEmail}(nahrádza \texttt{EmailComponent} zo starších verzií cakePHP), komponenty \texttt{Auth}, \texttt{Session} a \texttt{Cookie}. Zadefinoval som tu taktiež aj \texttt{layout} pre webové a mobilné rozhranie.
+
+Hlavná a veľmi dôležitá funkcia v \texttt{AppController} je verejná funkcia \texttt{beforeFilter}. Dávajú sa do nej akcie ktoré sú volané ako prvé a pred ešte pred akciou controllera. Sú to napríklad akcie súvisiace s autorizáciou používateľa a jeho oprávnení. Taktiež v nej kontrolujem prístup z mobilného zariadenia a s tým súvisiace prepnutie na mobilný vzhľad aplikácie.
+
+Ďalšou funkciou je \texttt{afterFilter}, ktorá je zavolaná až po akcii controllera a renderovaní \texttt{view}. Skontroluje prístup z mobilného zariadenia a nastaví príslušný mobilný vzhľad, a pokiaľ je vytvorené, tak aj špecifické mobilné \texttt{view}.
+
+
+\subsection{TransactionsController}
+Základom aplikácie Domáce účtovníctvo je práca s transakciami a preto je práve TransactionsController najzaujímavejším a najdôležitejším controllerom. Zaoberá sa spracovaním transakcií a tvorbe prehľadných grafov a tabuľkových prehľadov. Už skôr som spomínal, že na tvorbu grafov používam Highcharts plugin. Preto bolo jednou z prvých vecí pridanie komponentu HighCharts.HighCharts do tohto controllera. Používam ho v každej akcii v ktorej generujem grafy. Základom každého grafu sú dáta. V mojich grafoch potrebujem naplniť hodnotami polia pre X-ové súradnice a polia pre Y-ové súradnice. Napríklad na domovskej stránke zobrazuje vrchný graf na X-vej súradnici dni za posledný mesiac a na y-ovej sumy transakcií za tieto konkrétne dni. 
+\subsubsection{Stránkovanie a grafy transakcií}
+Pod grafom sa nachádza tabuľka s prehľadom všetkých transakcií za tento posledný mesiac. Na tvorbu týchto tabuliek som využil komponent PaginatorComponent. Ide o veľmi dobre spracovaný komponent, ktorý ponúka CakePHP na tvorbu dotazov na databázu. Ponúka možnosť stránkovania a triedenia podľa stĺpcov tabuľky. 
+\begin{lstlisting}
+$this->paginate = array(
+	'limit' => 20,
+	'order' => array(
+			'Transaction.post_date' => 'asc'
+	),
+	'conditions' => array(
+			'Transaction.user_id' => $this->Session->read('User.id'),
+			'Transaction.post_date >=' => $filterdata['from_date'],
+			'Transaction.post_date <=' => $filterdata['to_date'],
+	),
+); 
+\end{lstlisting}
+Ako je možné vidieť v ukážke kódu, najčastejšie sa v ňom nastavujú 3 možnosti. Limit výpisov na jednu stránku, základné zoradenie týchto výpisov a podmienky výberu. V mojom prípade som nastavil limit 20 transakcií na jednu stránku, triedenie podľa dátumu transakcie a výber transakcií patriacich aktuálne prihlásenému používateľovi v rozsahu od a po určitý dátum. Framework si vďaka takémuto nastaveniu vybral všetky potrebné dáta s transakciami. Pôvodne som používal tieto dáta vybraté cez \texttt{paginate} aj pre grafy. Zistil som však, že dáta boli vybraté vždy len pre konkrétnu stránku zo stránkovania a tak sa mi na grafe vygenerovala napríklad len polovica údajov. Keď som chcel ďalšie, bolo potrebné prejsť na druhú stránku v stránkovaní. Vyriešil som to tak, že dáta pre grafy som získaval pomocou funkcie find. Tak som sa dostal ku všetkým potrebným dátam bez toho aby boli obmedzené stránkovaním.  
+
+Ďalší problém, ktorý sa vyskytol, bol pri použití filtra od/do a prepínania stránkovania. Ak používateľ použije filter pre výber rozsahu dátumov transakcií a rozdelenia týchto transakcií, zmení týmto údaje zobrazované v grafe a taktiež aj v tabuľke. Ak však potom klikne na inú stránku v stránkovaní, tieto údaje sa stratili a boli nahradené tými pôvodnými. Riešením bolo použitie Session. Po nastavení filtra som údaje z neho uložil do Session. Vďaka tomuto riešeniu sa pri stránkovaní nestratili a mohol som ich používateľovi prednačítať aj v iných častiach aplikácie, kde bola možnosť filtrovať dáta pre zobrazenie v grafoch a tabuľke.
+
+\section{Spracovanie výpisov}
+Jednou z ďalších zaujímavých a zložitých prvkov aplikácie bolo nahrávanie a spracovanie výpisov. Aktuálna verzia aplikácie podporuje spracovanie výpisov Slovenskej sporiteľne, ktorá ich poskytuje v zaužívanom formáte ABO. Na pochopenie tohoto ABO výpisu som si najskôr musel naštudovať štruktúru jeho výpisu. 
+
+Celý súbor výpisu sa skladá z 2 typov viet. Prvá veta je typu 074. Je to hlavička výpisu z účtu ktorá má fixnú dĺžku 114 znakov. Druhá veta je typu 075. Označuje údajovú položku výpisu z účtu. Jej fixná dĺžka je 128 znakov. Podrobnejšia štruktúra týchto viet zaberá 2 strany a preto ju tu celú nebudem opisovať. Zaujímavosťou v tomto výpise je, že jednotlivé pozície čísla účtu v tomto výpise sú pozmenené. Napríklad pre číslo účtu 0123456789 je číslo účtu v ABO výpise v tvare 9785012346. Takto vyzerá ukážka spracovania tohto čísla účtu:
+\begin{lstlisting}
+$cislo_uctu_partnera = substr($lines[$i], 3, 10);  // nacitanie cisla uctu zo spravnej pozicie udajovej polozky vo vypise
+$cislo_uctu_decoded = substr($cislo_uctu_partnera, 4, 5) . substr($cislo_uctu_partnera, 3, 1) . substr($cislo_uctu_partnera, 9, 1) . substr($cislo_uctu_klienta, 1, 2) . substr($cislo_uctu_partnera, 0, 1);  // zlozenie cifier cisla uctu do spravneho poradia 
+$predcislie_uctu_partnera = substr($lines[$i], 13, 6);  // nacitanie predcislia uctu
+$parsed_file['content'][$i]['account_number'] = $cislo_uctu_decoded;  // priradenie cisla uctu do pola
+$parsed_file['content'][$i]['account_prefix'] = $predcislie_uctu_partnera;  // priradenie predcislia uctu do pola
+\end{lstlisting}
+
+
 \section{Databázový model}
 \subsubsection{Transactions}
 Pre aplikáciu Domáce účtovníctvo sú najdôležitejšou časťou transakcie. Rovnako je pre databázový model najvýznamnejšia tabuľka \texttt{transactions}. Táto tabuľka uchováva informácie o všetkých transakciách. Transakcie sú rozdelené na príjmy a výdavky podľa \texttt{transaction\_type\_id} a preto na to nie je nutné 2 špeciálne tabuľky. \texttt{Transactions} obsahuje cudzie kľúče na stľpce v tabuľkách \texttt{transaction\_types}(\texttt{transaction\_\allowbreak type\_\allowbreak id}), \texttt{categories}(\texttt{category\_id}), \texttt{subcategories}(\texttt{subcategory\_id}), \texttt{users}(\texttt{user\_id}) a dokonca aj sama na seba. To využíva pri opakovaných transakciách odkazovaním na svoj stĺpec \texttt{original\_transaction\_id}.
 \subsubsection{Users}
-Druhou významnou tabuľkou(modelom??) sú users(používatelia?), ktorí sú reprezentovaní v tabuľke \texttt{users}. Nájdeme v nej všetky informácie týkajuce sa použivateľa. Zaujímavá je položka active. Určuje či je používateľ stále aktívny a má prístup do systému. V prípade zrušenia konta sa zmení len táto položka a tým je používateľovi zablokovaný ďalší prístup do aplikácie. Táto tabuľka obsahuje jediný cudzí kľuč \texttt{user\_type\_id}, ktorý sa vzťahuje na stĺpec \texttt{id} v tabuľke \texttt{user\_types}. Ďalej je v tejto tabuľke zadefinovaný vzťah hasMany na tabuľky \texttt{transactions}, \texttt{categories}, \texttt{subcategories} a \texttt{imports}. Z toho vyplýva, že jednému používateľovi môže prislúchať viacero záznamov z týchto tabuliek.
+Druhou významnou tabuľkou sú používatelia, ktorí sú reprezentovaní v tabuľke \texttt{users}. Nájdeme v nej všetky informácie týkajuce sa použivateľa. Zaujímavá je položka active. Určuje či je používateľ stále aktívny a má prístup do systému. V prípade zrušenia konta sa zmení len táto položka a tým je používateľovi zablokovaný ďalší prístup do aplikácie. Táto tabuľka obsahuje jediný cudzí kľuč \texttt{user\_type\_id}, ktorý sa vzťahuje na stĺpec \texttt{id} v tabuľke \texttt{user\_types}. Ďalej je v tejto tabuľke zadefinovaný vzťah hasMany na tabuľky \texttt{transactions}, \texttt{categories}, \texttt{subcategories} a \texttt{imports}. Z toho vyplýva, že jednému používateľovi môže prislúchať viacero záznamov z týchto tabuliek.
 \subsubsection{Categories}
 Jednoduchá tabuľka obsahujúca informácie o kategóriách transakcií. Obsahuje len jeden cudzí kľúč \texttt{user\_id} na na stĺpec \texttt{id} v tabuľke \texttt{users}. 
 \subsubsection{Subcategories}
@@ -469,25 +590,17 @@ Tabuľka \texttt{user} types slúži na identifikáciu a pomenovanie typu použ�
 \subsubsection{Transaction\_types}
 Tabuľka \texttt{transaction\_types} slúži na identifikáciu a pomenovanie typu transakcie. Tie sú rozdelené na príjmy a výdavky.
 \subsubsection{Imports}
-Tabuľka obsahujúca len jeden cudzí kľúč \texttt{user\_id}, ktorý definuje vzťah \texttt{belongsTo} k tabuľke \texttt{user} a konkrétnemu userovi(používateľovi). TODO
+Tabuľka obsahujúca len jeden cudzí kľúč \texttt{user\_id}, ktorý definuje vzťah \texttt{belongsTo} k tabuľke \texttt{user} a konkrétnemu používateľovi.
 \begin{figure}[ht]
   \centering
       \includegraphics[width=15cm]{databazovy_model}
   \caption{Domáce účtovníctvo - Databázový model}
   \label{DataModel}
-\end{figure}  
+\end{figure}    
 
+\section{Dáta pre grafy}
 
-\chapter{Implementácia}
-TODO
-
-Vystupy pre highcharts plugin - rozne typy prehladov podla casovych obdobi (den, mesiac, rok)
-
-PAGINATE PROBLEM a filter
-
-parsovanie vypisov
-
-mobilna aplikacia
+\section{Resetovanie hesiel}
 
 
 \chapter{Záver}\label{chap:outro}
