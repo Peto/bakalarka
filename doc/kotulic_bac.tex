@@ -528,6 +528,8 @@ Trieda, ktorá obsahuje informácie o importoch používateľa. Každý import p
 TODO MAYBE
 info napr o domovskej stranke ...v akom controlleri je atd, ako cake implementuje controller .. ako som includoval controller do ineho
 
+Mojim hlavným cieľom v implementácii bolo využiť nadobnuté vedomosti z programovania weboských aplikácií a skĺbiť ich s vedomosťami a funkcionalitou ktorú ponúka MVC framework CakePHP. S generovaním prehľadných grafom mi pomohla implementácie pluginu \texttt{HighCharts}. 
+
 \section{CakePHP}
 Základná implementácia vo frameworku CakePHP je na princípe toho, že každá trieda z tabuľky má svoj vlastný \texttt{controller}, \texttt{model} a rôzne prislúchajúce \texttt{views}. Tento princíp som využíval aj ja. V každom controllery som si definoval potrebné funkcie, nazývané aj akcie tohto controllera. 
 
@@ -610,7 +612,17 @@ Tabuľka obsahujúca len jeden cudzí kľúč \texttt{user\_id}, ktorý definuje
 
 \chapter{Záver}\label{chap:outro}
  
-Zaverecny popis.
+Zámerom mojej bakalárskej práce bolo vytvorenie prehľadnej aplikácie na správu domáceho účtovníctva. Hlavným cieľom bola webová aplikácia s plnou funkcionalitou. Od nej bola odvodená jednoduchšia mobilná verzia aplikácie. Vzhľadom na udržanie prehľadnosti a jednoduchosti používania tejto mobilnej aplikácie bola jej funkcionalita obmedzená len na najčastejšie používané funkcie.
+
+Na začiatku práce som si spravil prehľad v podobných konkurenčných aplikáciách. Analyzoval som ich klady a zápory a do svojej aplikácie som sa pokúsil implementovať tie najlepšie riešenia z týchto rôznych aplikácií. Veľký dôraz som kládol na prehľadnosť a jednoduchosť ovládania aplikácie, pretože práve toto bola slabá stránka niektorých konkurenčných aplikácií. 
+
+Ďalej som sa zaujímal o webové technológie, ktoré bude potrebné v práci použiť. Tu bolo jedným zo základných prvkov použitie frameworku CakePHP. Vďaka nemu, a MVC prístupu ktorý používa, sa programovanie aplikácie urýchlilo. Podstatnejšie však je, že sa jeho použitím sprehľadnil kód a zjednodušila prípadná budúca implementácia novej funkcionality. 
+
+Po naštudovaní fungovania a začatia programovania s CakePHP bolo ďalším krokom vytvorenie prehľadných štatistických grafov. To som dosiahol pomocou pluginu HighCharts, ktorý slúži na tvorbu grafov. 
+
+Jednou z finálnych častí práce bolo spracovávanie výpisov a následné vytvorenie transakcií z týchto výpisov. Vzhľadom k tomu, že skoro každá slovenská banka používa svoj vlastný formát výpisu, použil ten najuniverzálnejší vo formáte ABO. Ide o zaužívaný štandard bankových výpisov ktorý používa Slovenská sporiteľňa. 
+
+Do budúcna by preto bolo dobré rozšíriť aplikáciu o spracovanie výpisov z iných bánk, prípadne o možnosť spravovania viacerých účtov používateľa v rámci jedného používateľského konta. Zaujímavým a pre používateľa motivačným rozšírením aplikácie by mohlo byť aj stanovenie si súkromných cieľov na ktoré by si financie postupne presúval a šetril. Táto aplikácia na báze MVC architektúry ponúka skutočne široké možnosti rozšírenia.
 
 \backmatter
 
