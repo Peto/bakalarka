@@ -525,11 +525,8 @@ Trieda, ktorá obsahuje informácie o importoch používateľa. Každý import p
 
 \chapter{Implementácia}
 
-TODO
-
-Vystupy pre highcharts plugin - rozne typy prehladov podla casovych obdobi (den, mesiac, rok)
-
-info napr o domovskej stranke ...v akom controlleri je atd, ako cake implementuje controller ...napr ako som includoval controller do ineho
+TODO MAYBE
+info napr o domovskej stranke ...v akom controlleri je atd, ako cake implementuje controller .. ako som includoval controller do ineho
 
 \section{CakePHP}
 Základná implementácia vo frameworku CakePHP je na princípe toho, že každá trieda z tabuľky má svoj vlastný \texttt{controller}, \texttt{model} a rôzne prislúchajúce \texttt{views}. Tento princíp som využíval aj ja. V každom controllery som si definoval potrebné funkcie, nazývané aj akcie tohto controllera. 
@@ -537,15 +534,24 @@ Základná implementácia vo frameworku CakePHP je na princípe toho, že každ�
 \subsection{AppController}
 Všetky mnou vytvorené controllery rozširujú možnosti preddefinovanej triedy \texttt{AppController} a tá možnosti základnej triedy \texttt{Controller}. V triede \texttt{AppController} som si definoval všetky potrebné akcie, triedy a komponenty CakePHP, ktoré budem chcieť používať v ostatných mnou vytvorených controlleroch. U mňa to boli triedy \texttt{CakeTime}, \texttt{CakeEmail}(nahrádza \texttt{EmailComponent} zo starších verzií cakePHP), komponenty \texttt{Auth}, \texttt{Session} a \texttt{Cookie}. Zadefinoval som tu taktiež aj \texttt{layout} pre webové a mobilné rozhranie.
 
-Hlavná a veľmi dôležitá funkcia v \texttt{AppController} je verejná funkcia \texttt{beforeFilter}. Dávajú sa do nej akcie ktoré sú volané ako prvé a pred ešte pred akciou controllera. Sú to napríklad akcie súvisiace s autorizáciou používateľa a jeho oprávnení. Taktiež v nej kontrolujem prístup z mobilného zariadenia a s tým súvisiace prepnutie na mobilný vzhľad aplikácie.
+Hlavná a veľmi dôležitá funkcia v \texttt{AppController} je verejná funkcia \texttt{beforeFilter}. Dávajú sa do nej akcie ktoré sú volané ako prvé a ešte pred akciou controllera. Sú to napríklad akcie súvisiace s autorizáciou používateľa a jeho oprávnení. Taktiež v nej kontrolujem prístup z mobilného zariadenia a s tým súvisiace neskoršie prepnutie na mobilný vzhľad aplikácie.
 
-Ďalšou funkciou je \texttt{afterFilter}, ktorá je zavolaná až po akcii controllera a renderovaní \texttt{view}. Skontroluje prístup z mobilného zariadenia a nastaví príslušný mobilný vzhľad, a pokiaľ je vytvorené, tak aj špecifické mobilné \texttt{view}.
+Ďalšou funkciou je \texttt{afterFilter}, ktorá je zavolaná až po akcii controllera a renderovaní \texttt{view}. Skontroluje či bol v \texttt{beforeFilter} zistený prístup z mobilného zariadenia a nastaví príslušný mobilný vzhľad. Pokiaľ je vytvorené, tak nastaví aj špecifické mobilné \texttt{view}.
 
 
 \subsection{TransactionsController}
-Základom aplikácie Domáce účtovníctvo je práca s transakciami a preto je práve TransactionsController najzaujímavejším a najdôležitejším controllerom. Zaoberá sa spracovaním transakcií a tvorbe prehľadných grafov a tabuľkových prehľadov. Už skôr som spomínal, že na tvorbu grafov používam Highcharts plugin. Preto bolo jednou z prvých vecí pridanie komponentu HighCharts.HighCharts do tohto controllera. Používam ho v každej akcii v ktorej generujem grafy. Základom každého grafu sú dáta. V mojich grafoch potrebujem naplniť hodnotami polia pre X-ové súradnice a polia pre Y-ové súradnice. Napríklad na domovskej stránke zobrazuje vrchný graf na X-vej súradnici dni za posledný mesiac a na y-ovej sumy transakcií za tieto konkrétne dni. 
-\subsubsection{Stránkovanie a grafy transakcií}
-Pod grafom sa nachádza tabuľka s prehľadom všetkých transakcií za tento posledný mesiac. Na tvorbu týchto tabuliek som využil komponent PaginatorComponent. Ide o veľmi dobre spracovaný komponent, ktorý ponúka CakePHP na tvorbu dotazov na databázu. Ponúka možnosť stránkovania a triedenia podľa stĺpcov tabuľky. 
+Základom aplikácie Domáce účtovníctvo je práca s transakciami a preto je práve \texttt{TransactionsController} najzaujímavejším a najdôležitejším controllerom. Zaoberá sa spracovaním transakcií a tvorbe prehľadných grafov a tabuľkových prehľadov. Už skôr som spomínal, že na tvorbu grafov používam Highcharts plugin. Preto bolo jednou z prvých vecí pridanie komponentu \texttt{HighCharts.HighCharts} do tohto controllera. Používam ho v každej akcii v ktorej generujem grafy. 
+
+\section{Dáta pre HighCharts grafy} 
+Základom každého grafu sú dáta. V mojich grafoch potrebujem naplniť hodnotami polia pre X-ové súradnice a polia pre Y-ové súradnice. Napríklad na domovskej stránke zobrazuje vrchný graf na X-vej súradnici dni za posledný mesiac a na y-ovej sumy transakcií za tieto konkrétne dni. Polí s x-ovými súradnicami môže byť aj viac. Zaleží to podľa počtu údajov ktoré chcem zobrazovať. Napríklad na spomenutej domovskej stránke je v jednom grafe stĺpcový prehľad príjmov, stĺpcový prehľad výdavkov a krivka priebežnej bilancie. Pod grafom sa nachádzajú tlačidlá s možnosťou zobrazenia len niektorého z týchto údajov. 
+
+Jednou zo zložitejších častí implementácie týchto grafov bolo správne prednastavenie polí s dátami a nulovými hodnotami. Je to spôsobené tým, že nie každý deň musí byť pridaná určitá transakcia. Preto pokiaľ som nechcel, aby mi z grafu vypadli dni bez transakcií, musel som si po vybratí rozsahu dátumov vo filtry nastaviť nulové hodnoty pre každý deň, prípadne mesiac alebo rok. Najzložitejšie sa to implementovalo pri dennom filtry. Najjednoduchši prípad bol ak bol rozsah dní len v strede určitého mesiaca. Pokiaľ rozsah prekračoval mesiac potreboval som dĺžky všetkých mesiacov ktoré rozsah zahŕňal. Ak rozsah prekročil rok, tak sa príprava dát sťažila ešte viac. Pri filtrovaní dní som takto získaval až trojrozmerné polia naplnené nulovými hodnotami. Až potom som ich mohol naplniť dátami z reálnych transakcií.
+
+
+
+
+\section{Stránkovanie a grafy transakcií}
+Pokračujem opisom domovskej stránky. Pod grafom sa nachádza tabuľka s prehľadom všetkých transakcií za tento posledný mesiac. Na tvorbu týchto tabuliek som využil komponent \texttt{PaginatorComponent}. Ide o veľmi dobre spracovaný komponent, ktorý ponúka CakePHP na tvorbu dotazov na databázu. Ponúka možnosť stránkovania a triedenia podľa stĺpcov tabuľky. 
 \begin{lstlisting}
 $this->paginate = array(
 	'limit' => 20,
@@ -598,7 +604,6 @@ Tabuľka obsahujúca len jeden cudzí kľúč \texttt{user\_id}, ktorý definuje
   \label{DataModel}
 \end{figure}    
 
-\section{Dáta pre grafy}
 
 \section{Resetovanie hesiel}
 
